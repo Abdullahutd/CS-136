@@ -1,0 +1,1642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0081)https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+<meta name="robots" content="index,nofollow"></head><body dir="ltr" lang="en">10
+
+<title>POSIX Permissions and Stateful Firewalls</title>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="./POSIX Permissions and Stateful Firewalls_files/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="./POSIX Permissions and Stateful Firewalls_files/screen.css">
+
+
+<div id="page" dir="ltr" lang="en">
+<h1>POSIX Permissions and Stateful Firewalls</h1>
+<div class="author">Created by: Peter A. H. Peterson and Dr. Peter Reiher, UCLA {pahp, reiher}@cs.ucla.edu, with Dr. Tanya Crenshaw, UP {crenshaw@up.edu}<br>
+</div>
+
+<div class="due-date">Due: Thursday, October 13th, 2011 11:59PM via CourseWeb</div>
+
+<div class="table-of-contents">
+<div class="table-of-contents-heading">Contents</div>
+<ol type="1">
+<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#overview">Overview</a>
+</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#reading">Required Reading</a>
+<ol>
+	<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#posix">POSIX Permissions</a>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#criticisms">Criticisms</a>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#sudo">sudo and Alternatives</a>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#permtools">Software Tools</a>
+	<ol>
+			<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#adduser">adduser, chfn, passwd</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#addgroup">addgroup</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#usermod">usermod</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#chown">chown, chgrp</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#chmod">chmod</a>
+	</li></ol>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#firewalls">Firewalls</a>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#policy">Policy Design</a>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#nettools">Firewall and Network Testing Tools</a>
+	<ol>
+			<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#netfilter">iptables</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#nmap">nmap</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#ifconfig">ifconfig</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#telnet">telnet</a>
+			</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#netcat">netcat</a>
+	</li></ol>
+</li></ol>
+</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#intro">Introduction</a>
+</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#assignment">Assignment Instructions</a>
+<ol>
+	<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#setup">Setup</a>
+	<ol>
+		<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#saving">Saving your work</a></li>
+		<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#restoring">Restoring your work</a></li>
+	</ol>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#tasks">Tasks</a>
+	<ol>
+		<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#homedirsec">Home Directory Security</a>
+		</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#ballotbox">The Ballot Box</a>
+		</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#tpsreports">The TPS Reports Directory</a>
+		</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#sudoprobs">sudo Problems</a>
+		</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#firewall">Firewall Configuration</a>
+	</li></ol>
+
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#tips">Tips and Tricks</a>
+	<ol>
+		<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#ambiguity">Resolving ambiguities</a></li>
+		<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#envvars">Using environment variables</a></li>
+		<li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#fwtest">Testing your firewall</a></li>
+	</ol>
+	</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#glitches">What Can Go Wrong</a>
+</li></ol>
+<!-- <li><a href="#extra">Extra Credit (optional section)</a> -->
+
+</li><li><a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#submission">Submission Instructions</a>
+
+</li></ol>
+</div>
+
+<span class="anchor" id="overview"></span> 
+<h2>Overview</h2>
+
+<p>The purpose of this exercise is to introduce you to filesystem and network access control schemes and the "principle of least privilege" through the use of POSIX filesystem permissions and <tt>iptables</tt> firewalls.
+
+</p><p>After this exercise, you will: 
+
+</p><ol type="1"><li>understand the POSIX permissions structure including SUID and SGID bits 
+</li><li>understand the essence of the sudo utility and how to configure and use it securely. 
+</li><li>be able to apply that knowledge to configure permissions in multiple scenarios, such as: 
+<ol type="1"><li>shared system directories 
+</li><li>user home directories and private directories 
+</li><li>privileged system directories 
+</li><li>unprivileged temporary directories 
+</li><li>editing important configuration files 
+</li><li>restarting system processes 
+</li><li>potential privilege escalation problems 
+</li></ol></li><li>understand the basics of stateful firewalls 
+</li><li>be able to apply that knowledge to configure a basic firewall in Linux using iptables. 
+</li></ol><p><span class="anchor" id="posix"></span><span class="anchor" id="unix"></span> 
+
+<span class="anchor" id="reading"></span> 
+</p><h2>Required Reading</h2>
+<h3>POSIX Permissions</h3>
+
+<span class="anchor" id="posix"></span>
+<p>The Portable Operating System Interface, or POSIX, is IEEE standards family <strong>IEEE 1003.1</strong> and represents an attempt to formalize the API for variants of the Unix operating system. POSIX specifies standards for the kernel APIs (including many internal functions like permissions, threads, networking, and interprocess communication), commands, required utilities and user-level APIs (including many utilities and scripting tools like awk, echo, ed, sh, vi, basic I/O, and more), and a conformance test that can be run on many platforms. POSIX is very widely disseminated and has been in use for almost 20 years, but is a closed standard (i.e. proprietary). As a result, it is expensive to be certified; this has resulted in many free operating systems such as FreeBSD and Linux being substantially compliant but not officially able to use the moniker "POSIX Compliant". An alternative to POSIX is the <a class="http" href="http://en.wikipedia.org/wiki/Single_UNIX_Specification">Single UNIX Specification</a>, developed by the Austin Group. Unfortunately, it is also proprietary and expensive. 
+
+</p><p>The expense has not been prohibitive for motivated commercial vendors however, and POSIX has been extremely influential in coalescing and standardizing those elements that are characteristically UNIX-like. Furthermore, POSIX is a standard that influences software design and operating system implementations in seemingly unlikely places -- for example, Windows NT and its derivatives (2000, XP, and beyond) can be "POSIX compliant" with the addition of software packages and the enabling of certain features. This broad influence -- existing before the public explosion of the Internet -- has helped to make software and systems similar in fundamental ways. This, in turn, simplifies many portability and interoperability problems. 
+
+</p><p>One of the enduring legacies of Bell Labs UNIX and the POSIX standard are traditional Unix file system permissions, which are a simple system of permissions stored in the file system and and kernel and evaluated to mediate access to system resources. Additionally, since devices are files in Unix, file system permissions also mediate control over many aspects of the operating system. 
+
+</p><p>In most Unix and Unix-like operating systems, the permission system is extremely simple. Each file has <tt>read</tt>, <tt>write</tt>, and <tt>execute</tt> permissions set for each of three groups of users called "access classes". The three classes are  <tt>user</tt> (owner), <tt>group</tt>, and <tt>other</tt>; each access class represents one or more users in the following way: 
+
+</p><ul><li><p>Users each have unique user identifiers (userids or UIDs, listed in <tt>/etc/passwd</tt>) that only they control. 
+</p></li><li><p>Groups are arbitrary collections of users. Each group has its own group identifier (groupid or GID, defined in <tt>/etc/group</tt>). Often, every user on the system has a personal group used for sharing data with a limited set of other users.
+</p><ul><li><p>Example: the <tt>group</tt> class <tt>cdrom</tt> usually contains a list of all users granted permission to access the system's CD-rom drive. 
+</p></li><li><p>Example: the user <tt>sonny</tt> has a group <tt>sonny</tt> by default; the user <tt>cher</tt> can be added as a member of group <tt>sonny</tt> so that they can share resources between themselves but no one else. 
+</p></li></ul></li><li><p>Finally, the membership of the <tt>other</tt> class for each file is dependent on the <tt>user</tt> and members of the <tt>group</tt> class -- <strong>the</strong> <tt>other</tt> <strong>class does not represent "all users!"</strong> Specifically, the <tt>other</tt> class represents "everyone that is <em>not</em> the <tt>user</tt> (owner) of the file and <em>or</em> a member of the file's <tt>group</tt> class."  This fact allows us to express more meaningful permissions by strictly dividing all system users into three non-overlapping sets. 
+</p><ul><li><p>A more precise way of stating this is to say that <tt>other</tt> represents the the list of all users on the system, minus the union of the <tt>user</tt> and <tt>group</tt> classes. 
+</p></li><li><p>Example: There are three users on a system: <tt>sonny</tt>, <tt>cher</tt>, and <tt>donovan</tt>. <tt>sonny</tt> owns a file whose group access class is set to the group <tt>sonny</tt>, which contains the user <tt>cher</tt>. The <tt>other</tt> class consists only of <tt>donovan</tt>, because he is not the owner nor in the group <tt>sonny</tt>. 
+</p></li></ul></li></ul><p>Each access class is encoded by 3 bits. Each bit present grants an additional permission from the set <tt>read</tt>, <tt>write</tt>, and <tt>execute</tt>. When you list files in long form (with the option <tt>-l</tt>), you will see the permissions  written out in the leftmost column as a bitstring with the letters <tt>r</tt>, <tt>w</tt>, and <tt>x</tt> in the order <tt>user</tt>, <tt>group</tt>, and <tt>other</tt>: 
+
+</p><p>Here's what it looks like "in the wild": 
+
+</p><p>
+</p><pre>$ ls -alh
+-rw-r--r--   1 pahp console  18K May 16  2006 gpl.txt
+drwx------   5 pahp console  512 May 21  2006 john-1.7.2/
+lrwxrwxrwx   1 pahp console   25 Sep 13 20:45 labs -&gt; /proj/some/link/
+-rwxr--r--   1 pahp console  171 Sep  9 09:18 loadimage.sh*
+drwxrwxrwx   1 pahp console  512 Sep 13 20:45 worldwriteable/
+^ ^  ^  ^--- other permissions
+| |  '------- group permissions
+| '---------- user permissions
+'------------ file type: d=directory, l=symbolic link, - means regular file
+</pre>
+
+<p>Here's an example bitstring split into components: 
+
+</p><p>
+</p><pre>   d     rwx     rwx    rwx
+type    user    group  other
+</pre>
+
+
+<p>In the above example, the owner of the file <tt>gpl.txt</tt> has read and write permission because the <tt>owner</tt> part of the bitstring is set to <tt>rw-</tt>. The owner (<tt>pahp</tt>) cannot execute this file, but that doesn't matter because it's just a text file. The group class <tt>console</tt> can read the file, as can the members of the other class -- everyone else. 
+
+</p><p>The directory <tt>john-1.7.2</tt> is only accessible by the owner and nobody else. Notice the <tt>d</tt> in the first place; this means that the file is a directory. 
+
+</p><p>The file <tt>labs</tt> is a "<a class="http" href="http://en.wikipedia.org/wiki/Symbolic_link">symbolic link</a>" (sometimes called "soft link") to the directory <tt>/proj/some/link/</tt>. Symbolic links are a special kind of file that is a pointer to a disk location (a "pathname" which may or may not exist). Permissions on symbolic links do not work as their <tt>lrwxrwxrwx</tt> permissions might lead you believe. 
+
+</p><p>In addition to the 9 bits required to store the <tt>user</tt>, <tt>group</tt>, and <tt>other</tt> permissions of a file, there are three kinds of "additional permissions" that are rarely used but are extremely important to understand. The additional permissions are known as the <em>setuid bit</em>, <em>setgid bit</em>, and <em>sticky bit</em>. Each special bit has a different function depending on where it is used: 
+
+</p><p>When the the special bits are used on regular files: 
+
+</p><ul><li><p>The setuid bit on an executable file means that the file will run as the userid of the file's <em>owner</em> as opposed to the userid of the user executing the file. This is done to allow users to perform tasks that temporarily require the user to be someone else, such as changing passwords or restarting a service. Any program with the UID bit set must be carefully written so as to block all misuse. Innumerable vulnerabilities have stemmed from setuid <strong>root</strong> programs with security holes that allowed users to execute other commands as root. 
+</p></li><li><p>The setgid bit on an executable file is like the setuid bit, except that the process gains the effective user of the file's <em>group</em>, not its owner or the user executing the file. 
+</p></li><li>The "sticky bit" was used in the olden days to tell the kernel to keep an executable's image in memory so that it would not have to be reloaded from disk. This was commonly done with programs such as editors that were used regularly but had a significant load time. Modern systems use the "sticky bit" for other uses. 
+</li></ul><p>When the special bits are used on directories, they have different meanings altogether. Search online to discover what those meanings are on Linux systems.
+
+</p><p>Every file has permissions of some kind set for the each of the three classes, using the three types of basic permissions: <tt>read</tt>, <tt>write</tt>, and <tt>execute</tt> (and the three special bits). These permissions have a default value (based on the system umask) when the file is created. Permissions can be changed with command line utilities such as <tt>chmod</tt> and <tt>chown</tt>, which are discussed <a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#permtools">later in this document</a>. 
+
+</p><p>These permissions are fairly self explanatory when applied to files, but when applied to directories their meanings are <strong>not always intuitive</strong>. In particular, permissions set on a directory <strong>do not always apply to that directory's contents</strong>, and the concepts of "read", "write", and "execute" as they pertain to directories is not obvious. (It helps to think of a directory as a file which contains links to other files, rather than as a nested series of containers -- experiment on DETER to determine how they really interact!) 
+
+</p><p>Furthermore, while the special bits are commonly overlooked, they have important meanings with <strong>incredible significance</strong> in terms of security. You are encouraged to play with these permissions and read other materials in order to fully understand how they are interpreted. 
+
+</p><p><span class="anchor" id="criticisms"></span> 
+</p><h3>Criticisms</h3>
+
+<p>Traditional Unix permissions date back to the early 1970s. While simple and inexpensive to implement and evaluate, they have long been criticized for being out of date and woefully inexpressive compared to the power of other access control systems. Other systems (such as Microsoft Windows and other ACL models for Unix) have more than three access groups, nested groups, explicit deny lists, the ability to specify write permissions for changing, creating, and deleting (with Unix permissions they are largely the same), the ability to consider arbitrary state in evaluating the ACLs (such as time of day, network address, etc.), the ability to make files invisible to unprivileged users, and many other features that traditional Unix permissions lack. 
+
+</p><p>Another important and oft-criticized fact is that Unix permissions do not exactly reflect the current state of the permissions configuration on the system. For example, while Unix checks the file permissions at the moment a file is <em>opened</em>, it only checks those permissions <em>once</em> for each <tt>open</tt> system call. This means that the permissions are only tested when you <em>first open the file for reading, writing, or executing</em>, <strong>not</strong> each time you access or modify the file's contents via an open file descriptor. If a user opens a file, and immediately thereafter all permissions on that file for that user are removed, the user with the open file descriptor will <em>still</em> have access to the resource according to the permissions set <em>when the file was opened</em>, even if the <em>current</em> permissions deny reading, writing, or execution. 
+
+</p><p>Furthermore, the traditional Unix permissions and authentication system assigns group membership and other credentials at login time and <em>never</em> checks them again -- this means that system password, login permission, group membership details in <tt>/etc/group</tt> and other details changed <em>after</em> you log in are <strong>not</strong> reflected in your processes until you log out and log back in or the process with those credentials is restarted. For example, this means that any change to a user group is fully applied only when all affected processes have been restarted. Another example is that if an attacker steals a password and logs in to a system before that account is disabled or the password is changed, the attacker will still have that level of authentication until he or she logs out. 
+
+</p><div class="infobox">
+<p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/idea.png">
+This is an example of a <i>time-of-check vs. time-of-use</i> (TOCTOU) problem.
+</p></div>
+
+<p>These design decisions were made to limit the space occupied by and CPU cycles spent evaluating system permissions. As long as the semantics of the system (including the above criticisms) are fully understood, it can be an effective, acceptably secure solution for many purposes. In fact, in some ways, its simplicity and even naivete make it more transparent and easily understandable when compared to more complex systems. For these and many other reasons, the traditional Unix file permissions are still in wide use, over 40 years after their initial deployment. 
+
+</p><p><span class="anchor" id="sudo"></span> 
+</p><h3>sudo and Alternatives</h3>
+
+<p>Some applications simply require stronger guarantees, finer granularity, or other features that the traditional permissions cannot express. For those applications, users have many alternatives. <tt>sudo</tt> is one simple extension to traditional Unix permissions that has become very popular. 
+
+</p><p><strong>sudo</strong> is a setuid root application with its own ACL (stored in <tt>/etc/sudoers</tt>) that specifies, with fine granularity, tasks that users and groups can perform as root. For example, sudo could be used to allow a user to act as root in order to kill processes with a specific name. The user would otherwise have no additional privileges. This is an example of a perfect use for setuid root programs -- granting strongly-constrained privileges to unprivileged users. 
+
+</p><p>However, sudo is a double edged sword. On the one hand, it greatly enhances the expressiveness of Unix permissions without actually changing the permissions system. On the other hand, if improperly configured, it offers <strong>easy access to root</strong>. For more information on sudo and the sudoers ACL format, please see the manpages for sudo and sudoers (the configuration file), or other sudo-related material online (in particular regarding sudo exploits). 
+
+</p><p>Beyond sudo, two broader and more revolutionary alternatives for Linux permissions include SELinux and grsecurity, while other options exist including LDAP, Novell eDirectory, and other permissions systems for other operating systems. (We won't be using any of these.) 
+
+<span class="anchor" id="permtools"></span> 
+</p><h3>Software Tools</h3>
+<p>
+
+<span class="anchor" id="adduser"></span> 
+
+</p><p>
+
+</p><h4>adduser, chfn, passwd: add users to a system</h4>
+
+<p>
+<tt>adduser</tt> is the tool available for adding users to the system. To create a new user, execute: 
+
+</p><p>
+
+</p><pre>$ adduser username
+</pre>
+
+<p>
+<tt>adduser</tt> will copy files from the <tt>/etc/skel</tt> directory to become the new homedir of the new user in the <tt>/home/</tt> directory. You can specify a different home directory or automatically add the new user to groups; those options can be found in the <tt>adduser</tt> manpage. 
+
+</p><p>
+<tt>adduser</tt> does not set any <tt>finger</tt> information for the user (this is not strictly necessary anyway), but the tool <tt>chfn</tt> will do that: 
+
+</p><p>
+
+</p><pre>$ sudo chfn jimbo
+Changing finger information for jimbo.
+Name []: ...
+</pre>
+
+<p>
+By default, the user is created with a "locked out" account with no password set. To set the password, use the command <tt>passwd</tt>: 
+
+</p><p>
+
+</p><pre>$ sudo passwd jimbo
+Changing password for user jimbo.
+New Unix password:
+Retype new Unix password:
+passwd: all authentication tokens updated successfully.
+</pre>
+
+<p>
+<tt>passwd</tt> will complain if it doesn't like the password you enter, but will accept anything with enough prodding. 
+
+</p><p>
+Once an account is created, you can log into it in a number of ways: 
+
+</p><ol type="1"><li><p>
+If logged in to the system where you created the account, you can execute <tt>ssh&nbsp;newuser@localhost</tt> to reconnect locally as the new user with the new password. 
+</p></li><li><p>
+If local, you can also use the <tt>su</tt> command <tt>su&nbsp;newuser</tt> to change to that user. This does not always update all access credentials, however. This method can also be used to become root by entering <tt>sudo&nbsp;su&nbsp;-</tt>. 
+</p></li><li><p>
+If logged in to <tt>users.deterlab.net</tt>, you can ssh to the node as the new user. 
+
+</p></li></ol><p>
+<span class="anchor" id="addgroup"></span> 
+
+</p><p>
+
+
+</p><h4>groupadd: add groups to a system</h4>
+
+
+<p>
+<tt>groupadd</tt> adds a new group to the system with a unique ID (by default). Example: 
+
+</p><p>
+
+</p><pre>$ groupadd newgroup
+</pre>
+
+<p>
+See <tt>man&nbsp;groupadd</tt> for more information. 
+
+</p><p>
+<span class="anchor" id="usermod"></span> 
+
+</p><p>
+
+</p><h4>usermod: modify a user</h4>
+
+
+<p>
+<tt>usermod</tt> can be used to modify many details of a preexisting user account. For more information, see <tt>man&nbsp;usermod</tt>. 
+
+</p><p>
+<span class="anchor" id="chown"></span> 
+
+</p><p>
+
+</p><h4>chown, chgrp: change ownership of a file</h4>
+
+
+<p>
+<tt>chown</tt> stands for <strong>ch</strong>ange <strong>own</strong>ership and is (unsurprisingly) used to change the owner and group of a file. 
+
+</p><p>
+The syntax is very simple. To change the owner of a file, execute: 
+
+</p><p>
+
+</p><pre>$ chown newowner filename
+</pre>
+
+<p>
+To change the owner and group classes of a file, execute: 
+
+</p><p>
+
+</p><pre>$ chown newowner:newgroup filename
+</pre>
+
+<p>
+<tt>chgrp</tt> stands for <strong>ch</strong>ange <strong>gr</strong>ou<strong>p</strong> and works very similarly to <tt>chown</tt>. To change the group of a file, execute: 
+
+</p><p>
+
+</p><pre>$ chgrp newgroup filename
+</pre>
+
+<p>
+Recursive and other options exist; see <tt>man&nbsp;chown</tt> or <tt>man&nbsp;chgrp</tt> for more information. 
+
+</p><p>
+<span class="anchor" id="chmod"></span> 
+
+</p><p>
+
+
+</p><h4>chmod: change the mode of a file</h4>
+
+<p>
+chmod stands for <strong>ch</strong>ange <strong>mod</strong>e and is used to change the permissions mode of a file. Earlier, we discussed how the POSIX ACL has three access classes. User (or owner), group, and other (or world). The permissions mode for each access class can be changed by the <tt g="">chmod</tt> command.
+
+</p><p>
+There are two ways to use <tt>chmod</tt>; one is an <em>absolute numeric mode</em> and the other is a <em>symbolic mode</em>. 
+
+</p><p>
+
+
+</p><h5>chmod: absolute -- setting the permissions explicitly</h5>
+
+
+<p>
+In the absolute mode, <tt>chmod</tt> takes a file mode in 3 or 4 digits, each of which represents the absolute permission mode for one access class expressed in octal, where each number is a sum of the permission bits. Each permission has a unique value: <tt g="">read</tt> permission is <tt class="backtick">4</tt>, <tt class="backtick">write</tt> permission is <tt class="backtick">2</tt>, and <tt class="backtick">execute</tt> permission is <tt class="backtick">1</tt>. These values represent the position of the permission in a 3-bit value. 
+
+</p><p>
+For example, the mode <tt g="">777</tt> means "full permissions" because all bits are set in each access class. Similarly, <tt class="backtick">000</tt> means "no permissions" because all bits are unset in each access class. 
+
+</p><p>
+The 3-digit mode <tt g="">777</tt> is the equivalent to the 4-digit mode <tt class="backtick">0777</tt> where the leading <tt class="backtick">0</tt> represents the "special" permission class of setuid, setgid, and sticky. Likewise, the modes <tt class="backtick">000</tt> and <tt class="backtick">0000</tt> are equivalent and represent the absence of permission. (The owner of the file and root still have the ability to change the file's mode by virtue of their ownership and superuser status.) Finally, if the 3-digit mode is used, <tt class="backtick">chmod</tt> always assumes that the special access class is <tt class="backtick">0</tt>. Therefore, if you set an suid-root file to mode <tt class="backtick">777</tt>, <tt class="backtick">chmod</tt> assumes that you meant mode <tt class="backtick">0777</tt>, which would take away the special permissions. This is consistent if you remember that octal modes represent <em>absolute permissions</em> and <em>the special group class is assumed to be <tt class="backtick">0</tt> if a 3-digit mode is provided.</em> 
+
+</p><p>
+The following is a table to help calculate permission modes:
+</p><div><table style="width: 200px"><tbody><tr>  <td colspan="12" style="text-align: center;"><p>
+<strong>chmod absolute values</strong> </p></td>
+
+</tr>
+<tr>  <td colspan="3" style="text-align: center;">
+<p>
+ special<em> </em> </p></td>
+  <td colspan="3" style="text-align: center;"><p>
+ user<em> </em> </p></td>
+  <td colspan="3" style="text-align: center;"><p>
+ group<em> </em> </p></td>
+
+  <td colspan="3" style="text-align: center;"><p>
+ other<em> </em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<strong>s</strong> </p></td>
+  <td><p>
+<strong>g</strong> </p></td>
+  <td><p>
+<strong>t</strong> </p></td>
+
+  <td><p>
+<strong>r</strong> </p></td>
+  <td><p>
+<strong>w</strong> </p></td>
+  <td><p>
+<strong>x</strong> </p></td>
+  <td><p>
+<strong>r</strong> </p></td>
+  <td><p>
+<strong>w</strong> </p></td>
+
+  <td><p>
+<strong>x</strong> </p></td>
+  <td><p>
+<strong>r</strong> </p></td>
+  <td><p>
+<strong>w</strong> </p></td>
+  <td><p>
+<strong>x</strong> </p></td>
+</tr>
+
+<tr>  <td>
+<p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+  <td><p>
+1 </p></td>
+  <td><p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+  <td><p>
+1 </p></td>
+
+  <td><p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+  <td><p>
+1 </p></td>
+  <td><p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+  <td><p>
+1 </p></td>
+
+</tr>
+</tbody></table></div>
+
+
+<p>
+For example, full access is <tt g="">0777</tt>, which represents: 
+</p><div><table><tbody><tr>  <td colspan="3" style="text-align: center;"><p>
+ special<em> </em> </p></td>
+  <td colspan="3" style="text-align: center;"><p>
+ user<em> </em> </p></td>
+  <td colspan="3" style="text-align: center;"><p>
+ group<em> </em> </p></td>
+
+  <td colspan="3" style="text-align: center;"><p>
+ other<em> </em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<strong>s</strong> </p></td>
+  <td><p>
+<strong>g</strong> </p></td>
+  <td><p>
+<strong>t</strong> </p></td>
+
+  <td style="background-color: #ff8080"><p>
+<strong>r</strong> </p></td>
+  <td style="background-color: #ff8080"><p>
+<strong>w</strong> </p></td>
+  <td style="background-color: #ff8080"><p>
+<strong>x</strong> </p></td>
+  <td style="background-color: #80ff80"><p>
+<strong>r</strong> </p></td>
+  <td style="background-color: #80ff80"><p>
+<strong>w</strong> </p></td>
+
+  <td style="background-color: #80ff80"><p>
+<strong>x</strong> </p></td>
+  <td style="background-color: #8080ff"><p>
+<strong>r</strong> </p></td>
+  <td style="background-color: #8080ff"><p>
+<strong>w</strong> </p></td>
+  <td style="background-color: #8080ff"><p>
+<strong>x</strong> </p></td>
+</tr>
+
+<tr>  <td>
+<p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+  <td><p>
+1 </p></td>
+  <td style="background-color: #ff8080"><p>
+4 </p></td>
+  <td style="background-color: #ff8080"><p>
+2 </p></td>
+  <td style="background-color: #ff8080"><p>
+1 </p></td>
+
+  <td style="background-color: #80ff80"><p>
+4 </p></td>
+  <td style="background-color: #80ff80"><p>
+2 </p></td>
+  <td style="background-color: #80ff80"><p>
+1 </p></td>
+  <td style="background-color: #8080ff"><p>
+4 </p></td>
+  <td style="background-color: #8080ff"><p>
+2 </p></td>
+  <td style="background-color: #8080ff"><p>
+1 </p></td>
+
+</tr>
+<tr>  <td colspan="3" style="text-align: center;">
+<p>
+ 0 </p></td>
+  <td colspan="3" style="text-align: center; ; background-color: #ff8080"><p>
+<strong>7</strong> </p></td>
+  <td colspan="3" style="text-align: center; ; background-color: #80ff80"><p>
+ <strong>7</strong> </p></td>
+  <td colspan="3" style="text-align: center; ; background-color: #8080ff"><p>
+ <strong>7</strong> </p></td>
+
+</tr>
+</tbody></table></div>
+
+
+<p>
+There are no special bits set, so the <tt g="">special</tt> octal digit is <tt class="backtick">0</tt>, while all three bits in each other class are set. Each set of bits totals 7 (4 + 2 + 1), so the mode is <tt class="backtick">0777</tt>. 
+
+</p><p>
+Another example is mode <tt g="">2755</tt>, which represents <tt class="backtick">setgid</tt> (2), plus "full access" for <tt class="backtick">user</tt> (4 + 2 + 1) and <tt class="backtick">write</tt> and <tt class="backtick">execute</tt> (4 + 1) access for both the <tt class="backtick">group</tt> and <tt class="backtick">other</tt> class. 
+</p><div><table><tbody><tr>  <td colspan="3" style="text-align: center;"><p>
+ special<em> </em> </p></td>
+
+  <td colspan="3" style="text-align: center;"><p>
+ user<em> </em> </p></td>
+  <td colspan="3" style="text-align: center;"><p>
+ group<em> </em> </p></td>
+  <td colspan="3" style="text-align: center;"><p>
+ other<em> </em> </p></td>
+
+</tr>
+<tr>  <td>
+<p>
+<strong>s</strong> </p></td>
+  <td style="background-color: #808080"><p>
+<strong>g</strong> </p></td>
+  <td><p>
+<strong>t</strong> </p></td>
+  <td style="background-color: #ff8080"><p>
+<strong>r</strong> </p></td>
+
+  <td style="background-color: #ff8080"><p>
+<strong>w</strong> </p></td>
+  <td style="background-color: #ff8080"><p>
+<strong>x</strong> </p></td>
+  <td style="background-color: #80ff80"><p>
+<strong>r</strong> </p></td>
+  <td><p>
+<strong>w</strong> </p></td>
+  <td style="background-color: #80ff80"><p>
+<strong>x</strong> </p></td>
+
+  <td style="background-color: #8080ff"><p>
+<strong>r</strong> </p></td>
+  <td><p>
+<strong>w</strong> </p></td>
+  <td style="background-color: #8080ff"><p>
+<strong>x</strong> </p></td>
+</tr>
+<tr>  <td>
+<p>
+4 </p></td>
+  <td style="background-color: #808080"><p>
+2 </p></td>
+
+  <td><p>
+1 </p></td>
+  <td style="background-color: #ff8080"><p>
+4 </p></td>
+  <td style="background-color: #ff8080"><p>
+2 </p></td>
+  <td style="background-color: #ff8080"><p>
+1 </p></td>
+  <td style="background-color: #80ff80"><p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+
+  <td style="background-color: #80ff80"><p>
+1 </p></td>
+  <td style="background-color: #8080ff"><p>
+4 </p></td>
+  <td><p>
+2 </p></td>
+  <td style="background-color: #8080ff"><p>
+1 </p></td>
+</tr>
+<tr>  <td colspan="3" style="text-align: center; ; background-color: #808080">
+<p>
+ <strong>2</strong> </p></td>
+
+  <td colspan="3" style="text-align: center; ; background-color: #ff8080"><p>
+ <strong>7</strong> </p></td>
+  <td colspan="3" style="text-align: center; ; background-color: #80ff80"><p>
+ <strong>5</strong> </p></td>
+  <td colspan="3" style="text-align: center; ; background-color: #8080ff"><p>
+ <strong>5</strong> </p></td>
+</tr>
+</tbody></table></div>
+
+
+<p>
+Absolute modes are applied like this: 
+
+</p><p>
+
+</p><pre>$ chmod 0755 somefile.sh
+</pre>
+
+<p>
+Absolute mode is great for setting things to be exactly what you want, or imposing a radically different order onto a file or directory, but it's not very good for adding the sticky bit to a file. For that kind of work (or if the octal modes just confuse you) the symbolic mode is well suited. 
+
+</p><p>
+
+</p><h5>chmod: symbolic -- more user-friendly</h5>
+
+
+<p>
+The symbolic mode works pretty much the way you would expect. To add the <tt g="">execute</tt> bit to the <tt class="backtick">user</tt> class, you would execute a command like this: 
+
+</p><p>
+
+</p><pre>$ chmod u+x somefile.sh
+</pre>
+
+<p>
+Or to add <tt g="">execute</tt> to all three classes: 
+
+</p><p>
+
+</p><pre>$ chmod ugo+x somefile.sh
+</pre>
+
+<p>
+To make a file <tt g="">setuid</tt>: 
+
+</p><p>
+
+</p><pre>$ chmod u+s somefile.sh
+</pre>
+
+<p>
+To remove all permissions: 
+
+</p><p>
+
+</p><pre>$ chmod ugo-rwxsgt somefile.sh
+</pre>
+
+<p>
+Some people are so put off by the absolute mode that they never learn it -- you'll find with experience that both methods of setting permissions can be expeditious depending on the situation. More information is available in the <tt g="">chmod</tt> manpage. 
+
+</p><p>
+Regardless of how you set permissions, it is critical that you use the "principle of least privilege" and only grant the privileges that are necessary for proper operation.
+
+
+</p><p><span class="anchor" id="firewalls"></span>
+</p><h2>Firewalls</h2>
+<h3>Stateless Firewalls</h3>
+
+<p>In the late 1980s, the Internet was just beginning to grow beyond its early academic and governmental applications into the commercial and personal worlds. The <a class="http" href="http://en.wikipedia.org/wiki/Morris_worm">Great Internet Worm</a> in November of 1988 infected around 6,000 hosts (roughly 10% of the Internet) in the first major infection of its kind and helped to focus research and awareness on securing computers from unauthorized access. It was in this environment that the first firewalls were written about and developed at Digital Equipment Corporation (DEC) and Bell Labs (AT&amp;T). 
+
+</p><p>The first functional firewalls inspected individual packet headers without regard for established connections, other packets, or their contents. These kind of firewalls became known as "packet filters" because they literally filtered the packets one by one according to a set of criteria, not unlike a quality control inspector on an assembly line. For TCP and UDP, these criteria could be reduced essentially to the source and destination addresses and ports in the packet header. For example, a packet filter could reject or drop any packets destined for port 23 (telnet) on host 10.10.10.10  from any address other than 10.10.10.11. This kind of filter could rapidly and inexpensively inspect and classify packets without using much space (although they were not very "smart"). 
+
+</p><p>Unsurprisingly, simple packet filters are not adequate for many applications, such as the <a class="http" href="http://en.wikipedia.org/wiki/Ftp">File Transfer Protocol</a> (FTP), because these protocols open additional connections on random ports that can not be anticipated or recognized by the firewall since it does not understand or consider the state of any connection. 
+
+</p><p>This kind of simple "packet filter" ultimately became known as a "stateless firewall". 
+
+</p><h3>Stateful Firewalls</h3>
+
+<p>"Stateful firewalls" arrived not long after "stateless firewalls". Stateful firewalls keep tables of network connections and states in memory in order to determine if a packet is part of a preexisting network connection, the start of a new and legitimate connection, or an unwanted or unrelated packet. This kind of firewall can recognize, for example, that a new connection on a random high port from a host with a preexisting FTP connection is a related connection and should be allowed. Another difference is that while a stateless firewall will allow all packets from acceptable hosts to an open port, a stateful firewall can be configured to allow packets to that port only if a legitimate TCP connection (or some other protocol) has already been established in some acceptable way. Understanding protocol state essentially gives stateful firewalls vastly more criteria in deciding whether to accept or reject a packet, which translates into finer granularity. 
+
+</p><p>The cutting edge of firewall design today is what is called an "application-layer firewall", which is a firewall that performs "deep packet inspection". This means that the firewall is capable of looking not just at the header of the packets and the state of the connection, but at the payload of the packet in context of what the application processing the packets will do. For example, an application-layer firewall could be used to block Java applets from HTTP traffic by inspecting the packets and stripping Java code or dropping the packets entirely.  In order to do this, it must understand what applet code looks like within the payload portion of any HTTP traffic stream. An application-layer firewall essentially has total control over the network stream, although this control comes at a significant expense in terms of CPU time and software complexity. 
+
+</p><p>Most firewalls in use today lie somewhere between the stateful firewall and the application-layer firewall. These firewalls function essentially as a stateful firewall, but may understand enough of a few applications to perform some application-layer tasks. It is also common to couple a primarily stateful firewall (such as netfilter/iptables) with separate application layer firewalls for individual applications. 
+
+
+</p><p><span class="anchor" id="policy"></span> 
+</p><h3>Firewall Policy Design</h3>
+
+<p>People imagine many different things when they hear the term "<a class="http" href="http://en.wikipedia.org/wiki/Firewall">firewall</a>" in the context of computer networking. Some envision an impenetrable wall of flame <em>[at least I did --ed.]</em>. A Hollywood screenwriter might envision Harrison Ford battling kidnappers. A mechanic might envision the wall between the engine and passenger compartment of a car.  Yet mysteriously, every firewall is illustrated as a boring, red brick wall, typically with no fire in sight. 
+
+</p><p>Actually, the brick wall isn't that strange -- the name "firewall" comes from the brick walls in buildings placed to stop the spread of a fire from one area to another. But no matter who you are or what you see in your minds eye, the conventional wisdom is that firewalls are used to "keep the bad stuff out," whether you're protecting your desktop PC at home, your office LAN, or the Pentagon. However, those of us in the field of computer security often see firewalls more as a means of keeping things <em>in</em> rather than keeping them <em>out</em>. 
+
+</p><p>In one sense, these are two sides of the same coin -- but how you design something is (often unconsciously) directly related to how you view the problem, and this can lead to very different design choices when developing a firewall.  The goal of "keeping things out" is by definition, exclusively concerned with keeping external attackers "outside" the system, with no regard for what is inside that is worth protecting, and without considering threats (intentional or unintentional) that are <em>already</em> inside, like malicious or foolish employees. This is only half the picture. In contrast, "keeping things in"  by definition concerns itself with what is "inside" like sensitive data, privileged access, etc., and encourages the designer to consider <em>all</em> threats -- both internal and external -- against the protected resource. 
+
+</p><p>Practically speaking, these two goals often result in different default policies. The goal of "keeping things out" often results in a policy that by default allows anything not considered to be a threat. This is called a <strong>default allow</strong> policy, and the classic example of this kind of firewall allows <strong>all</strong> outbound traffic, but only allows "untrusted" inbound traffic to special services, such as a web server (which is then responsible for its own security). This is better than nothing, but is hardly secure. If an attacker can trick someone inside into opening a <a class="http" href="http://en.wikipedia.org/wiki/Trojan_horse_(computing)">trojan horse</a>, the malicious software can exploit the liberal egress policy by making connections to a malicious host on the Internet, which can be used to send messages to the now-compromised system. Incidentally, this is how the firewalls on most home routers are designed. 
+
+</p><p>On the other hand, the "keeping things in" policy usually results in a policy that by default <em>denies everything</em>, and allows only what is necessary for the proper functioning of a system. This embodies the principle of "<a class="http" href="http://en.wikipedia.org/wiki/Principle_of_least_privilege">least privilege</a>" and in the context of a firewall is called a <strong>default deny</strong> policy. A firewall configured this way allows only the handful of things that are strictly required. This limits inbound traffic as before, but also only allows outbound traffic to carefully chosen targets. For example, this might only allow oubound traffic to a secured mail server, ssh server, and the few web servers required for an employee to accomplish their job. This drastically limits the means by which traffic can enter <em>or</em> leave the network, and if an employee executes a trojan as in the last example, that malicious software will not be able to contact its evil master because the malicious Internet host will almost certainly not be in the list of allowed outbound connections. 
+
+</p><p>The obvious downside to a "default deny" firewall policy is maintenance and inconvenience -- it is harder to install in the first place, and any new network service or traffic type on the network must be explicitly allowed or it will not function. Allowing all outbound traffic significantly cuts down on this kind of maintenance -- at the cost of security. 
+
+<span class="anchor" id="tools"></span> 
+</p><h3>Firewall and Network Testing Tools</h3>
+
+
+<span class="anchor" id="netfilter"></span> 
+<h4>iptables: set and clear rules in netfilter</h4>
+
+<p>
+<a class="http" href="http://en.wikipedia.org/wiki/Iptables">iptables</a> is actually the user space tool for administering the <tt>netfilter</tt> functions and tables in the Linux kernel, but the entire <tt>netfilter</tt> and <tt>iptables</tt> package is commonly referred to simply as <tt>iptables</tt>. <tt>iptables</tt> has several built-in tables of rules (such as <tt>filter</tt> and <tt>nat</tt>) , several built-in "chains" (which are sets of network traffic including the built-in INPUT, OUTPUT, and FORWARD for inbound, outbound, and routed traffic), a set of powerful loadable modules of matching stateful filters, the typical set of stateless criteria (such as source, destination, and interface), and a set of targets that represent what to do with a matching packet. These options allow sophisticated firewalls to be defined. 
+
+</p><p>
+<tt>iptables</tt> can be intimidating and confusing at first glance even for veteran sysadmins, but especially to users who are not used to configuring firewalls at all or are used to configuring firewalls through a GUI. <tt class="backtick">iptables</tt> expressive plugins further complicate the syntax. A typical <tt>iptables</tt> command looks something like this: 
+
+</p><p>
+
+</p><pre>$ iptables -t filter -A INPUT -m state --state NEW -p tcp -s 192.168.0.1 --dport 23 -j REJECT
+</pre>
+
+<p>
+Upon closer inspection, <tt>iptables</tt> is revealed to be merely a command whose arguments define a single rule for packet filtering based on a number of possible criteria. <tt>iptables</tt> takes those arguments translates them one command at a time into priority-ordered filter rules in the Linux kernel. Thinking of <tt>iptables</tt> as a command with arguments can help demystify <tt>netfilter</tt> and the process of designing firewalls with <tt>iptables</tt> -- let's break down the above <tt class="backtick">iptables</tt> command and translate it into English: 
+
+</p><div><table style="width: 800px"><tbody><tr>  <td colspan="2" style="text-align: center;"><p>
+<strong>iptables command arguments</strong> </p></td>
+
+</tr>
+<tr>  <td>
+<p>
+ <strong>command/argument</strong> </p></td>
+  <td><p>
+<strong>translation</strong> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">iptables</tt> </p></td>
+  <td><p>
+<em>We're going to use the iptables tool to insert a new rule into netfilter.</em> </p></td>
+
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">-t&nbsp;filter</tt> </p></td>
+  <td><p>
+<em>This rule is going to go in the filter table, which is the built-in packet filtering table. This rule will apply only to:</em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">-A&nbsp;INPUT</tt> </p></td>
+  <td><p>
+<em>packets that have been put into the <tt>INPUT</tt> chain either by the kernel or by some previous rule and which:</em> </p></td>
+
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">-m&nbsp;state&nbsp;--state&nbsp;NEW</tt> </p></td>
+  <td><p>
+<em>represent a new connection,</em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">-p&nbsp;tcp</tt> </p></td>
+
+  <td><p>
+<em>are Transmission Control Protocol (TCP) packets,</em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">-s&nbsp;192.168.0.1</tt> </p></td>
+  <td><p>
+<em>are from the host 192.168.0.1,</em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">--dport&nbsp;23</tt> </p></td>
+
+  <td><p>
+<em>and are destined for port 23.</em> </p></td>
+</tr>
+<tr>  <td>
+<p>
+<tt class="backtick">-j&nbsp;REJECT</tt> </p></td>
+  <td><p>
+<em>Reject any matching packet. Processing of all packets matching this rule will instantly jump to the built-in target REJECT, which means that the packet will be rejected by the kernel with some kind of network error message.</em> </p></td>
+</tr>
+</tbody></table></div>
+
+
+<p>
+A few other examples: 
+
+</p><p>
+
+</p><pre>$ iptables -p tcp --syn --dport 23 -m connlimit --connlimit-above 2 -j REJECT
+</pre>
+
+<p>
+This rule (from <tt>man&nbsp;iptables</tt>) allows 2 telnet connections per client host. Note that this rule uses the <tt>connlimit</tt> matching module, and rejects additional connections. 
+
+</p><p>
+
+</p><pre>$ iptables -A INPUT -i lo -j ACCEPT
+$ iptables -A OUTPUT -o lo -j ACCEPT
+</pre>
+
+<p>
+These rules accepts any inbound or outbound traffic on the internal loopback network device (an internal, logical network adapter the kernel uses for network communication internal to the computer) regardless of state, protocol, source, or destination address. The <tt>-i&nbsp;lo</tt> and <tt>-o&nbsp;lo</tt> arguments specify the "input interface" and "output interface" the packet arrived on. 
+
+</p><p>
+
+</p><pre>$IPTABLES -t filter -A INPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+$IPTABLES -t filter -A OUTPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+</pre>
+<p>
+These rules accept all INBOUND and OUTBOUND traffic regardless of interface, address, port or protocol. They use the <tt>state</tt> matching module, but accept all NEW, RELATED, and ESTABLISHED packets (which is basically all traffic). This rule is basically like having no firewall at all! 
+
+</p><p>
+<strong>NEW, RELATED, ESTABLISHED</strong> 
+
+</p><p>
+Think of your firewall as a security checkpoint in a big office building. There's usually two lines -- one for people with IDs, and one for people without IDs. If someone already has an ID, they can skip the long line, and go through. If they don't, they have to wait to get an ID card or visitor's pass. This is analogous to the distinction between <strong>NEW</strong> traffic versus <strong>RELATED</strong> or <strong>ESTABLISHED</strong> traffic (which you usually see together). Traffic marked <strong>NEW</strong> doesn't have an ID badge yet, because it is the first packet of a new stream of traffic. On the other hand, a packet of a <strong>RELATED</strong> or <strong>ESTABLISHED</strong> stream is part of something that by definition has already come through the firewall in the past. In other words, the firewall has already given that stream a "badge" (which is really an entry in an internal firewall data structure).  
+
+</p><p>
+Among other things, this means that firewalls are typically structured so that the first section passes all accepted <strong>RELATED,ESTABLISHED</strong> traffic first, and then carefully allows only certain kinds of <strong>NEW</strong> traffic. Why do it in that order? 
+
+</p><p>
+While this brief introduction to <tt>iptables</tt> should point you in the right direction, there are other features of <tt>iptables</tt> not included here that you may want to use for the exercise. There are many HOWTOs, tips, and tutorials online in addition to the <tt>iptables</tt> manpage; the exercise manual assumes that in order to complete the <tt>iptables</tt> exercise, you will need to <a class="http" href="http://www.google.com/">do some research</a> on your own. 
+
+<span class="anchor" id="nmap"></span> 
+</p><h4>nmap: network mapping port scanner</h4>
+
+<p>
+<a class="http" href="http://en.wikipedia.org/wiki/Nmap">Nmap</a> (<a class="http" href="http://www.insecure.org/">homepage</a>) is a very popular "<a class="http" href="http://en.wikipedia.org/wiki/Port_scanner">port scanner</a>" that can be used to determine what kind of services are running on a remote or local host, perform <a class="http" href="http://en.wikipedia.org/wiki/Passive_OS_Fingerprinting">OS fingerprinting</a>, and many other tasks. Nmap is capable of performing many tasks in a "stealth mode" designed to not raise the suspicion of the victim, but some tasks require more obvious techniques. 
+
+</p><p>
+Nmap is incredibly powerful, but the basic functionality of the application is easy to use: 
+
+</p><p>
+
+</p><pre>$ sudo nmap yahoo.com
+
+Starting Nmap 4.20 ( http://insecure.org ) at 2007-09-22 21:33 PDT
+Warning: Hostname yahoo.com resolves to 2 IPs. Using 216.109.112.135.
+Interesting ports on w2.rc.vip.dcn.yahoo.com (216.109.112.135):
+Not shown: 1694 filtered ports
+PORT    STATE SERVICE
+25/tcp  open  smtp
+80/tcp  open  http
+443/tcp open  https
+
+Nmap finished: 1 IP address (1 host up) scanned in 29.990 seconds
+
+$ sudo nmap www.somehost.edu -P0
+Starting Nmap 4.20 ( http://insecure.org ) at 2007-09-22 21:34 PDT
+Interesting ports on dns.somehost.edu (33.xx.111.1):
+Not shown: 1677 filtered ports
+PORT     STATE  SERVICE
+53/tcp   open   domain
+80/tcp   open   http
+443/tcp  open   https
+2048/tcp open   dls-monitor
+2049/tcp closed nfs
+2053/tcp open   knetd
+2064/tcp closed dnet-keyproxy
+2065/tcp open   dlsrpn
+2067/tcp open   dlswpn
+2068/tcp open   advocentkvm
+2105/tcp open   eklogin
+2106/tcp open   ekshell
+2108/tcp open   rkinit
+2111/tcp open   kx
+2112/tcp open   kip
+2120/tcp open   kauth
+2121/tcp open   ccproxy-ftp
+2201/tcp open   ats
+2232/tcp open   ivs-video
+2241/tcp closed ivsd
+
+Nmap finished: 1 IP address (1 host up) scanned in 32.385 seconds
+</pre>
+
+<p>
+See the Nmap manpage or online documentation for advanced features. 
+
+</p><p>
+<span class="anchor" id="ifconfig"></span> 
+</p><h4>ifconfig: configure Linux network devices</h4>
+
+<p>
+<a class="http" href="http://en.wikipedia.org/wiki/Ifconfig">ifconfig</a> is the network interface configurator in Linux. It is most commonly used by users to see network addresses and statistics, but can also be used to enable and disable interfaces, set configuration options such as network addresses, and more. 
+
+</p><p>
+For the purposes of this exercise, <tt class="backtick">ifconfig</tt> will be used to determine what network addresses are running on what interfaces. 
+
+</p><p>
+To see the current interface configurations: 
+
+</p><p>
+
+</p><pre>$ ifconfig
+
+eth0      Link encap:Ethernet  HWaddr 00:00:5A:00:01:B3
+          inet addr:64.81.0.256  Bcast:64.81.40.255  Mask:255.255.255.0
+          inet6 addr: fe80::200:5aff:fe00:1b3/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1826346 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1887951 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:691689933 (659.6 MiB)  TX bytes:1037280707 (989.2 MiB)
+          Interrupt:58
+
+eth1      Link encap:Ethernet  HWaddr 00:13:D4:04:44:CA
+          inet addr:10.10.10.10  Bcast:10.10.10.255  Mask:255.255.0.0
+          inet6 addr: fe80::213:d4ff:fe04:44ca/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1165519 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1549057 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:428484191 (408.6 MiB)  TX bytes:1780325755 (1.6 GiB)
+          Interrupt:50
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:5808042 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5808042 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:6895907043 (6.4 GiB)  TX bytes:6895907043 (6.4 GiB)
+</pre>
+<p>
+Note that <tt class="backtick">eth0</tt>'s address is 64.81.0.256, while <tt>eth1</tt>'s address is 10.10.10.10. This means that the two interfaces are on different networks.
+
+<span class="anchor" id="telnet"></span> 
+</p><h4>telnet: cleartext remote shell</h4>
+
+<p>
+<a class="http" href="http://en.wikipedia.org/wiki/Telnet">TELNET</a> (TELe-NETwork) is a cleartext remote terminal protocol. On its face, telnet is very simple; the user issues commands over a TCP socket, and the server replies with the results of those commands and waits for more input. In practice, this is complicated with various network and terminal emulation layers. Still, telnet is one of the simplest and oldest network protocols still in use. Due to its cleartext nature and low level access to the system, telnet is incredibly insecure -- it was common in the past for system administrators to log in as root using telnet on a hub network connection that could be sniffed by any sufficiently prepared attacker. 
+
+</p><p>
+Thanks to the advent of Secure Shell (ssh), active use of telnet servers has died off except for some specialized uses. One place where telnet lives on is debugging ASCII-based network services. For example, web pages can be retrieved by telnetting to HTTP servers, and emails can be sent by telnetting to SMTP servers. 
+
+</p><p>
+Telnetting to a suspected open port is still one of the fastest ways to see if a service is available or reachable. 
+
+</p><p>
+Here are a few sample uses of telnet: 
+
+</p><p>
+
+</p><pre>$ telnet yahoo.com 80
+
+Trying 66.94.234.13...
+Connected to yahoo.com.
+Escape character is '^]'.
+GET /
+...
+
+&lt;html&gt;&lt;head&gt; ...[web page data] ...
+&lt;/body&gt;
+&lt;/html&gt;
+
+Connection closed by foreign host.
+</pre>
+
+<p>
+
+</p><pre>$ telnet mailserver.net 25
+Trying 216.0.1.1...
+Connected to mailserver.net.
+
+Escape character is '^]'.
+220 mailserver.net ESMTP Postfix (Ubuntu)
+HELO sender.net
+250 sender.net
+MAIL FROM: me@sender.net
+250 Ok
+RCPT TO: me@mailserver.net
+250 Ok
+DATA
+354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
+Subject: test mail message
+test message
+.
+
+250 Ok: queued as 152CFB8802A
+^]
+
+telnet&gt; Connection closed.
+
+You have mail in /var/mail/me
+</pre>
+
+For this exercise, you will use <tt>telnet</tt> to test if a TCP port is open on a remote host. Telnetnetting to an IP and port (see above) should return a "connected" message if it is possible to connect to a running server.
+
+<span class="anchor" id="nc"></span> 
+<h4>netcat: a network swiss army knife</h4>
+
+<p>
+netcat (often <tt class="backtick">nc</tt> on some systems) is a Unix utility for creating and using TCP and UDP sockets. In a very simplified way, <tt class="backtick">netcat</tt> is like a telnet client and server without any built in protocol or terminal emulation. Another way of putting it is that <tt class="backtick">netcat</tt> is the bare essentials for creating a TCP or UDP socket and client, with hooks for using standard in and standard out for IO. 
+
+</p><p>There are too many cool uses of netcat to describe here. For the purposes of this exercise, we'll use netcat to create "fake" TCP or UDP servers that we can use to test firewall configurations.
+
+</p><h5>Creating fake TCP/UDP servers with netcat</h5>
+
+<p>
+Starting a fake listening server (a program that will accept connections on a port) is as simple as running: 
+
+</p><p>
+
+</p><pre>$ sudo nc -l 80         # we need sudo because 80 is a privileged port
+</pre>
+
+<p>
+... to start a listening TCP socket on port 80. Then, from the another host, you can either use telnet or nc to connect to the server you just started on the the first host. You should be able to type in one window and see output in the other if the network pipe is open. 
+
+</p><p>
+Testing UDP services is exactly the same -- you can use netcat for that, too. You need to start a listening UDP process on the receiving side, and a sending process on the sending side. If you are testing UDP traffic from a client to a server, you can do something like this: 
+
+</p><p>
+
+</p><pre>[server]$ nc -u -l 10000        # listen for UDP traffic on port 10000
+</pre>
+
+<p>
+Then on the client, do something like this: 
+
+</p><p>
+
+</p><pre>[client]$ nc -u server 10000    # connect to server via UDP on port 10000
+</pre>
+
+<p>
+After establishing the connection, enter some data from standard input (probably your keyboard). Input on the sender should appear on the receiving terminal. Hit ^C to close the programs. UDP is of course an unreliable network protocol, so it's possible that there will be errors in the text file. 
+
+</p><p>
+You can do any of this in reverse to test the connection from a server to a client. If you're able to transmit data, then the firewall is allowing communication.
+
+<span class="anchor" id="intro"></span> 
+</p><h2>Introduction</h2>
+
+<p>You are Wilbar Memboob, the Security Administrator of <a class="nonexistent" href="https://education.deterlab.net/classes/seclabs/moin.cgi/FrobozzCo">FrobozzCo</a> (<em>"You name it, we make it"</em>).  You are looking to hire a new system administrator to replace the guy you just fired -- unfortunately, even though his resume looked great on paper and he interviewed well, once you put him at a console he clearly had no idea what he was doing. 
+
+</p><p>To him, proper permissions meant  that the application worked; if it was secure then that was just icing on the cake. You should have done something when the other admins starting calling him  "Triple-7" -- a.k.a. "wide open". But it was when he changed the company fileserver directory permissions to "ugo+rwx" and the projected budget was "released" early -- including a list of the employees being laid off -- that he signed his own pink slip. 
+
+</p><p>To keep this from happening again, you've created a little test for your new applicants to take. Unfortunately, before you can grade the applicants, you need to create an answer key. 
+
+<span class="anchor" id="assignment"></span> 
+</p><h2>Assignment Instructions</h2>
+
+<p>In the assignment portion of this exercise, you're going to create an answer key for your "hiring exam." You'll need to swap in your nodes and complete the exercises below.
+
+<span class="anchor" id="setup"></span>
+</p><div class="level3"><h3>Setup</h3>
+
+<ol type="1"><li><p>If you don't have an account, follow the instructions in the <a href="https://education.deterlab.net/DETERintro/DETERintro.html">introduction to DETER</a> document. 
+</p></li><li>Log into DETER. 
+</li><li>Create an instance of this exercise by following the instructions <a href="https://education.deterlab.net/DETERintro/DETERintro.html#create">here</a>, using <tt>/share/education/PermissionsFirewalls_UCLA/permissions.ns</tt> as your NS File.
+	<ul>
+	<li><p>In the "Idle-Swap" field, enter "1". This tells DETER to swap your experiment out if it is idle for more than one hour.
+	</p></li><li><p>In the "Max. Duration" field, enter "6". This tells DETER to swap the experiment out after six hours.
+	</p></li>
+	</ul>
+</li><li> Swap in your new lab. 
+</li><li>After the experiment has finished swapping in, log in to the node via ssh. 
+</li></ol><p>
+
+</p><p>As mentioned in <a href="https://education.deterlab.net/DETERintro/DETERintro.html">DETER Instructions</a>, changes to DETER nodes are lost when the nodes are swapped out. This means that you must manually save your work between working on nodes in order to keep it. However, <b>this exercise</b> includes experimental scripts to help you save and restore your work. 
+
+</p><p><span class="anchor" id="save"></span> 
+
+</p><p>
+</p><h4>Saving your Work</h4>
+
+<p>After completing the POSIX and firewall-related execises on the <tt>server</tt> node, cd into the <tt>/root</tt> directory and execute the script <tt>/root/submit.sh</tt>; like this: 
+
+</p><p></p><pre>$&nbsp;./submit.sh</pre> 
+
+<p>...it will make a tarball of all the relevant files and their permissions, including the /root/permissions-answers.txt and firewall.sh script you have updated. <strong>You must copy or move the created tarball into your group directory, otherwise it will be lost upon swapout.</strong> 
+
+</p><p><span class="anchor" id="restore"></span> 
+
+</p><p>
+
+</p><h4>Restoring Your Work</h4>
+
+<p>The <strong>experimental</strong> script <tt>/root/restore.sh</tt> on the <tt>server</tt> node, takes as input the path to a tarball created by <tt>submit.sh</tt> described above and restores the files to their proper locations on the system. This includes all the files you are asked to create or change in the first part, as well as the <tt>firewall.sh</tt> script for the second part. 
+
+</p><div class="warning">
+<p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/alert.png">
+<b>WARNING:</b> These scripts do <strong>not</strong> back up all arbitrary changes you may have made to the node (e.g., changing a peripheral configuration file), and it does not "merge" system files with submission files -- <em>it only restores submission files copied by <tt>submit.sh</tt></em>. You shouldn't need to change anything else, but see <tt>submit.sh</tt> and <tt>restore.sh</tt> to see exactly what those scripts do, and do not delete any of your submission tarballs so that you can go back to an earlier version if need be. 
+</p></div>
+
+<p>To use the <tt>restore.sh</tt>, copy a tarball created by <tt>submit.sh</tt> into the <tt>/root/</tt> directory and execute this command: 
+
+</p><p>
+</p><pre>$&nbsp;./restore.sh&nbsp;username-permissions-123123123.tar.gz</pre> 
+
+<p>You will be asked if you want to automatically overwrite files, and if you want to selectively restore some files and not others. The options are self-explanatory. 
+
+</p><p>Finally, if you don't trust the scripts, you can always make your own backups into your group directory and restore them by hand if you prefer. 
+
+</p><div class="warning">
+<p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/alert.png">
+<strong>NOTE:</strong> You do not need to run the submit and restore scripts with sudo. However, if you use sudo to run <tt>submit.sh</tt>, your tarball will be named after the <tt>root</tt> user. This is OK -- just run <tt>sudo&nbsp;./restore.sh&nbsp;root-permissions-2134234243.tar.gz</tt>. 
+</p></div>
+
+<span class="anchor" id="tasks"></span>
+<div class="level3">
+<h3>Tasks</h3>
+
+<p>Your task is to create an answer key for the following test: 
+
+</p><p>
+</p><h4>FrobozzCo Permissions and Firewall Test</h4>
+
+<p>This test is a part of the application process for the administrator position at <a class="nonexistent" href="https://education.deterlab.net/classes/seclabs/moin.cgi/FrobozzCo">FrobozzCo</a>. You will be presented with a number of tasks and questions; the tasks must be executed on the <tt>server</tt> node of the DETER experiment we have created for this purpose (you can use the <tt>client</tt> node for testing), while the questions must be answered in a plain text file that will be submitted with the results of your tasks. See below for further instructions. 
+
+</p><p>
+</p><h4>Part 1: POSIX File Permissions and 'sudo'</h4>
+
+
+<p>
+</p><h5>Instructions</h5>
+
+<p>The following section includes a number of permissions, firewall, and file creation exercises. This test will be performed on a live network testbed with a full complement of standard utilities and editors. In addition, you are fully encouraged to use the Internet, man pages, help screens, and any other resources available to you in the execution and answering of these problems. 
+
+</p><p>Please read and use these <a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#ambiguity">disambiguation rules</a> for setting the correct permissions. Also, make sure that you test your answers -- POSIX permissions are simple in theory, but in practice many combinations have counterintuitive effects! 
+
+</p><p>Your answers will consist of an archive, created by the <tt>submit.sh</tt> script described above. The archive will contain:
+</p><ol>
+	<li>A copy of the necessary server resources containing the results of your file creation and permissions modifications. You will be graded only on the correctness of your answers, not their elegance nor how efficiently you came to them.</li>
+	<li>Your written answers to the numbered short answer questions. These should be written in the file <tt>/root/permissions-answers.txt</tt> on the server system using an editor (such as <tt>vim</tt>).</li>
+	<li>Your firewall script.</li>
+</ol>
+
+<p>See below for instructions on <a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#submitting">submitting</a> your answers. 
+
+
+</p><p>
+<span class="anchor" id="homedirsec"></span>
+</p><h5>Home Directory Security</h5>
+
+<div class="warning">
+<p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/alert.png">
+<strong>Note:</strong> Admins -- members of the <tt>wheel</tt> group have <tt>sudo</tt> access. However, unless instructed to do so, use only standard UNIX ACLs -- don't give user accounts <tt>sudo</tt> permissions or consider the <tt>sudo</tt> access the 'wheel' group already has. Of course, <em>you</em> need to use <tt>sudo</tt> to create the accounts, edit root files, etc... this is exactly what <tt>sudo</tt> is for. 
+</p></div>
+
+<p>Your server needs two home directories, the usual <tt>/home</tt> and also<tt>&nbsp;/admins&nbsp;</tt>for your team. Normal home directories are private, while the homedirectories in <tt>&nbsp;/admins&nbsp;</tt> will be publicly viewable and somewhat collaborative. 
+
+</p><ol><li><p>Create the <tt>/admins</tt> directory. 
+</p></li><li><p>Create the group <tt>emp</tt>(see <tt>man groupadd</tt>). 
+</p></li><li><p>Create the normal (i.e., non admin) user accounts <tt>larry</tt>, <tt>moe</tt>, and <tt>curly</tt>, and the admin user accounts <tt>ken</tt>, <tt>dmr</tt>, and <tt>bwk</tt>. 
+	</p><ul><li>Note that several files from <tt>/etc/skel</tt> are copied into each new homedir. 
+	</li><li>Use <tt>passwd</tt> to set their passwords to whatever you like (password security is not important for this test). 
+	</li></ul>
+</li><li><p>make sure you specify the home directories for the admins as being in <tt>/admins</tt> (see <tt>man&nbsp;adduser</tt>). 
+</p></li><li><p>add the non-admin accounts to the <tt>emp</tt> group and add the admins to the <tt>wheel</tt> group by editing <tt>/etc/group</tt> or using <tt>usermod</tt>. 
+</p></li><li>add larry, bwk, and dmr to ken's group. 
+</li><li>add moe, dmr, and ken to bwk's group. 
+</li><li>add curly, ken, and bwk to dmr's group. 
+</li>
+	<ul><li><p>Admins are <strong>not</strong> a part of the emp group.</p></li>
+  </ul>
+<li><p>The permissions on the home directories already exclude prying eyes by default. Set the permission mode on <tt>/home</tt> itself so that normal users can't list its contents (but can still access their home directories) but so that members of the <tt>wheel</tt> group have full access to the directory (without using <tt>sudo</tt>). 
+</p></li><li><p>By default, the owner of a homedir is set to be the user and the group class of their homedir. Set the permission modes recursively on the individual homedirectories in <tt>/admins</tt> (see <tt>man chmod</tt>) so that: 
+	</p><ul><li><p>owners have <em>full access</em> 
+	</p></li><li>group users (users who are in the group associated with a user's home directory) can read and create files in that homedir 
+	</li><li>Set it so that any other users can read and execute any files 
+	</li><li>Files created by a group member in that homedir should be set to the homedir owner's group. (Hint: Look up what the SUID and SGID bits do on directories.) 
+	</li><li>Homedir permissions for the normal users should use the default permissions. 
+	</li><li><p>Example: <tt>larry</tt> is in <tt>ken</tt>'s group. <tt>larry</tt> can create files in ken's homedir, and those files are owned by <tt>larry</tt>, but are assigned to <tt>ken</tt>'s group rather than <tt>larry</tt>'s group. <tt>moe</tt>, not in <tt>ken</tt>'s group, can only read and execute files. 
+	</p></li>
+	</ul>
+	</li>
+</ol><p>
+
+<span class="anchor" id="ballotbox"></span>
+</p><h5>The Ballot Box</h5>
+
+<p>All regular employees use this directory to submit votes for "employee of the month". 
+
+</p><ol>
+	<li><p>Create the <tt>/ballots</tt> directory. </p></li>
+	<li><p>Set the permissions on <tt>/ballots</tt> so that it is owned by root and users can write files into the directory but cannot list the contents of the directory.</p></li>
+	<li><p>Furthermore, set it so that members of the <tt>wheel</tt> group have no access (not including sudo). </p></li>
+	<li><p><strong>Short Answer 1:</strong> Is there any way that employees can read the ballots of other users? If so, what could be done to stop this? If not, what prevents them from reading them?</p></li>
+	<li><p><strong>Short Answer 2:</strong> What does the 'x' bit mean when applied to directories? </p></li>
+</ol><p>
+
+<span class="anchor" id="tpsreports"></span>
+</p><h5>The TPS Reports Directory</h5>
+
+<p>Admin employees submit TPS reports in this partially collaborative directory. 
+
+</p><ol>
+	<li><p>Create the <tt>/tpsreports</tt> directory. </p></li>
+	<li><p>Create the <tt>tps</tt> user. </p></li>
+	<li><p>Set the permissions on <tt>/tpsreports</tt> so that it is owned by <tt>tps</tt> and that members of the <tt>wheel</tt> group have full access to the directory, but so that no one else has access to the directory. </p></li>
+	<li><p>Furthermore, configure it so that files written into it are still owned by the <tt>wheel</tt> group, but so that one member of <tt>wheel</tt> cannot delete another member's files. </p></li>
+	<li><p><strong>Short Answer 3:</strong> Which users on the system can delete arbitrary files in the <tt>/tpsreports</tt> directory? </p></li>
+	<li><p><strong>Short Answer 4:</strong> Is there any way that non-<tt>wheel</tt> employees can read files in the <tt>/tpsreports</tt> directory? </p></li>
+	<li><p><strong>Short Answer 5:</strong> What do '0' permissions mean for the owner of a directory? What privileges do they have over files in that directory? </p></li>
+</ol><p>
+
+
+<span class="anchor" id="sudoprobs"></span>
+</p><h5>sudo: Editing Configuration Files</h5>
+
+<div class="infobox">
+<p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/idea.png">
+<em>For the following three short answer questions, assume that your answers are unrelated; that is, your answer for question 6 does not impact the answer for questions 7 or 8.</em> 
+</p></div>
+
+<p>All members of the <tt>wheel</tt> group do system administration on the server. Because of this, they all have full sudo access to <tt>root</tt> privilege with the <tt>/etc/sudoers</tt> directive '<tt>%wheel&nbsp;ALL=(ALL)&nbsp;NOPASSWD:&nbsp;ALL</tt>'. The "NOPASSWD" means they don't have to enter a passwd upon sudo invocation. 
+
+</p><p>The employee <tt>larry</tt> is the webmaster for the system, so he has some extra privilege compared to the other employees. For example, <tt>larry</tt> has <tt>sudo</tt> access to the command 
+
+</p><p><tt>/usr/bin/vim&nbsp;/etc/httpd/conf/httpd.conf&nbsp;</tt> 
+
+</p><p>... with the directive 
+
+</p><p>
+</p><pre>larry ALL=(ALL) /usr/bin/vim /etc/httpd/confs/httpd.conf</pre>
+<p>... so that he can update the configuration of the webserver. 
+
+</p><p><strong>Short Answer 6:</strong> Is this safe? Why or why not? If it is not safe, is there a better way to give <tt>larry</tt> this access? If it is safe, how do you <em>know</em> it is safe? (Hint: search online for common <tt>sudo</tt> issues.) 
+
+</p><p>
+
+</p><h5>sudo: Restarting System Processes</h5>
+
+<p>As a part of his webmaster duties, <tt>larry</tt> often requests the <tt>wheel</tt> group to restart the Apache server with the command '<tt>/etc/init.d/httpd&nbsp;restart</tt>'. It would make everyone very happy if there was a secure way to let <tt>larry</tt> restart the Apache server (but not give him any other access). 
+
+</p><p><strong>Short Answer 7: </strong>Assuming the init script <tt>/etc/init.d/httpd</tt> has no unknown vulnerabilities, is it safe to grant <tt>larry</tt> <tt>sudo</tt> access to the command <tt>/etc/init.d/httpd restart</tt>? If this is not secure, explain why. 
+
+</p><p>
+
+</p><h5>POSIX and sudo: Two Wrongs Make a Much Bigger Wrong</h5>
+
+<p>Carefully examine the permissions on the server. Look at <tt>/etc/group</tt>, <tt>/etc/sudoers</tt>, and the files in the <tt>/admins</tt> and <tt>/home</tt> directories (and their subdirectories). 
+
+</p><p><strong>Short Answer 8: </strong>Is there some way that <tt>moe</tt> or <tt>curly</tt> could subvert this system to gain <tt>root</tt> privileges? If not, how do you know this is true? 
+
+</p><p><b>Hint:</b> Consider what happens during the UNIX login process -- the time between when the user enters the correct password and when they can interact with their shell. 
+
+</p><p>
+
+<span class="anchor" id="firewall"></span>
+</p><h4>Part 2: Firewall Configuration</h4>
+
+<p>The test server has a totally permissive firewall installed -- it accepts all inbound and outbound traffic from all ports, protocols, addresses, interfaces, and states. This is basically like having no firewall at all. 
+
+</p><p>Your task is to configure the firewall according to the principle of "least privilege". This means that it should be maximally restrictive while still permissive enough to allow a strictly defined set of tasks. While some of these rules can <em>also</em> be configured in the server software (this strategy is called <a class="http" href="http://en.wikipedia.org/wiki/Defense_in_depth_(computing)">defense in depth</a>), we want you to implement the rules in iptables <strong>only </strong>-- do not reconfigure the underlying software. 
+
+</p><p>The firewall has been copied into the directory <tt>/root/firewall/</tt> along with a script called <tt>extingui.sh</tt> to "put out the fire" and clear all the rules in case you make a mistake. The firewall is <strong>not</strong> enabled by default -- to enforce the rules, execute: 
+
+</p><p>
+</p><pre>/root/firewall/firewall.sh</pre> 
+
+<p>... as the <tt>root</tt> user or using <tt>sudo</tt>: 
+
+</p><p>
+</p><pre>sudo&nbsp;/root/firewall/firewall.sh</pre> 
+
+<p>This will load the rules and start enforcing them. To make sure that you are removing all iptables rules, you should run <tt>extingui.sh</tt> in <strong>between every invocation of firewall.sh</strong> or rules might "stick around" which can be very confusing if you are trying to debug the system. This can be done like this as root (or with <tt>sudo</tt> as above): 
+
+</p><p>
+</p><pre>/root/firewall/extingui.sh</pre> 
+
+<p>If you make the server inaccessible with broken rules, don't worry -- you can reboot the node in the DETER console, and since the firewall <em>is not enabled by default</em>, you can log in in order to fix it. Your files will still be on the experimental node <strong>as long as you don't swap out the experiment</strong>.  (Of course, you can permanently save your files in your home directory.) 
+
+</p><p>Finally, only your final product is evaluated -- not the number of times you have to reboot the server. You should expect to lock yourself out a few times. <img alt=":)" height="15" src="./POSIX Permissions and Stateful Firewalls_files/smile.png" title=":)" width="15"> 
+
+</p><div class="warning">
+<p><img src="./POSIX Permissions and Stateful Firewalls_files/alert.png"> Your experimental nodes have at least two networks. The first is a control network between your node and <tt>users.deterlab.net</tt>. This is the network you use to connect to your nodes from <tt>users</tt>. Your nodes also have an "experimental" network that connects all the machines in a given experiment. For this project, your experimental network connects <tt>server</tt> and <tt>client</tt></p>
+
+<p>The firewall only needs to limit the experimental network interface (the interface with the 10.1.x.x network) and should <strong>not</strong> ever limit the control network (192.x.x.x as of this writing) or you may cut yourself off from the node. The experimental interface is one of eth0-ethN and you can determine which using the command <tt>ifconfig</tt> and looking for the 10.x.x.x interface. Be warned that the specifc interface used may change with a reboot or different experimental node.</p>
+
+<p>See below for instructions on using environment variables to define the experimental interface in your firewall.sh script.</p>
+</div>
+
+<p><strong>Here's what the firewall needs to do:</strong> 
+
+</p><ol>
+	<li><p><strong>passively ignore</strong> any traffic inbound to the interface that says it's coming from the server itself (obvious spoof attempt). The server uses the localhost loopback device <tt>lo</tt> for internal traffic, so it should never see incoming traffic from its own IP on the experimental network interface. (See test case 11, below)</p></li>
+	<li><p>Allow all <em>established</em> traffic on the experimental network interface. Established or related traffic is traffic that is part of <em>previously accepted</em> new connections.</p></li>
+	<li><p>Accept <strong>new</strong> connections on the experimental network (10.1.x.x) of the types listed below:
+	</p><ol>
+		<li>Inbound TCP connections to the OpenSSH, Apache, and MySQL servers on their standard ports. (Test cases 1, 3, 5)
+			<ul><li><p>The MySQL server should <strong>only</strong> accept connections from the <strong>client</strong> host. </p></li>
+			</ul>
+		</li>
+		<li><p>Inbound UDP connections to the <strong>server</strong> ports 10000 to 10005 from the host <strong>client</strong>. (Test case 8)</p></li>
+		<li><p>Inbound ICMP <tt>ping</tt> requests and replies. (Test case 6)</p></li>
+		<li>Outbound TCP connections to any OpenSSH, SMTP, and Apache (on standard ports). (Test cases 2, 4) </li>
+		<li><p>Outbound UDP connections to the ports 10006 to 10010 on host <strong>client</strong> from the <strong>server</strong>. (Test case 9)</p></li>
+		<li><p>Outbound ICMP <tt>ping</tt> requests and replies. (Test case 7)</p></li>
+	</ol></li>
+  <li><p><strong>passively ignore all other traffic</strong>. (Do not allow it or respond to it in any way.) (Test case 10)</p></li>
+</ol>
+
+<p>There are many online resources and tutorials for iptables configuration -- feel free to use them. Be aware, however, <strong>not all tutorials emphasize the principle of least privilege</strong> and may give you overly permissive advice! In order to properly configure the firewall, you must consider the basic ways the firewall can differentiate traffic and allow only the specific types you require to properly function. 
+
+</p><p>Please read the helpful advice in the next section for configuring and testing your firewall.
+
+</p></div>
+<span class="anchor" id="tips"></span>
+<div class="level3">
+<h3>Tips and Tricks</h3>
+
+This section includes important rules and tips for making sure that your answers are correct.
+
+<p>
+<span class="anchor" id="ambiguity"></span>
+</p><h4>1. Rules for resolving filesystem permission ambiguities:</h4>
+
+<p>Permissions should <em>always</em> be set to reflect the <strong>least privilege</strong> required to fulfill the requirements. In POSIX permissions, every bit set represents <em>less security</em>, so we want to set as few bits as possible. Resolve any ambiguities with this cumulative list of guidelines: 
+
+</p><ol type="1"><li><p>Files you are instructed to create are to be owned by <tt>root</tt> unless otherwise specified. Doing the work as <tt>root</tt> should do this automatically. (You can become root by executing <tt>sudo&nbsp;su&nbsp;-</tt>.) 
+</p><ul><li>Exception: Files in homedirs should be owned by the homedir owner (useradd should do this by default for boilerplate files like .bash_login, etc). 
+</li></ul></li><li>When setting ownership of a file, set the group class to the same thing as the user (owner) class unless otherwise specified. 
+<ul><li><p>Example: Create the directory <tt>foo</tt>. Set <tt>www-data</tt> as the owner of <tt>foo</tt>. 
+</p></li><li><p>Answer: Set <tt>www-data</tt> to be the user (owner) and group class of <tt>foo</tt>. 
+</p></li><li><p>Example: Create the directory <tt>xyzzy</tt>. Set the group class to <tt>www-data</tt>. 
+</p></li><li><p>Answer: Set the group class to <tt>www-data</tt> but the user class should still be set to <tt>root</tt>. 
+</p></li></ul></li><li><p>Files whose permissions you are <em>not</em> otherwise instructed to change should stay at their default. 
+</p><ul><li><p>Example: Create directory <tt>baz</tt>. Create directory <tt>quux</tt> and set its permissions to be wide open. 
+</p></li><li><p>Answer: Don't change <tt>baz</tt>'s file mode. It should be owned by root (as per #1). Set <tt>quux</tt> permissions to <tt>0777</tt>. 
+</p></li></ul></li><li><p>For any files whose permissions you <em>are</em> instructed to change, unspecified permissions are <strong>always</strong> assumed to be 0 (no access). In other words, instructions for setting file permissions implicitly include all access groups (even those not explicitly mentioned). 
+</p><ul><li><p>Example: Set directory <tt>foo</tt> so that its owner has full access. 
+</p></li><li><p>Answer: The correct mode is <tt>0700</tt>, since no group or other permissions were specified and we assume that they are 0. 
+</p></li></ul></li><li>Permissions are assumed to be for all classes unless specified. 
+<ul><li><p>Example: Remove all permissions from <tt>/dev/hdc</tt>. 
+</p></li><li><p>Answer: Set <tt>/dev/hdc</tt> to mode <tt>000</tt> (root still has access of course). 
+</p></li><li><p>Example: Set read and write permissions on <tt>/etc/motd</tt>. 
+</p></li><li><p>Answer: <tt>/etc/motd</tt> should be set to mode 0666 -- all classes can read and write. 
+</p></li></ul></li><li><p>When granting permissions, setuid, setgid, and sticky bits are <strong>never</strong> granted unless specifically required to solve the problem. These bits are special and must be required by the nature of the question or be otherwise mentioned to be granted. 
+</p><ul><li>Example: Set a directory so that owner has full access and it's group class members can create files in it. 
+</li><li><p>Answer: The correct mode is <tt>0730</tt> because a user (in this case the group user) requires both write and execute to create files. The question didn't specify anything requiring setuid or setgid so they are not enabled. 
+</p></li><li><p>Note: the <tt>other</tt> class in this example has no access because the permission is assumed to be <tt>0</tt> (as per #4). 
+</p></li><li><p>Note: In #3 above, see that "wide open" for the directory quux meant <tt>0777</tt>  <strong>not</strong>  <tt>4777</tt> because setuid was not specified or required. 
+</p></li></ul></li><li>If any tasks are not possible with the standard POSIX permissions available in this exercise, explain why. 
+</li></ol><p>
+
+
+<span class="anchor" id="envvars"></span> 
+</p><h4>2. Use Environment Variables in your firewall.sh!</h4>
+
+<p>Your firewall script is only supposed to limit the traffic on the "experimental network" interface, as opposed to including the "control network" of DETER. If you block the control network, you're likely to lose connection to your node, or shut off networked file systems, etc. 
+
+</p><p>Unfortunately, different DETER nodes (the physical computers you are given) bring up their networks on different interfaces (and in general you can't control which nodes you get). This means that on one node, the experimental network might be on eth0, and on another node, it might be on eth4 (or any other ethN). This makes writing your script difficult because it is not 100% portable from one node to another. 
+
+</p><p>However, we can use an environment variable to substitute in the right interface. In the firewall.sh script, there is a variable declaration: 
+
+</p><p>
+</p><pre>ETH="eth0"
+</pre>
+<p>You can use this variable with the token $ETH -- the shell will substitute in its value at runtime. Use ifconfig to make sure that ETH is set to the right value for your experimental node (or update it). For example, use ETH in a hypothetical iptables command like this: 
+
+</p><p>
+</p><pre>iptables -A INPUT -i $ETH -j ACCEPT
+</pre>
+<p>This way, you only need to update the ETH variable if your interface changes, rather than every iptables call that specifies an interface. 
+
+</p><p>
+<span class="anchor" id="fwtest"></span> 
+</p><h4>3. How to test your firewall</h4>
+
+<p>Testing your firewall is easy; you just need to make sure that the allowed services are allowed, and that things that should be denied are denied. To do that, we'll use a few tools like telnet, netcat, and others. 
+
+</p><p>You may also have noticed that this experiment swaps in two nodes instead of one. One will be called <tt>client</tt> and the other will be called <tt>server</tt>. <tt>server</tt> is the node with the firewall and resources you want to protect, but you can use client to check to see if the firewall is doing its job. You can also use client as a target to see if the server's outbound rules are functioning properly, using tools such as nmap, telnet, nc, and others in the <a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#nettools">network tools portion of this document</a>. 
+
+</p><p>The following tests have been provided by Dr. Tanya Crenshaw from the University of Portland. While these test cases cannot guarantee a perfect firewall, they should help you understand if your firewall is meeting the guidelines.
+
+</p><h5>Firewall Test Cases</h5>
+
+
+
+<div class="warning">
+<p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/idea.png">
+<b>c$</b> indicates tests run from client node and <b>s$</b> indicates tests run from the server node
+</p><p>
+<img src="./POSIX Permissions and Stateful Firewalls_files/idea.png">
+The test file “hi.txt” was created on the client using by executing: <tt>c$ echo “hi” &gt; hi.txt</tt>
+</p></div>
+
+<p>
+</p><table>
+<tbody><tr>
+<td>
+#
+</td><td width="200">
+Rule
+</td><td>
+Test
+</td><td width="200">
+Result
+</td>
+</tr>
+
+<tr>
+<td>
+1
+</td><td>
+Allow inbound traffic to the OpenSSH port.
+</td><td>
+<pre>c$ telnet server 22
+Trying 10.1.1.3...
+Connected to server.
+Escape character is '^]'.
+SSH-1.99-OpenSSH_4.2
+</pre>
+</td><td>
+SUCCESS: A connection on port 22 is established using the telnet tool.
+</td>
+</tr>
+
+<tr>
+<td>
+2
+</td><td>
+Allow outbound ssh traffic (established).
+</td><td>
+<pre>See well-formed reply from ssh server in Test #1:
+
+‘SSH-1.99-OpenSSH_4.2’
+</pre>
+</td><td>
+SUCCESS: The ssh server running on the server node replies to telnet’s connection request with the SSH version number.
+</td>
+</tr>
+
+<tr>
+<td>
+3
+</td><td>
+Allow inbound traffic to http traffic.
+
+</td><td>
+<pre>c$ telnet server 80              
+Trying 10.1.1.3...
+Connected to server.
+Escape character is '^]'. 
+</pre>
+</td><td>
+SUCCESS: A connection on port 80 is established using the telnet tool.
+
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+4
+</td><td>
+Allow outbound http traffic (established).
+
+</td><td>
+<pre>c$ nc -q -1 server.MyExp.MyClass.isi.deterlab.net 80 &lt; hi.txt
+
+<title>501 Method Not Implemented</title> ...
+
+</pre>
+</td><td>
+SUCCESS: The Apache Web Server running on the server node replies to the client’s badly-formed http request with a well-formed http reply.
+
+</td>
+</tr>
+
+<tr>
+<td>
+5
+</td><td>
+Allow inbound and outbound mySQL traffic
+
+</td><td>
+<pre>c$ [client]$ telnet server 3306            
+Trying 10.1.1.3...
+Connected to server.         
+Escape character is '^]'.
+K#HY000Host 'client-link0' is not allowed to connect to this MySQL serverConnection closed by foreign host.
+
+</pre>
+</td><td>
+SUCCESS: Connect to the MySQL server running on the server node using the telnet tool.  MySQL server responds with an error indicating that outbound traffic is allowed.
+
+
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+6
+</td><td>
+Allow new inbound ping traffic.
+
+</td><td>
+<pre>c$ ping server
+PING server-link0 (10.1.1.3) 56(84) bytes of data.
+64 bytes from server-link0 (10.1.1.3): icmp_seq=0 ttl=64 time=0.412 ms
+
+
+</pre>
+</td><td>
+SUCCESS: Ping request from client is replied to by server.  Note that request is new traffic, while reply is established traffic.
+
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+7
+</td><td>
+Allow new outbound ping traffic.
+
+
+</td><td>
+<pre>s$ ping client
+PING client-link0 (10.1.1.2) 56(84) bytes of data.
+64 bytes from client-link0 (10.1.1.2): icmp_seq=0 ttl=64 time=0.302 ms
+
+
+</pre>
+</td><td>
+SUCCESS: Ping request from server is replied to by client.  Note that request is new traffic, while reply is established traffic.
+
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+8
+</td><td>
+Allow inbound UDP traffic on ports 10000:10005
+
+</td><td>
+<pre>s$ nc -u -l 10000
+hello
+
+c$ nc -u server 10000
+  (type ‘hello’)
+
+</pre>
+</td><td>
+SUCCESS: Traffic is allowed into the server on port 10000.  Run the same test for 10001:10005.
+
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+9
+</td><td>
+Allow outbound UDP traffic on ports 10006:10010
+
+</td><td>
+<pre>c$ nc -u -l 10006
+hello
+
+s$ nc -u client 10006
+  (type ‘hello’)
+
+</pre>
+</td><td>
+SUCCESS: Traffic is allowed out of the server on port 10006.  Run the same test for 10007:10010.
+
+
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+10
+</td><td>
+Disallow all other traffic
+</td><td>
+<pre>c$ telnet server PORT
+
+s$ telnet server PORT
+</pre>
+</td><td>
+SUCCESS: The full test is to run a bash script on the client-side and server-side which attempts telnet on every other port aside from those not addressed above, and also tests UDP, etc. A good firewall design should ensure that all traffic is dropped except that which is explicitly accepted. 
+
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+11
+</td><td>
+Prevent spoofing
+
+
+</td><td>
+<pre>Straighforward test unknown
+
+</pre>
+</td><td>
+NA
+</td>
+</tr>
+
+</tbody></table>
+<p></p>
+
+
+</div>
+
+<span class="anchor" id="glitches"></span>
+<div class="level3">
+<h3>What can go wrong</h3>
+
+<h4>1. Your firewall cuts off your access to the node.</h4>
+
+<p>If you have misconfigured your firewall, and it "locks you out," you can try to reboot your experimental nodes using the DETER interface. If that does not work, you will need to swap your nodes out and back in again, but beware that swapping your nodes out will destroy any work you have not backed up in your home directory.
+
+</p><p>Make sure you are using the environment variable to define the interface you are restricting -- this will help keep you from getting "locked out." See the <a href="https://education.deterlab.net/file.php/7/PermissionsFirewalls_UCLA/Exercise.html#tips">tips and tricks</a> section for more information.
+
+</p></div>
+
+<!-- <span class="anchor" id="extra"></span> 
+<h2>Extra Credit</h2>
+
+This section describes any extra credit assignments, how to do them, what to measure, etc. If there are no extra credit assignments for this exercise remove this section from here and from the TOC.
+
+-->
+
+<span class="anchor" id="submission"></span> 
+<h2>Submission Instructions</h2>
+
+<p>Submit a tarball created by <tt>submit.sh</tt> to your instructor. You <strong>must</strong> use a tarball created by this script so that it will correctly save the permissions of the directories. 
+
+
+</p></div>
+
+
+</div></body><style type="text/css" style="display: none !important; ">/*This block of style rules is inserted by AdBlock*/#RadAd_Skyscraper,#bbccom_leaderboard,#center_banner,#footer_adcode,#hbBHeaderSpon,#hiddenHeaderSpon,#mbEnd[cellspacing="0"][cellpadding="0"],#navbar_adcode,#rightAds,#rightcolumn_adcode,#top-advertising,#topMPU,#tracker_advertorial,.ad-now,.dfpad,.prWrap,[id^="ad_block"],[id^="adbrite"],[id^="dclkAds"],[id^="ew"][id$="_bannerDiv"],[id^="konaLayer"],[src*="sixsigmatraffic.com"],a.kLink span[id^="preLoadWrap"].preLoadWrap,a[href^="http://ad."][href*=".doubleclick.net/"],a[href^="http://adserver.adpredictive.com"],div#adxLeaderboard,div#dir_ads_site,div#FFN_Banner_Holder,div#FFN_imBox_Container,div#p360-format-box,div#rm_container,div#tads table[align="center"][width="100%"],div#tooltipbox[class^="itxt"],div[class^="dms_ad_IDS"],div[id^="adKontekst_"],div[id^="google_ads_div"],div[id^="kona_"][id$="_wrapper"],div[id^="sponsorads"],div[id^="y5_direct"],embed[flashvars*="AdID"],iframe.chitikaAdBlock,iframe[id^="dapIfM"],iframe[id^="etarget"][id$="banner"],iframe[name^="AdBrite"],iframe[name^="google_ads_"],img[src^="http://cdn.adnxs.com"],ispan#ab_pointer,object#flashad,object#ve_threesixty_swf[name="ve_threesixty_swf"],script[src="//pagead2.googleadservices.com/pagead/show_ads.js"] + ins > ins > iframe,script[src="http://pagead2.googlesyndication.com/pagead/show_ads.js"] + ins > ins > iframe,table[cellpadding="0"][width="100%"] > * > * > * > div[id^="tpa"],#A9AdsMiddleBoxTop,#A9AdsOutOfStockWidgetTop,#A9AdsServicesWidgetTop,#ADSLOT_1,#ADSLOT_2,#ADSLOT_3,#ADSLOT_4,#ADSLOT_SKYSCRAPER,#ADVERTISE_HERE_ROW,#AD_CONTROL_22,#AD_ROW,#AD_newsblock,#ADgoogle_newsblock,#ADsmallWrapper,#Ad1,#Ad160x600,#Ad2,#Ad300x250,#Ad3Left,#Ad3Right,#Ad3TextAd,#AdA,#AdArea,#AdBanner_F1,#AdBar,#AdBar1,#AdBox2,#AdC,#AdContainer,#AdContainerTop,#AdContentModule_F,#AdDetails_GoogleLinksBottom,#AdDetails_InsureWith,#AdE,#AdF,#AdFrame4,#AdG,#AdH,#AdHeader,#AdI,#AdJ,#AdLeaderboardBottom,#AdLeaderboardTop,#AdMiddle,#AdMobileLink,#AdPopUp,#AdRectangle,#AdSenseDiv,#AdSenseResults1_adSenseSponsorDiv,#AdServer,#AdShowcase_F1,#AdSky23,#AdSkyscraper,#AdSpacing,#AdSponsor_SF,#AdSubsectionShowcase_F1,#AdTargetControl1_iframe,#AdText,#AdTop,#AdTopLeader,#Ad_BelowContent,#Ad_Block,#Ad_Center1,#Ad_Right1,#Ad_RightBottom,#Ad_RightTop,#Ad_Top,#Adbanner,#Adrectangle,#Ads,#AdsContent,#AdsRight,#AdsWrap,#Ads_BA_CAD,#Ads_BA_CAD2,#Ads_BA_CAD_box,#Ads_BA_SKY,#Ads_CAD,#Ads_OV_BS,#Ads_Special,#AdvertMPU23b,#AdvertPanel,#AdvertiseFrame,#Advertisement,#Advertisements,#Advertorial,#Advertorials,#AdvertsBottom,#AdvertsBottomR,#BANNER_160x600,#BANNER_300x250,#BANNER_728x90,#BannerAd,#BannerAdvert,#BigBoxAd,#BodyAd,#BotAd,#Bottom468x60AD,#ButtonAd,#CompanyDetailsNarrowGoogleAdsPresentationControl,#CompanyDetailsWideGoogleAdsPresentationControl,#ContentAd,#ContentAd1,#ContentAd2,#ContentAdPlaceHolder1,#ContentAdPlaceHolder2,#ContentAdXXL,#ContentPolepositionAds_Result,#CornerAd,#DartAd300x250,#DivAdEggHeadCafeTopBanner,#FIN_videoplayer_300x250ad,#FooterAd,#FooterAdContainer,#GoogleAd1,#GoogleAd2,#GoogleAd3,#GoogleAdsPlaceHolder,#GoogleAdsPresentationControl,#GoogleAdsense,#Google_Adsense_Main,#HEADERAD,#HOME_TOP_RIGHT_BOXAD,#HeaderAD,#HeaderAdsBlock,#HeaderAdsBlockFront,#HeaderBannerAdSpacer,#HeaderTextAd,#HeroAd,#HomeAd1,#HouseAd,#ID_Ad_Sky,#JobsearchResultsAds,#Journal_Ad_125,#Journal_Ad_300,#JuxtapozAds,#KH-contentAd,#LargeRectangleAd,#LeftAd,#LeftAd1,#LeftAdF1,#LeftAdF2,#LftAd,#LoungeAdsDiv,#LowerContentAd,#MainSponsoredLinks,#Nightly_adContainer,#NormalAdModule,#OpenXAds,#OverrideAdArea,#PREFOOTER_LEFT_BOXAD,#PREFOOTER_RIGHT_BOXAD,#PageLeaderAd,#RelevantAds,#RgtAd1,#RightAd,#RightBottom300x250AD,#RightNavTopAdSpot,#RightSponsoredAd,#SectionAd300-250,#SectionSponsorAd,#SideAdMpu,#SidebarAdContainer,#SkyAd,#SpecialAds,#SponsoredAd,#SponsoredLinks,#TL_footer_advertisement,#TOP_ADROW,#TOP_RIGHT_BOXAD,#Tadspacefoot,#Tadspacehead,#Tadspacemrec,#TextLinkAds,#ThreadAd,#Top468x60AD,#TopAd,#TopAdBox,#TopAdContainer,#TopAdDiv,#TopAdPos,#VM-MPU-adspace,#VM-footer-adspace,#VM-header-adspace,#VM-header-adwrap,#XEadLeaderboard,#XEadSkyscraper,#YahooAdParentContainer,#_ads,#abHeaderAdStreamer,#about_adsbottom,#abovepostads,#ad-120x600-sidebar,#ad-120x60Div,#ad-160x600,#ad-160x600-sidebar,#ad-250,#ad-250x300,#ad-300,#ad-300x250,#ad-300x250-sidebar,#ad-300x250Div,#ad-300x60-1,#ad-376x280,#ad-728,#ad-728x90,#ad-728x90-leaderboard-top,#ad-728x90-top0,#ad-ads,#ad-article,#ad-banner,#ad-banner-1,#ad-bigbox,#ad-billboard-bottom,#ad-block-125,#ad-bottom,#ad-bottom-wrapper,#ad-box,#ad-box-first,#ad-box-second,#ad-boxes,#ad-bs,#ad-buttons,#ad-colB-1,#ad-column,#ad-container,#ad-content,#ad-contentad,#ad-first-post,#ad-flex-first,#ad-footer,#ad-footprint-160x600,#ad-frame,#ad-front-footer,#ad-front-sponsoredlinks,#ad-fullbanner2,#ad-globalleaderboard,#ad-halfpage,#ad-header,#ad-header-728x90,#ad-horizontal-header,#ad-img,#ad-inner,#ad-label,#ad-leaderboard,#ad-leaderboard-bottom,#ad-leaderboard-container,#ad-leaderboard-spot,#ad-leaderboard-top,#ad-left,#ad-left-sidebar-ad-1,#ad-left-sidebar-ad-2,#ad-left-sidebar-ad-3,#ad-links-content,#ad-list-row,#ad-lrec,#ad-medium,#ad-medium-rectangle,#ad-medrec,#ad-middlethree,#ad-middletwo,#ad-module,#ad-mpu,#ad-mpu1-spot,#ad-mpu2,#ad-mpu2-spot,#ad-north,#ad-one,#ad-placard,#ad-placeholder,#ad-rectangle,#ad-right,#ad-right-sidebar-ad-1,#ad-right-sidebar-ad-2,#ad-righttop,#ad-row,#ad-side,#ad-side-text,#ad-sidebar,#ad-sky,#ad-skyscraper,#ad-slug-wrapper,#ad-small-banner,#ad-space,#ad-special,#ad-splash,#ad-sponsors,#ad-spot,#ad-squares,#ad-target,#ad-target-Leaderbord,#ad-teaser,#ad-text,#ad-top,#ad-top-banner,#ad-top-text-low,#ad-top-wrap,#ad-tower,#ad-trailerboard-spot,#ad-two,#ad-typ1,#ad-unit,#ad-west,#ad-wrap,#ad-wrap-right,#ad-wrapper,#ad-wrapper1,#ad-yahoo-simple,#ad-zone-1,#ad-zone-2,#ad-zone-inline,#ad01,#ad02,#ad1006,#ad11,#ad125BL,#ad125BR,#ad125TL,#ad125TR,#ad125x125,#ad160x600,#ad160x600right,#ad1Sp,#ad2,#ad2Sp,#ad3,#ad300,#ad300-250,#ad300X250,#ad300_x_250,#ad300x100Middle,#ad300x150,#ad300x250,#ad300x250Module,#ad300x60,#ad300x600,#ad300x600_callout,#ad336,#ad336x280,#ad375x85,#ad4,#ad468,#ad468x60,#ad468x60_top,#ad526x250,#ad600,#ad7,#ad728,#ad728Mid,#ad728Top,#ad728Wrapper,#ad728top,#ad728x90,#ad728x90_1,#ad90,#adBadges,#adBanner,#adBanner10,#adBanner120x600,#adBanner160x600,#adBanner2,#adBanner3,#adBanner336x280,#adBanner4,#adBanner728,#adBanner9,#adBannerTable,#adBannerTop,#adBar,#adBelt,#adBlock125,#adBlockTop,#adBlocks,#adBottbanner,#adBox,#adBox11,#adBox16,#adBox350,#adBox390,#adCirc300X200,#adCirc_620_100,#adCol,#adColumn,#adCompanionSubstitute,#adComponentWrapper,#adContainer,#adContainer_1,#adContainer_2,#adContainer_3,#adDiv,#adDiv300,#adDiv728,#adFiller,#adFps,#adFtofrs,#adGallery,#adGoogleText,#adGroup1,#adHeader,#adHeaderTop,#adIsland,#adL,#adLB,#adLabel,#adLayer,#adLeader,#adLeaderTop,#adLeaderboard,#adMPU,#adMediumRectangle,#adMiddle0Frontpage,#adMiniPremiere,#adMonster1,#adOuter,#adP,#adPlaceHolderRight,#adPlacer,#adPosOne,#adRight,#adRight2,#adSPLITCOLUMNTOPRIGHT,#adSenseModule,#adSenseWrapper,#adServer_marginal,#adSidebar,#adSidebarSq,#adSky,#adSkyscraper,#adSlider,#adSpace,#adSpace0,#adSpace1,#adSpace10,#adSpace11,#adSpace12,#adSpace13,#adSpace14,#adSpace15,#adSpace16,#adSpace17,#adSpace18,#adSpace19,#adSpace2,#adSpace20,#adSpace21,#adSpace22,#adSpace23,#adSpace24,#adSpace25,#adSpace3,#adSpace300_ifrMain,#adSpace4,#adSpace5,#adSpace6,#adSpace7,#adSpace8,#adSpace9,#adSpace_footer,#adSpace_right,#adSpace_top,#adSpacer,#adSpecial,#adSplotlightEm,#adSpot-Leader,#adSpot-banner,#adSpot-island,#adSpot-mrec1,#adSpot-sponsoredlinks,#adSpot-textbox1,#adSpot-widestrip,#adSpotAdvertorial,#adSpotIsland,#adSpotSponsoredLinks,#adSquare,#adStaticA,#adStrip,#adSuperAd,#adSuperPremiere,#adSuperSkyscraper,#adSuperbanner,#adTableCell,#adTag1,#adTag2,#adText,#adTextCustom,#adTextLink,#adText_container,#adTile,#adTop,#adTopContent,#adTopbanner,#adTopboxright,#adTower,#adUnit,#adWrapper,#adZoneTop,#ad_1,#ad_130x250_inhouse,#ad_160x160,#ad_160x600,#ad_190x90,#ad_2,#ad_3,#ad_300,#ad_300_250,#ad_300_250_1,#ad_300a,#ad_300b,#ad_300c,#ad_300x100_m_c,#ad_300x250,#ad_300x250_content_column,#ad_300x250_m_c,#ad_300x250m,#ad_300x90,#ad_4,#ad_468_60,#ad_468x60,#ad_5,#ad_728_foot,#ad_728x90,#ad_728x90_container,#ad_940,#ad_984,#ad_A,#ad_B,#ad_Banner,#ad_C,#ad_C2,#ad_D,#ad_E,#ad_F,#ad_G,#ad_H,#ad_I,#ad_J,#ad_K,#ad_L,#ad_M,#ad_N,#ad_O,#ad_P,#ad_YieldManager-300x250,#ad_YieldManager-728x90,#ad_after_navbar,#ad_anchor,#ad_area,#ad_banner,#ad_banner_top,#ad_banners,#ad_bar,#ad_bellow_post,#ad_bigsize_wrapper,#ad_block_1,#ad_block_2,#ad_bottom,#ad_box,#ad_box_colspan,#ad_box_top,#ad_branding,#ad_bs_area,#ad_buttons,#ad_center_monster,#ad_circ300x250,#ad_cna2,#ad_cont,#ad_container,#ad_container_marginal,#ad_container_side,#ad_container_sidebar,#ad_container_top,#ad_content_top,#ad_content_wrap,#ad_feature,#ad_firstpost,#ad_footer,#ad_front_three,#ad_fullbanner,#ad_gallery,#ad_global_header,#ad_h3,#ad_haha_1,#ad_haha_4,#ad_halfpage,#ad_head,#ad_header,#ad_holder,#ad_horizontal,#ad_horseshoe_left,#ad_horseshoe_right,#ad_horseshoe_spacer,#ad_horseshoe_top,#ad_hotpots,#ad_in_arti,#ad_island,#ad_label,#ad_large_rectangular,#ad_lastpost,#ad_layer2,#ad_leader,#ad_leaderBoard,#ad_leaderboard,#ad_leaderboard728x90,#ad_leaderboard_top,#ad_left,#ad_lnk,#ad_lrec,#ad_lwr_square,#ad_main,#ad_medium_rectangle,#ad_medium_rectangular,#ad_mediumrectangle,#ad_menu_header,#ad_message,#ad_middle,#ad_most_pop_234x60_req_wrapper,#ad_mpu,#ad_mpu300x250,#ad_mpuav,#ad_mrcontent,#ad_newsletter,#ad_overlay,#ad_play_300,#ad_rect,#ad_rect_body,#ad_rect_bottom,#ad_rectangle,#ad_rectangle_medium,#ad_related_links_div,#ad_related_links_div_program,#ad_replace_div_0,#ad_replace_div_1,#ad_report_leaderboard,#ad_report_rectangle,#ad_results,#ad_right,#ad_right_main,#ad_ros_tower,#ad_rr_1,#ad_sec,#ad_sec_div,#ad_sgd,#ad_sidebar,#ad_sidebar1,#ad_sidebar2,#ad_sidebar3,#ad_sky,#ad_skyscraper,#ad_skyscraper160x600,#ad_skyscraper_text,#ad_slot_leaderboard,#ad_slot_livesky,#ad_slot_sky_top,#ad_space,#ad_square,#ad_ss,#ad_table,#ad_term_bottom_place,#ad_text:not(textarea),#ad_thread_first_post_content,#ad_top,#ad_top_holder,#ad_tp_banner_1,#ad_tp_banner_2,#ad_txt,#ad_unit,#ad_vertical,#ad_wide,#ad_wide_box,#ad_widget,#ad_window,#ad_wrap,#ad_wrapper,#adaptvcompanion,#adbForum,#adbanner,#adbar,#adbig,#adbnr,#adboard,#adbody,#adbottom,#adbox,#adbox1,#adbox2,#adbutton,#adclear,#adcode,#adcode1,#adcode2,#adcode3,#adcode4,#adcolumnwrapper,#adcontainer,#adcontainer1,#adcontainerRight,#adcontainsm,#adcontent,#adcontent1,#adcontrolPushSite,#add_ciao2,#addbottomleft,#addiv-bottom,#addiv-top,#adfooter,#adfooter_728x90,#adframe:not(frameset),#adhead,#adhead_g,#adheader,#adhome,#adiframe1_iframe,#adiframe2_iframe,#adiframe3_iframe,#adimg,#adition_content_ad,#adlabel,#adlabelFooter,#adlayerContainer,#adlayerad,#adleaderboard,#adleaderboard_flex,#adleaderboardb,#adleaderboardb_flex,#adleft,#adlinks,#adlinkws,#adlrec,#admanager_leaderboard,#admid,#admiddle3center,#admiddle3left,#adposition,#adposition-C,#adposition-FPMM,#adposition1,#adposition2,#adposition3,#adposition4,#adrectangle,#adrectanglea,#adrectanglea_flex,#adrectangleb,#adrectangleb_flex,#adrig,#adright,#adright2,#adrighthome,#ads-250,#ads-468,#ads-area,#ads-block,#ads-bot,#ads-bottom,#ads-col,#ads-dell,#ads-footer,#ads-footer-inner,#ads-horizontal,#ads-indextext,#ads-leaderboard1,#ads-lrec,#ads-main,#ads-menu,#ads-middle,#ads-prices,#ads-rhs,#ads-right,#ads-sponsored-boxes,#ads-top,#ads-vers7,#ads-wrapper,#ads120,#ads160left,#ads2,#ads300,#ads300-250,#ads300Bottom,#ads300Top,#ads315,#ads336x280,#ads7,#ads728bottom,#ads728top,#ads790,#adsBox-460_left,#adsBox-dynamic-right,#adsBoxResultsPage,#adsContent,#adsDisplay,#adsHeader,#adsID,#ads_160,#ads_300,#ads_728,#ads_banner,#ads_belowforumlist,#ads_belownav,#ads_bottom,#ads_bottom_inner,#ads_bottom_outer,#ads_box,#ads_button,#ads_catDiv,#ads_container,#ads_footer,#ads_fullsize,#ads_halfsize,#ads_header,#ads_html1,#ads_html2,#ads_inner,#ads_lb,#ads_medrect,#ads_notice,#ads_right,#ads_right_sidebar,#ads_sidebar_roadblock,#ads_space,#ads_text,#ads_top,#ads_topbanner,#ads_watch_top_square,#ads_zone27,#adsbottom,#adsbox,#adsbox-left,#adsbox-right,#adscolumn,#adsd_contentad_r1,#adsd_contentad_r2,#adsd_contentad_r3,#adsd_topbanner,#adsd_txt_sky,#adsdiv,#adsense,#adsense-2,#adsense-header,#adsense-tag,#adsense-text,#adsense03,#adsense04,#adsense05,#adsense1,#adsenseLeft,#adsenseOne,#adsenseWrap,#adsense_article_left,#adsense_block,#adsense_box,#adsense_box_video,#adsense_inline,#adsense_leaderboard,#adsense_overlay,#adsense_placeholder_2,#adsenseheader,#adsensetopplay,#adsensewidget-3,#adserv,#adshometop,#adsimage,#adskinlink,#adsky,#adskyscraper,#adslider,#adslot,#adsmiddle,#adsonar,#adspace,#adspace-1,#adspace-300x250,#adspace-leaderboard-top,#adspace300x250,#adspaceBox,#adspaceBox300,#adspace_header,#adspace_leaderboard,#adspacer,#adsponsorImg,#adspot,#adspot-1,#adspot-149x170,#adspot-1x4,#adspot-2,#adspot-295x60,#adspot-2a,#adspot-2b,#adspot-300x110-pos-1,#adspot-300x125,#adspot-300x250-pos-1,#adspot-300x250-pos-2,#adspot-468x60-pos-2,#adspot-a,#adspot300x250,#adspot_220x90,#adspot_300x250,#adspot_468x60,#adspot_728x90,#adsquare,#adsright,#adst,#adstop,#adt,#adtab,#adtag_right_side,#adtagfooter,#adtagheader,#adtagrightcol,#adtaily-widget-light,#adtech_googleslot_03c,#adtech_takeover,#adtext,#adtop,#adtophp,#adtxt,#adv-300,#adv-leaderboard,#adv-left,#adv-masthead,#adv-middle,#adv-mpux,#adv-x36,#adv-x37,#adv-x38,#adv-x39,#adv-x40,#adv1,#adv300bottom,#adv300top,#adv728,#adv_300,#adv_728,#adv_border,#adv_google_300,#adv_google_728,#adv_halfpage,#adv_halfpage_title,#adv_leaderboard,#adv_sky,#adv_top_banner_wrapper,#adver1,#adver2,#adver3,#adver4,#adver5,#adver6,#adver7,#advert-1 { display:none !important; } #advert-120,#advert-boomer,#advert-display,#advert-header,#advert-leaderboard,#advert-links-bottom,#advert-skyscraper,#advert-top,#advert1,#advertBanner,#advertContainer,#advertDB,#advertRight,#advertSection,#advert_125x125,#advert_250x250,#advert_box,#advert_home01,#advert_leaderboard,#advert_lrec_format,#advert_mid,#advert_mpu,#advert_mpu_1,#advert_right_skyscraper,#advert_sky,#advertbox,#advertbox2,#advertbox3,#advertbox4,#adverthome,#advertise,#advertise-here-sidebar,#advertise-now,#advertise1,#advertiseHere,#advertisement1,#advertisement160x600,#advertisement3,#advertisement728x90,#advertisementLigatus,#advertisementPrio2,#advertisementRight,#advertisementRightcolumn0,#advertisementRightcolumn1,#advertisementsarticle,#advertiser-container,#advertiserLinks,#advertisers,#advertising,#advertising-banner,#advertising-caption,#advertising-container,#advertising-control,#advertising-skyscraper,#advertising-top,#advertising2,#advertisingModule160x600,#advertisingModule728x90,#advertisingTopWrapper,#advertising_btm,#advertising_contentad,#advertising_horiz_cont,#advertisment,#advertismentElementInUniversalbox,#advertorial,#advertorial_red_listblock,#adverts,#adverts-top-container,#adverts-top-left,#adverts-top-middle,#adverts-top-right,#advertsingle,#advertspace,#advheader,#advt,#advtext,#advtop,#adwhitepaperwidget,#adwin_rec,#adwith,#adwords-4-container,#adwrapper,#adxBigAd,#adxMiddle5,#adxSponLink,#adxSponLinkA,#adxtop,#adz,#adzbanner,#adzerk,#adzerk1,#adzone,#adzoneBANNER,#adzoneheader,#afc-container,#affinityBannerAd,#after-content-ads,#after-header-ad-left,#after-header-ad-right,#after-header-ads,#agi-ad300x250,#agi-ad300x250overlay,#agi-sponsored,#alert_ads,#anchorAd,#annoying_ad,#ap_adframe,#ap_cu_overlay,#ap_cu_wrapper,#apiBackgroundAd,#apiTopAdWrap,#apmNADiv,#apolload,#araHealthSponsorAd,#area-adcenter,#area1ads,#article-ad,#article-ad-container,#article-box-ad,#articleAdReplacement,#articleLeftAdColumn,#articleSideAd,#article_ad,#article_ad_container,#article_box_ad,#articlead1,#articlead2,#asinglead,#atlasAdDivGame,#awds-nt1-ad,#babAdTop,#banner-300x250,#banner-ad,#banner-ad-container,#banner-ads,#banner250x250,#banner300x250,#banner468x60,#banner728x90,#bannerAd,#bannerAdTop,#bannerAdWrapper,#bannerAd_ctr,#bannerAd_rdr,#banner_160x600,#banner_300_250,#banner_ad,#banner_ad_footer,#banner_ad_module,#banner_admicro,#banner_ads,#banner_content_ad,#banner_topad,#bannerad,#bannerad2,#baseAdvertising,#basket-adContainer,#bbccom_mpu,#bbo_ad1,#bg-footer-ads,#bg-footer-ads2,#bg_YieldManager-160x600,#bg_YieldManager-300x250,#bg_YieldManager-728x90,#bigAd,#bigBoxAd,#bigad300outer,#bigadbox,#bigadframe,#bigadspot,#billboard_ad,#block-ad_cube-1,#block-openads-0,#block-openads-1,#block-openads-2,#block-openads-3,#block-openads-4,#block-openads-5,#block-spti_ga-spti_ga_adwords,#block-thewrap_ads_250x300-0,#block_advert,#blog-ad,#blog_ad_content,#blog_ad_opa,#blog_ad_right,#blog_ad_top,#blox-big-ad,#blox-big-ad-bottom,#blox-big-ad-top,#blox-halfpage-ad,#blox-tile-ad,#blox-tower-ad,#body_728_ad,#book-ad,#botad,#bott_ad2,#bott_ad2_300,#bottom-ad,#bottom-ad-container,#bottom-ad-tray,#bottom-ad-wrapper,#bottom-ads,#bottomAd,#bottomAdCCBucket,#bottomAdContainer,#bottomAdSense,#bottomAdSenseDiv,#bottomAds,#bottomAdvBox,#bottomContentAd,#bottomRightAd,#bottomRightAdSpace,#bottom_ad,#bottom_ad_area,#bottom_ad_unit,#bottom_ads,#bottom_banner_ad,#bottom_overture,#bottom_sponsor_ads,#bottom_sponsored_links,#bottom_text_ad,#bottomad,#bottomads,#bottomadsense,#bottomadwrapper,#bottomleaderboardad,#box-ad-section,#box-content-ad,#box-googleadsense-1,#box-googleadsense-r,#box1ad,#boxAd300,#boxAdContainer,#boxAdvert,#box_ad,#box_advertisment,#box_mod_googleadsense,#boxad1,#boxad2,#boxad3,#boxad4,#boxad5,#bpAd,#bps-header-ad-container,#btnAds,#btnads,#btr_horiz_ad,#burn_header_ad,#button-ads-horizontal,#button-ads-vertical,#buttonAdWrapper1,#buttonAdWrapper2,#buttonAds,#buttonAdsContainer,#button_ad_container,#button_ad_wrap,#button_ads,#buttonad,#buy-sell-ads,#c4ad-Middle1,#c_ad_sb,#c_ad_sky,#caAdLarger,#catad,#category-ad,#cellAd,#channel_ad,#channel_ads,#ciHomeRHSAdslot,#circ_ad,#closeable-ad,#cmn_ad_box,#cmn_toolbar_ad,#cnnAboveFoldBelowAd,#cnnRR336ad,#cnnSponsoredPods,#cnnTopAd,#cnnVPAd,#col3_advertising,#colAd,#colRightAd,#collapseobj_adsection,#column4-google-ads,#comments-ad-container,#commercial_ads,#common_right_ad_wrapper,#common_right_lower_ad_wrapper,#common_right_lower_adspace,#common_right_lower_player_ad_wrapper,#common_right_lower_player_adspace,#common_right_player_ad_wrapper,#common_right_player_adspace,#common_right_right_adspace,#common_top_adspace,#comp_AdsLeaderboardTop,#companion-ad,#companionAdDiv,#companionad,#container-righttopads,#container-topleftads,#containerLocalAds,#containerLocalAdsInner,#containerMrecAd,#containerSqAd,#content-ad-header,#content-header-ad,#content-left-ad,#content-right-ad,#contentAd,#contentBoxad,#contentTopAds2,#content_ad,#content_ad_square,#content_ad_top,#content_ads_content,#content_box_300body_sponsoredoffers,#content_box_adright300_google,#content_lower_center_right_ad,#content_mpu,#contentad,#contentad_imtext,#contentad_right,#contentads,#contentinlineAd,#contents_post_ad,#contextad,#contextual-ads,#contextual-ads-block,#contextualad,#coverADS,#coverads,#ctl00_Adspace_Top_Height,#ctl00_BottomAd,#ctl00_ContentMain_BanManAd468_BanManAd,#ctl00_ContentPlaceHolder1_blockAdd_divAdvert,#ctl00_ContentRightColumn_RightColumn_Ad1_BanManAd,#ctl00_ContentRightColumn_RightColumn_Ad2_BanManAd,#ctl00_ContentRightColumn_RightColumn_PremiumAd1_ucBanMan_BanManAd,#ctl00_LHTowerAd,#ctl00_LeftHandAd,#ctl00_MasterHolder_IBanner_adHolder,#ctl00_TopAd,#ctl00_TowerAd,#ctl00_VBanner_adHolder,#ctl00__Content__RepeaterReplies_ctl03__AdReply,#ctl00_abot_bb,#ctl00_adFooter,#ctl00_advert_LargeMPU_div_AdPlaceHolder,#ctl00_atop_bt,#ctl00_cphMain_hlAd1,#ctl00_cphMain_hlAd2,#ctl00_cphMain_hlAd3,#ctl00_ctl00_MainPlaceHolder_itvAdSkyscraper,#ctl00_ctl00_ctl00_Main_Main_PlaceHolderGoogleTopBanner_MPTopBannerAd,#ctl00_ctl00_ctl00_Main_Main_SideBar_MPSideAd,#ctl00_dlTilesAds,#ctl00_m_skinTracker_m_adLBL,#ctl00_phCrackerMain_ucAffiliateAdvertDisplayMiddle_pnlAffiliateAdvert,#ctl00_phCrackerMain_ucAffiliateAdvertDisplayRight_pnlAffiliateAdvert,#ctl00_topAd,#ctrlsponsored,#cubeAd,#cube_ads,#cube_ads_inner,#cubead,#cubead-2,#currencies-sponsored-by,#custom-advert-leadboard-spacer,#dAdverts,#dItemBox_ads,#dart_160x600,#dc-display-right-ad-1,#dcadSpot-Leader,#dcadSpot-LeaderFooter,#dcol-sponsored,#defer-adright,#detail_page_vid_topads,#div-gpt-ad-1,#div-gpt-ad-2,#div-gpt-ad-3,#div-gpt-ad-4,#divAd,#divAdBox,#divAdWrapper,#divAdvertisement,#divBottomad1,#divBottomad2,#divDoubleAd,#divLeftAd12,#divLeftRecAd,#divMenuAds,#divWNAdHeader,#divWrapper_Ad,#div_ad_leaderboard,#div_video_ads,#dlads,#dni-header-ad,#dnn_adLeaderBoard2008,#dnn_ad_banner,#download_ads,#dp_ads1,#ds-mpu,#ds_ad_north_leaderboard,#editorsmpu,#em_ad_superbanner,#embedded-ad,#evotopTen_advert,#ex-ligatus,#exads,#extra-search-ads,#fb_adbox,#fb_rightadpanel,#featAds,#featuread,#featured-advertisements,#featuredAdContainer2,#featuredAds,#featured_ad_links,#feed_links_ad_container,#file_sponsored_link,#first-300-ad,#first-adlayer,#first_ad_unit,#firstad,#fl_hdrAd,#flash_ads_1,#flexiad,#floatingAd,#floating_ad_container,#foot-ad-1,#footad,#footer-ad,#footer-ads,#footer-advert,#footer-adverts,#footer-sponsored,#footerAd,#footerAdDiv,#footerAds,#footerAdvertisement,#footerAdverts,#footer_ad,#footer_ad_01,#footer_ad_block,#footer_ad_container,#footer_ad_modules,#footer_ads,#footer_adspace,#footer_text_ad,#footerad,#footerads,#footeradsbox,#forum_top_ad,#four_ads,#fpad1,#fpad2,#fpv_companionad,#fr_ad_center,#frame_admain,#frnAdSky,#frnBannerAd,#frnContentAd,#front_ad728,#front_advert,#front_mpu,#ft-ad,#ft-ad-1,#ft-ad-container,#ft_mpu,#fullsizebanner_468x60,#fusionad,#fw-advertisement,#g_ad,#g_adsense,#ga_300x250,#gad,#gad2,#gad3,#gad5,#galleries-tower-ad,#gallery-ad,#gallery-ad-m0,#gallery-random-ad,#gallery_ads,#game-info-ad,#gamead,#gameads,#gasense,#gglads,#global_header_ad_area,#gm-ad-lrec,#gmi-ResourcePageAd,#gmi-ResourcePageLowerAd,#goad1,#goads,#gooadtop,#google-ad,#google-ad-art,#google-ad-table-right,#google-ad-tower,#google-ads,#google-ads-bottom,#google-ads-header,#google-ads-left-side,#google-adsense-mpusize,#googleAd,#googleAdArea,#googleAds,#googleAdsSml,#googleAdsense,#googleAdsenseBanner,#googleAdsenseBannerBlog,#googleAdwordsModule,#googleAfcContainer,#googleSearchAds,#googleShoppingAdsRight,#googleShoppingAdsTop,#googleSubAds,#google_ad,#google_ad_container,#google_ad_inline,#google_ad_test,#google_ads,#google_ads_aCol,#google_ads_frame1,#google_ads_frame1_anchor,#google_ads_frame2,#google_ads_frame2_anchor,#google_ads_frame3,#google_ads_frame3_anchor,#google_ads_test,#google_ads_top,#google_adsense_home_468x60_1,#googlead,#googlead-sidebar-middle,#googlead-sidebar-top,#googlead2,#googleadbox,#googleads,#googleads_mpu_injection,#googleadsense,#googlesponsor,#gpt-ad-halfpage,#gpt-ad-rectangle1,#gpt-ad-rectangle2,#gpt-ad-skyscraper,#gpt-ad-story_rectangle3,#grid_ad,#gsyadrectangleload,#gsyadrightload,#gsyadtop,#gsyadtopload,#gtopadvts,#half-page-ad,#halfPageAd,#halfe-page-ad-box,#hd-ads,#hd-banner-ad,#hdtv_ad_ss,#head-ad,#head-ad-1,#headAd,#head_ad,#head_advert,#headad,#header-ad,#header-ad-left,#header-ad-rectangle-container,#header-ad-right,#header-ad2010,#header-ads,#header-adspace,#header-advert,#header-advertisement,#header-advertising,#header-adverts,#headerAd,#headerAdBackground,#headerAdContainer,#headerAdWrap,#headerAds,#headerAdsWrapper,#headerTopAd,#header_ad,#header_ad_728_90,#header_ad_container,#header_adcode,#header_ads,#header_advertisement_top,#header_flag_ad,#header_leaderboard_ad_container,#header_publicidad,#headerad,#headeradbox,#headerads,#headeradsbox,#headeradvertholder,#headeradwrap,#headline_ad,#headlinesAdBlock,#hiddenadAC,#hideads,#hl-sponsored-results,#hly_ad_side_bar_tower_left,#hly_inner_page_google_ad,#home-advert-module,#home-rectangle-ad,#home-top-ads,#homeMPU,#homeTopRightAd,#home_ad,#home_bottom_ad,#home_contentad,#home_feature_ad,#home_lower_center_right_ad,#home_mpu,#home_spensoredlinks,#homead,#homepage-ad,#homepageAdsTop,#homepageFooterAd,#homepage_right_ad,#homepage_right_ad_container,#homepage_top_ads,#hometop_234x60ad,#hor_ad,#horizad,#horizontal-banner-ad,#horizontal_ad,#horizontal_ad_top,#horizontalads,#hot-deals-ad,#houseAd,#hp-header-ad,#hp-mpu,#hp-right-ad,#hp-store-ad,#hpV2_300x250Ad,#hpV2_googAds,#hp_ad300x250,#ibt_local_ad728,#icePage_SearchLinks_AdRightDiv,#icePage_SearchLinks_DownloadToolbarAdRightDiv,#icePage_SearchResults_ads0_SponsoredLink,#icePage_SearchResults_ads1_SponsoredLink,#icePage_SearchResults_ads2_SponsoredLink,#icePage_SearchResults_ads3_SponsoredLink,#icePage_SearchResults_ads4_SponsoredLink,#idSponsoredresultend,#idSponsoredresultstart,#iframeRightAd,#iframeTopAd,#imu_ad_module,#in_serp_ad,#inadspace,#indexad,#inline-story-ad,#inlineAd,#inlinead,#inlinegoogleads,#inlist-ad-block,#inner-advert-row,#inner-top-ads,#innerpage-ad,#inside-page-ad,#insider_ad_wrapper,#instoryad,#instoryadtext,#instoryadwrap,#int-ad,#interstitial_ad_wrapper,#iqadtile8,#islandAd,#j_ad,#ji_medShowAdBox,#jmp-ad-buttons,#joead,#joead2,#ka_adRightSkyscraperWide,#ka_samplead,#kaufDA-widget,#kdz_ad1,#kdz_ad2,#keyadvertcontainer,#landing-adserver,#lapho-top-ad-1,#largead,#lateAd,#layerAds_layerDiv,#layerTLDADSERV,#layer_ad_content,#layer_ad_main,#layerad,#leader-board-ad,#leaderAd,#leaderAdContainer,#leader_ad,#leader_board_ad,#leaderad,#leaderad_section,#leaderboard-ad,#leaderboard-bottom-ad,#leaderboardAd,#leaderboard_ad,#leaderboard_ad_gam,#left-ad-1,#left-ad-2,#left-ad-col,#left-ad-skin,#left-bottom-ad,#left-lower-adverts,#left-lower-adverts-container,#leftAdContainer,#leftAd_rdr,#leftAdvert,#leftSectionAd300-100,#left_ad,#left_adspace,#leftad,#leftads,#leftcolAd,#lg-banner-ad,#ligatus,#linkAds,#linkads,#live-ad,#logoAd,#longAdSpace,#long_advertisement,#lowerAdvertisementImg,#lowerads,#lowerthirdad,#lowertop-adverts,#lowertop-adverts-container,#lpAdPanel,#lrecad,#lsadvert-left_menu_1,#lsadvert-left_menu_2,#lsadvert-top,#mBannerAd,#main-ad,#main-ad160x600,#main-ad160x600-img,#main-ad728x90,#main-advert1,#main-advert2,#main-advert3,#main-bottom-ad,#main-tj-ad,#mainAd,#mainAdUnit,#mainAdvert,#main_ad,#main_rec_ad,#main_top_ad_container,#marketing-promo,#mastAd,#mastAdvert,#mastad,#mastercardAd,#masthead_ad,#masthead_topad,#medRecAd,#media_ad,#mediaplayer_adburner,#mediumAdvertisement,#medrectad,#menuAds,#menubanner-ad-content,#mi_story_assets_ad,#mid-ad300x250,#mid-table-ad,#midRightTextAds,#mid_ad_div,#mid_ad_title,#mid_mpu,#midadd,#midadspace,#middle-ad,#middle_ad,#middle_body_advertising,#middlead,#middleads,#midrect_ad,#midstrip_ad,#mini-ad,#mochila-column-right-ad-300x250,#mochila-column-right-ad-300x250-1,#module-google_ads,#module_ad,#module_box_ad,#module_sky_scraper,#monsterAd,#moogleAd,#moreads,#most_popular_ad,#motionAd,#mpu,#mpu-advert,#mpu-cont,#mpu300250,#mpuAd,#mpuDiv,#mpuSlot,#mpuWrapper,#mpuWrapperAd,#mpu_banner,#mpu_firstpost,#mpu_holder,#mpu_text_ad,#mpuad,#mpubox,#mr_banner_topad,#mrecAdContainer,#msAds,#ms_ad,#msad,#multiLinkAdContainer,#multi_ad,#my-ads,#myads_HeaderButton,#n_sponsor_ads,#namecom_ad_hosting_main,#narrow-ad,#narrow_ad_unit,#natadad300x250,#national_microlink_ads,#nationalad,#navi_banner_ad_780,#nba160PromoAd,#nba300Ad,#nbaGI300ad,#nbaHouseAnd600Ad,#nbaLeft600Ad,#nbaMidAds,#nbaVid300Ad,#nbcAd300x250,#new_topad,#newads,#news_advertorial_content,#news_advertorial_top,#ng_rtcol_ad,#noresults_ad_container,#noresultsads,#northad,#northbanner-advert,#northbanner-advert-container,#ns_ad1,#ns_ad2,#ns_ad3,#oanda_ads,#onespot-ads,#online_ad,#ovadsense,#p-googleadsense,#page-header-ad,#page-top-ad,#pageAds,#pageAdsDiv,#pageBannerAd,#page_ad,#page_content_top_ad,#pagelet_adbox,#pagelet_netego_ads,#pagelet_search_ads2,#panelAd,#pb_report_ad,#pcworldAdBottom,#pcworldAdTop,#pinball_ad,#player-below-advert,#player_ad,#player_ads,#pmad-in1,#pod-ad-video-page,#populate_ad_bottom,#populate_ad_left,#popup_domination_lightbox_wrapper,#portlet-advertisement-left,#portlet-advertisement-right,#post-promo-ad,#post5_adbox,#post_ad,#premium_ad,#priceGrabberAd,#prime-ad-space,#print-header-ad,#print_ads,#printads,#product-adsense,#promo-ad,#promoAds,#ps-vertical-ads,#pub468x60,#publicidad,#pushdown_ad,#qm-ad-big-box,#qm-ad-sky,#qm-dvdad,#quigo_ad,#r1SoftAd,#rail_ad1,#rail_ad2,#realEstateAds,#rectAd,#rect_ad,#rectangle-ad,#rectangleAd,#rectangle_ad,#refine-300-ad,#region-node-advert,#region-top-ad,#relocation_ad_container,#rh-ad-container,#rh_tower_ad,#rhapsodyAd,#rhs_ads,#rhsadvert,#right-ad,#right-ad-col,#right-ad-skin,#right-ad-title,#right-ad1,#right-ads-3,#right-advert,#right-box-ad,#right-featured-ad,#right-mpu-1-ad-container,#right-uppder-adverts,#right-uppder-adverts-container,#rightAd,#rightAd300x250,#rightAd300x250Lower,#rightAdBar,#rightAdColumn,#rightAd_rdr,#rightAdsDiv,#rightColAd,#rightColumnMpuAd,#rightColumnSkyAd,#right_ad,#right_ad_wrapper,#right_ads,#right_advert,#right_advertisement,#right_advertising,#right_column_ad_container,#right_column_ads,#right_column_adverts,#right_column_internal_ad_container,#right_column_top_ad_unit,#rightad,#rightadContainer,#rightads,#rightadvertbar-doubleclickads,#rightbar-ad,#rightcolhouseads,#rightcolumn_300x250ad,#rightgoogleads,#rightinfoad,#rightside-ads,#rightside_ad,#righttop-adverts,#righttop-adverts-container,#rm_ad_text,#ros_ad,#rotatingads,#row2AdContainer,#rprightHeaderAd,#rr_MSads,#rt-ad,#rt-ad-top,#rt-ad468,#rtMod_ad,#rtmod_ad,#sAdsBox,#sb-ad-sq,#sb_ad_links,#sb_advert,#search-google-ads,#search-sponsored-links,#search-sponsored-links-top,#searchAdSenseBox,#searchAdSenseBoxAd,#searchAdSkyscraperBox,#search_ads,#search_result_ad,#sec_adspace,#second-adlayer,#secondBoxAdContainer,#secondrowads,#sect-ad-300x100,#sect-ad-300x250-2,#section-ad-1-728,#section-ad-300-250,#section-ad-4-160,#section-blog-ad,#section-container-ddc_ads,#section_advertisements,#section_advertorial_feature { display:none !important; } #servfail-ads,#sew-ad1,#shoppingads,#show-ad,#showAd,#showad,#side-ad,#side-ad-container,#side-ads,#sideAd,#sideAd1,#sideAd2,#sideAdSub,#sideAds,#sideBarAd,#side_ad,#side_ad_wrapper,#side_ads_by_google,#side_sky_ad,#sidead,#sideads,#sideadtop-to,#sidebar-125x125-ads,#sidebar-125x125-ads-below-index,#sidebar-ad,#sidebar-ad-boxes,#sidebar-ad-space,#sidebar-ad-wrap,#sidebar-ad3,#sidebar-ads,#sidebar-adv,#sidebar-sponsor-link,#sidebar2ads,#sidebar_ad,#sidebar_ad_widget,#sidebar_ads,#sidebar_ads_180,#sidebar_sponsoredresult_body,#sidebar_txt_ad_links,#sidebarad,#sidebaradpane,#sidebarads,#sidebaradver_advertistxt,#sideline-ad,#single-mpu,#singlead,#site-ad-container,#site-leaderboard-ads,#site_top_ad,#sitead,#sky-ad,#skyAd,#skyAdContainer,#skyScrapperAd,#skyWrapperAds,#sky_ad,#sky_advert,#skyads,#skyadwrap,#skyline_ad,#skyscrapeAd,#skyscraper-ad,#skyscraperAd,#skyscraperAdContainer,#skyscraper_ad,#skyscraper_advert,#skyscraperad,#slide_ad,#sliderAdHolder,#slideshow_ad_300x250,#sm-banner-ad,#small_ad,#small_ad_banners_vertical,#small_ads,#smallerAd,#some-ads,#some-more-ads,#specialAd_one,#specialAd_two,#specialadvertisingreport_container,#specials_ads,#speeds_ads,#speeds_ads_fstitem,#speedtest_mrec_ad,#sphereAd,#sponlink,#sponlinks,#sponsAds,#sponsLinks,#sponseredlinks,#sponsorAd1,#sponsorAd2,#sponsorAdDiv,#sponsorLinks,#sponsorTextLink,#sponsor_banderole,#sponsor_deals,#sponsored,#sponsored-ads,#sponsored-features,#sponsored-links,#sponsored-listings,#sponsored-resources,#sponsored1,#sponsoredBox1,#sponsoredBox2,#sponsoredLinks,#sponsoredList,#sponsoredResults,#sponsoredResultsWide,#sponsoredSiteMainline,#sponsoredSiteSidebar,#sponsored_ads_v4,#sponsored_container,#sponsored_content,#sponsored_game_row_listing,#sponsored_head,#sponsored_link,#sponsored_link_bottom,#sponsored_links,#sponsored_v12,#sponsoredads,#sponsoredlinks,#sponsoredlinks_cntr,#sponsoredlinkslabel,#sponsoredresults_top,#sponsoredwellcontainerbottom,#sponsoredwellcontainertop,#sponsorlink,#spotlightAds,#spotlightad,#sqAd,#squareAd,#squareAdSpace,#squareAds,#square_ad,#start_middle_container_advertisment,#sticky-ad,#stickyBottomAd,#story-90-728-area,#story-ad-a,#story-ad-b,#story-leaderboard-ad,#story-sponsoredlinks,#storyAd,#storyAdWrap,#storyad2,#submenu-ads,#subpage-ad-right,#subpage-ad-top,#swads,#synch-ad,#systemad_background,#tabAdvertising,#takeoverad,#tblAd,#tbl_googlead,#tcwAd,#td-GblHdrAds,#template_ad_leaderboard,#tertiary_advertising,#test_adunit_160_article,#text-ad,#text-ads,#text-link-ads,#textAd,#textAds,#text_ad,#text_ads,#text_advert,#textad,#textad3,#textad_block,#the-last-ad-standing,#thefooterad,#themis-ads,#tile-ad,#tmglBannerAd,#tmp2_promo_ad,#toolbarSlideUpAd,#top-ad,#top-ad-container,#top-ad-menu,#top-ads,#top-ads-tabs,#top-advertisement,#top-banner-ad,#top-search-ad-wrapper,#topAd,#topAd728x90,#topAdBanner,#topAdBox,#topAdContainer,#topAdSenseDiv,#topAdcontainer,#topAds,#topAdsContainer,#topAdvBox,#topAdvert,#topBannerAd,#topBannerAdContainer,#topContentAdTeaser,#topNavLeaderboardAdHolder,#topOverallAdArea,#topRightBlockAdSense,#topSponsoredLinks,#top_ad,#top_ad_area,#top_ad_banner,#top_ad_game,#top_ad_unit,#top_ad_wrapper,#top_ad_zone,#top_ads,#top_advertise,#top_advertising,#top_rectangle_ad,#top_right_ad,#top_wide_ad,#topad,#topad1,#topad2,#topad_left,#topad_right,#topadbar,#topadblock,#topaddwide,#topads,#topadsense,#topadspace,#topadwrap,#topadzone,#topbanner_ad,#topbannerad,#topbar-ad,#topcustomad,#topleaderboardad,#topnav-ad-shell,#topnavad,#toprightAdvert,#toprightad,#topsponsored,#toptextad,#tour300Ad,#tour728Ad,#tourSponsoredLinksContainer,#towerad,#ts-ad_module,#ttp_ad_slot1,#ttp_ad_slot2,#twogamesAd,#txfPageMediaAdvertVideo,#txt_link_ads,#txtads,#undergameAd,#upperAdvertisementImg,#upperMpu,#upper_small_ad,#upperad,#urban_contentad_1,#urban_contentad_2,#urban_contentad_article,#v_ad,#vert-ads,#vert_ad,#vert_ad_placeholder,#vertical_ad,#vertical_ads,#videoAd,#videoAdvert,#video_ads_overdiv,#video_advert2,#video_advert3,#video_cnv_ad,#video_overlay_ad,#videoadlogo,#view_ads,#view_ads_advertisements,#viewads,#viewportAds,#viewvid_ad300x250,#wXcds12-ad,#wall_advert,#wallpaper-ad-link,#wallpaperAd_left,#wallpaperAd_right,#walltopad,#weblink_ads_container,#welcomeAdsContainer,#welcome_ad_mrec,#welcome_advertisement,#wf_ContentAd,#wf_FrontSingleAd,#wf_SingleAd,#wf_bottomContentAd,#wgtAd,#whatsnews_top_ad,#whitepaper-ad,#whoisRightAdContainer,#wide_ad_unit_top,#wideskyscraper_160x600_left,#wideskyscraper_160x600_right,#widget_Adverts,#widget_advertisement,#widgetwidget_adserve2,#wrapAdRight,#wrapAdTop,#wrapperAdsTopLeft,#wrapperAdsTopRight,#xColAds,#y-ad-units,#y708-ad-expedia,#y708-ad-lrec,#y708-ad-partners,#y708-ad-ysm,#y708-advertorial-marketplace,#yahoo-ads,#yahoo-sponsors,#yahooSponsored,#yahoo_ads,#yahoo_ads_2010,#yahoo_text_ad,#yahooad-tbl,#yan-sponsored,#yatadsky,#ybf-ads,#yfi_fp_ad_mort,#yfi_fp_ad_nns,#yfi_pf_ad_mort,#ygrp-sponsored-links,#ymap_adbanner,#yn-gmy-ad-lrec,#yreSponsoredLinks,#ysm_ad_iframe,#zoneAdserverMrec,#zoneAdserverSuper,.ADBAR,.ADPod,.AD_ALBUM_ITEMLIST,.AD_MOVIE_ITEM,.AD_MOVIE_ITEMLIST,.AD_MOVIE_ITEMROW,.ADbox,.Ad-300x100,.Ad-Container-976x166,.Ad-Header,.Ad-MPU,.Ad-Wrapper-300x100,.Ad1,.Ad120x600,.Ad160x600,.Ad160x600left,.Ad160x600right,.Ad2,.Ad247x90,.Ad300x,.Ad300x250,.Ad300x250L,.Ad728x90,.AdBorder,.AdBox,.AdBox7,.AdContainerBox308,.AdContainerModule,.AdHeader,.AdHere,.AdInfo,.AdInline,.AdMedium,.AdPlaceHolder,.AdProS728x90Container,.AdProduct,.AdRingtone,.AdSense,.AdSenseLeft,.AdSlot,.AdSpace,.AdTextSmallFont,.AdTitle,.AdUnit,.AdUnit300,.Ad_C,.Ad_D_Wrapper,.Ad_E_Wrapper,.Ad_Right,.Ads,.AdsBottom,.AdsBoxBottom,.AdsBoxSection,.AdsBoxTop,.AdsLinks1,.AdsLinks2,.AdsRec,.AdvBoxSidebar,.Advert,.Advert300x250,.AdvertMidPage,.AdvertiseWithUs,.Advertisement,.AdvertisementTextTag,.Advman_Widget,.ArticleAd,.ArticleInlineAd,.BCA_Advertisement,.Banner300x250,.BannerAd,.BigBoxAd,.BlockAd,.BlueTxtAdvert,.BottomAdContainer,.BottomAffiliate,.BoxAd,.CG_adkit_leaderboard,.CG_details_ad_dropzone,.CWReviewsProdInfoAd,.ComAread,.CommentAd,.ContentAd,.ContentAds,.DAWRadvertisement,.DeptAd,.DisplayAd,.FT_Ad,.FeaturedAdIndexAd,.FlatAds,.GOOGLE_AD,.GoogleAd,.GoogleAdSenseBottomModule,.GoogleAdSenseRightModule,.HPG_Ad_B,.HPNewAdsBannerDiv,.HPRoundedAd,.HomeContentAd,.IABAdSpace,.InArticleAd,.IndexRightAd,.LazyLoadAd,.LeftAd,.LeftButtonAdSlot,.LeftTowerAd,.M2Advertisement,.MD_adZone,.MOS-ad-hack,.MPU,.MPUHolder,.MPUTitleWrapperClass,.MREC_ads,.MiddleAd,.MiddleAdContainer,.MiddleAdvert,.NewsAds,.OAS,.OpaqueAdBanner,.OpenXad,.PU_DoubleClickAdsContent,.Post5ad,.Post8ad,.Post9ad,.RBboxAd,.RW_ad300,.RectangleAd,.RelatedAds,.Right300x250AD,.RightAd1,.RightAdvertiseArea,.RightAdvertisement,.RightGoogleAFC,.RightRailAd,.RightRailTop300x250Ad,.RightSponsoredAdTitle,.RightTowerAd,.STR_AdBlock,.SectionSponsor,.SideAdCol,.SidebarAd,.SidebarAdvert,.SitesGoogleAdsModule,.SkyAdContainer,.SponsoredAdTitle,.SponsoredContent,.SponsoredLinkItemTD,.SponsoredLinks,.SponsoredLinksGrayBox,.SponsoredLinksModule,.SponsoredLinksPadding,.SponsoredLinksPanel,.Sponsored_link,.SquareAd,.StandardAdLeft,.StandardAdRight,.TRU-onsite-ads-leaderboard,.TextAd,.TheEagleGoogleAdSense300x250,.TopAd,.TopAdContainer,.TopAdL,.TopAdR,.TopBannerAd,.UIWashFrame_SidebarAds,.UnderAd,.VerticalAd,.Video-Ad,.VideoAd,.WidgetAdvertiser,.a160x600,.a728x90,.ad-120x60,.ad-120x600,.ad-160,.ad-160x600,.ad-160x600x1,.ad-160x600x2,.ad-160x600x3,.ad-250,.ad-300,.ad-300-block,.ad-300-blog,.ad-300x100,.ad-300x250,.ad-300x250-first,.ad-300x250-right0,.ad-300x600,.ad-350,.ad-355x75,.ad-600,.ad-635x40,.ad-728,.ad-728x90,.ad-728x90-1,.ad-728x90-top0,.ad-728x90_forum,.ad-90x600,.ad-above-header,.ad-adlink-bottom,.ad-adlink-side,.ad-area,.ad-background,.ad-banner,.ad-banner-smaller,.ad-bigsize,.ad-block,.ad-block-square,.ad-blog2biz,.ad-body,.ad-bottom,.ad-box,.ad-break,.ad-btn,.ad-btn-heading,.ad-button,.ad-cell,.ad-column,.ad-container,.ad-container-300x250,.ad-container-728x90,.ad-container-994x282,.ad-context,.ad-disclaimer,.ad-display,.ad-div,.ad-enabled,.ad-feedback,.ad-filler,.ad-flex,.ad-footer,.ad-footer-leaderboard,.ad-forum,.ad-google,.ad-graphic-large,.ad-gray,.ad-grey,.ad-hdr,.ad-head,.ad-header,.ad-heading,.ad-holder,.ad-homeleaderboard,.ad-img,.ad-in-post,.ad-index-main,.ad-inline,.ad-island,.ad-label,.ad-leaderboard,.ad-left,.ad-links,.ad-lrec,.ad-medium,.ad-medium-two,.ad-mpl,.ad-mpu,.ad-msn,.ad-note,.ad-notice,.ad-other,.ad-permalink,.ad-place-active,.ad-placeholder,.ad-postText,.ad-poster,.ad-priority,.ad-rect,.ad-rectangle,.ad-rectangle-text,.ad-related,.ad-rh,.ad-ri,.ad-right,.ad-right-header,.ad-right-txt,.ad-row,.ad-section,.ad-show-label,.ad-side,.ad-sidebar,.ad-sidebar-outer,.ad-sidebar300,.ad-sky,.ad-skyscr,.ad-skyscraper,.ad-slot,.ad-slot-234-60,.ad-slot-300-250,.ad-slot-728-90,.ad-source,.ad-space,.ad-space-mpu-box,.ad-space-topbanner,.ad-spot,.ad-square,.ad-square300,.ad-squares,.ad-statement,.ad-story-inject,.ad-tabs,.ad-text,.ad-text-links,.ad-tile,.ad-title,.ad-top,.ad-top-left,.ad-unit,.ad-unit-300,.ad-unit-300-wrapper,.ad-unit-anchor,.ad-unit-top,.ad-vert,.ad-vertical-container,.ad-vtu,.ad-widget-list,.ad-with-us,.ad-wrap,.ad-wrapper,.ad-zone,.ad-zone-s-q-l,.ad.super,.ad0,.ad08,.ad08sky,.ad1,.ad10,.ad100,.ad120,.ad120x240backgroundGray,.ad120x600,.ad125,.ad140,.ad160,.ad160600,.ad160x600,.ad160x600GrayBorder,.ad18,.ad19,.ad2,.ad21,.ad230,.ad250,.ad250c,.ad3,.ad300,.ad300250,.ad300_250,.ad300x100,.ad300x250,.ad300x250-hp-features,.ad300x250Module,.ad300x250Top,.ad300x250_container,.ad300x250box,.ad300x50-right,.ad300x600,.ad310,.ad315,.ad336x280,.ad343x290,.ad4,.ad400right,.ad450,.ad468,.ad468_60,.ad468x60,.ad540x90,.ad6,.ad600,.ad620x70,.ad626X35,.ad7,.ad728,.ad728_90,.ad728x90,.ad728x90_container,.ad8,.ad90x780,.adAgate,.adArea674x60,.adBanner,.adBanner300x250,.adBanner728x90,.adBannerTyp1,.adBannerTypSortableList,.adBannerTypW300,.adBar,.adBgBottom,.adBgMId,.adBgTop,.adBlock,.adBottomLink,.adBottomboxright,.adBox,.adBox1,.adBox230X96,.adBox728X90,.adBoxBody,.adBoxBorder,.adBoxContainer,.adBoxContent,.adBoxInBignews,.adBoxSidebar,.adBoxSingle,.adBwrap,.adCMRight,.adCell,.adColumn,.adCont,.adContTop,.adContainer,.adContour,.adCreative,.adCube,.adDiv,.adElement,.adFender3,.adFrame,.adFtr,.adFullWidthMiddle,.adGoogle,.adHeader,.adHeadline,.adHolder,.adHome300x250,.adHorisontal,.adInNews,.adIsland,.adLabel,.adLeader,.adLeaderForum,.adLeaderboard,.adLeft,.adLoaded,.adLocal,.adMPU,.adMarker,.adMastheadLeft,.adMastheadRight,.adMegaBoard,.adMinisLR,.adMkt2Colw,.adModule,.adModuleAd,.adMpu,.adNewsChannel,.adNoOutline,.adNotice,.adNoticeOut,.adObj,.adPageBorderL,.adPageBorderR,.adPanel,.adPod,.adRect,.adResult,.adRight,.adSKY,.adSelfServiceAdvertiseLink,.adServer,.adSky,.adSky600,.adSkyscaper,.adSkyscraperHolder,.adSlot,.adSpBelow,.adSpace,.adSpacer,.adSplash,.adSponsor,.adSpot,.adSpot-brought,.adSpot-searchAd,.adSpot-textBox,.adSpot-twin,.adSpotIsland,.adSquare,.adSubColPod,.adSummary,.adSuperboard,.adSupertower,.adTD,.adTab,.adTag,.adText,.adTileWrap,.adTiler,.adTitle,.adTopLink,.adTopboxright,.adTout,.adTxt,.adUnit,.adUnitHorz,.adUnitVert,.adUnitVert_noImage,.adWebBoard,.adWidget,.adWithTab,.adWord,.adWrap,.adWrapper,.ad_0,.ad_1,.ad_120x90,.ad_125,.ad_130x90,.ad_160,.ad_160x600,.ad_2,.ad_200,.ad_200x200,.ad_250x250,.ad_250x250_w,.ad_3,.ad_300,.ad_300_250,.ad_300x250,.ad_300x250_box_right,.ad_336,.ad_336x280,.ad_350x100,.ad_350x250,.ad_400x200,.ad_468,.ad_468x60,.ad_600,.ad_728,.ad_728_90b,.ad_728x90,.ad_925x90,.ad_Left,.ad_Right,.ad_ad_300,.ad_amazon,.ad_banner,.ad_banner_border,.ad_bar,.ad_bg,.ad_bigbox,.ad_biz,.ad_block,.ad_block_338,.ad_body,.ad_border,.ad_botbanner,.ad_bottom,.ad_bottom_leaderboard,.ad_bottom_left,.ad_box,.ad_box2,.ad_box_ad,.ad_box_div,.ad_callout,.ad_caption,.ad_column,.ad_column_box,.ad_column_hl,.ad_contain,.ad_container,.ad_content,.ad_content_wide,.ad_contents,.ad_descriptor,.ad_disclaimer,.ad_eyebrow,.ad_footer,.ad_frame,.ad_framed,.ad_front_promo,.ad_gutter_top,.ad_head,.ad_header,.ad_heading,.ad_headline,.ad_holder,.ad_hpm,.ad_info_block,.ad_inline,.ad_island,.ad_jnaught,.ad_label,.ad_launchpad,.ad_leader,.ad_leaderboard,.ad_left,.ad_line,.ad_link,.ad_links,.ad_linkunit,.ad_loc,.ad_lrec,.ad_main,.ad_medrec,.ad_medrect,.ad_middle,.ad_mod,.ad_mp,.ad_mpu,.ad_mr,.ad_mrec,.ad_mrec_title_article,.ad_mrect,.ad_news,.ad_note,.ad_notice,.ad_one,.ad_p360,.ad_partner,.ad_partners,.ad_plus,.ad_post,.ad_power,.ad_promo,.ad_rec,.ad_rectangle,.ad_right,.ad_right_col,.ad_row,.ad_row_bottom_item,.ad_side,.ad_sidebar,.ad_skyscraper,.ad_slug,.ad_slug_table,.ad_space,.ad_space_300_250,.ad_spacer,.ad_sponsor,.ad_sponsoredsection,.ad_spot_b,.ad_spot_c,.ad_square_r,.ad_square_top,.ad_sub,.ad_tag_middle,.ad_text,.ad_text_w,.ad_title,.ad_top,.ad_top_leaderboard,.ad_top_left,.ad_topright,.ad_tower,.ad_unit,.ad_unit_rail,.ad_url,.ad_warning,.ad_wid300,.ad_wide,.ad_wrap,.ad_wrapper,.ad_wrapper_fixed,.ad_wrapper_top,.ad_wrp,.ad_zone,.adarea,.adarea-long,.adbanner,.adbannerbox,.adbannerright,.adbar,.adboard,.adborder,.adbot { display:none !important; } .adbottom,.adbottomright,.adbox-outer,.adbox-wrapper,.adbox_300x600,.adbox_366x280,.adbox_468X60,.adbox_bottom,.adbox_br,.adbox_left,.adboxclass,.adboxesrow,.adbreak,.adbug,.adbutton,.adbuttons,.adcode,.adcol1,.adcol2,.adcolumn,.adcolumn_wrapper,.adcont,.adcopy,.add_300x250,.addiv,.adenquire,.adfieldbg,.adfoot,.adfootbox,.adframe,.adhead,.adhead_h,.adhead_h_wide,.adheader,.adheader100,.adhi,.adhint,.adholder,.adhoriz,.adi,.adiframe,.adinfo,.adinside,.adintro,.adits,.adjlink,.adkicker,.adkit,.adkit-advert,.adkit-lb-footer,.adlabel-horz,.adlabel-vert,.adlabelleft,.adleader,.adleaderboard,.adleft1,.adline,.adlink,.adlinks,.adlist,.adlnklst,.admarker,.admediumred,.admedrec,.admessage,.admodule,.admpu,.admpu-small,.adnation-banner,.adnotice,.adops,.adp-AdPrefix,.adpadding,.adpane,.adpic,.adprice,.adproxy,.adrec,.adright,.adroot,.adrotate_widget,.adrow,.adrow-post,.adrow1box1,.adrow1box3,.adrow1box4,.adrule,.ads-125,.ads-300,.ads-300x250,.ads-728x90-wrap,.ads-ads-top,.ads-banner,.ads-below-content,.ads-categories-bsa,.ads-custom,.ads-favicon,.ads-item,.ads-links-general,.ads-mpu,.ads-outer,.ads-profile,.ads-right,.ads-section,.ads-sidebar,.ads-sky,.ads-small,.ads-sponsors,.ads-stripe,.ads-text,.ads-top,.ads-wide,.ads-widget,.ads-widget-partner-gallery,.ads03,.ads160,.ads1_250,.ads2,.ads24Block,.ads3,.ads300,.ads460,.ads460_home,.ads468,.ads728,.ads728x90,.adsArea,.adsBelowHeadingNormal,.adsBlock,.adsBottom,.adsBox,.adsCell,.adsCont,.adsDiv,.adsFull,.adsImages,.adsInsideResults_v3,.adsMPU,.adsMiddle,.adsRight,.adsTextHouse,.adsTop,.adsTower2,.adsTowerWrap,.adsWithUs,.ads_125_square,.ads_180,.ads_300,.ads_300x100,.ads_300x250,.ads_320,.ads_337x280,.ads_728x90,.ads_big,.ads_big-half,.ads_box,.ads_box_headline,.ads_brace,.ads_catDiv,.ads_container,.ads_disc_anchor,.ads_disc_leader,.ads_disc_lwr_square,.ads_disc_skyscraper,.ads_disc_square,.ads_div,.ads_footer,.ads_header,.ads_holder,.ads_horizontal,.ads_leaderboard,.ads_lr_wrapper,.ads_medrect,.ads_mpu,.ads_outer,.ads_rectangle,.ads_remove,.ads_right,.ads_rightbar_top,.ads_sc_bl_i,.ads_sc_tb,.ads_sc_tl_i,.ads_show_if,.ads_side,.ads_sidebar,.ads_singlepost,.ads_spacer,.ads_takeover,.ads_title,.ads_top,.ads_top_promo,.ads_tr,.ads_verticalSpace,.ads_vtlLink,.ads_widesky,.ads_wrapperads_top,.adsafp,.adsbg300,.adsblockvert,.adsborder,.adsbottom,.adsbox,.adsboxitem,.adsbttmpg,.adsbyyahoo,.adsc,.adscaleAdvert,.adsclick,.adscontainer,.adscreen,.adsd_shift100,.adsection_a2,.adsection_c2,.adsense-468,.adsense-ad,.adsense-category,.adsense-category-bottom,.adsense-googleAds,.adsense-heading,.adsense-overlay,.adsense-post,.adsense-right,.adsense-title,.adsense3,.adsense300,.adsenseAds,.adsenseBlock,.adsenseContainer,.adsenseGreenBox,.adsenseInPost,.adsenseList,.adsense_bdc_v2,.adsense_mpu,.adsensebig,.adsenseblock,.adsenseblock_bottom,.adsenseblock_top,.adsenselr,.adsensem_widget,.adsensesq,.adsenvelope,.adset,.adsforums,.adsghori,.adsgvert,.adshome,.adside,.adsidebox,.adsider,.adsingle,.adsleft,.adsleftblock,.adslink,.adslogan,.adslotleft,.adslotright,.adsmalltext,.adsmessage,.adsnippet_widget,.adsp,.adspace,.adspace-MR,.adspace-widget,.adspace180,.adspace_bottom,.adspace_buysell,.adspace_rotate,.adspace_skyscraper,.adspacer,.adspot,.adspot728x90,.adstextpad,.adstitle,.adstop,.adstory,.adstrip,.adtab,.adtable,.adtag,.adtech,.adtext,.adtext_gray,.adtext_horizontal,.adtext_onwhite,.adtext_vertical,.adtile,.adtips,.adtips1,.adtitle,.adtop,.adtravel,.adtxt,.adtxtlinks,.adunit,.adv-mpu,.adv300,.advBox,.advVideobox,.adv_120x600,.adv_300x250,.adv_728x90,.adv_banner_hor,.adv_medium_rectangle,.adver,.adverTag,.adverTxt,.adver_cont_below,.advert-300-side,.advert-300x100-side,.advert-728x90,.advert-article-bottom,.advert-bannerad,.advert-bg-250,.advert-bloggrey,.advert-box,.advert-btm,.advert-head,.advert-horizontal,.advert-iab-300-250,.advert-iab-468-60,.advert-mpu,.advert-skyscraper,.advert-text,.advert-title,.advert-txt,.advert120,.advert300,.advert300x250,.advert300x300,.advert300x440,.advert350ih,.advert4,.advert5,.advert8,.advertColumn,.advertCont,.advertContainer,.advertContent,.advertHeadline,.advertIslandWrapper,.advertRight,.advertSuperBanner,.advertText,.advertTitleSky,.advert_336,.advert_468x60,.advert_box,.advert_cont,.advert_container,.advert_djad,.advert_google_content,.advert_google_title,.advert_home_300,.advert_label,.advert_leaderboard,.advert_list,.advert_note,.advert_surr,.advert_top,.advertheader-red,.advertise,.advertise-here,.advertise-homestrip,.advertise-horz,.advertise-inquiry,.advertise-leaderboard,.advertise-list,.advertise-top,.advertise-vert,.advertiseContainer,.advertiseText,.advertise_ads,.advertise_here,.advertise_link,.advertise_link_sidebar,.advertisement,.advertisement-728x90,.advertisement-block,.advertisement-sidebar,.advertisement-space,.advertisement-sponsor,.advertisement-swimlane,.advertisement-text,.advertisement-top,.advertisement300x250,.advertisement468,.advertisementBox,.advertisementColumnGroup,.advertisementContainer,.advertisementHeader,.advertisementLabel,.advertisementPanel,.advertisementText,.advertisement_300x250,.advertisement_btm,.advertisement_caption,.advertisement_g,.advertisement_header,.advertisement_horizontal,.advertisement_top,.advertiser,.advertiser-links,.advertisespace_div,.advertising-banner,.advertising-header,.advertising-leaderboard,.advertising-local-links,.advertising2,.advertisingTable,.advertising_block,.advertising_images,.advertisment,.advertisment_bar,.advertisment_caption,.advertisment_two,.advertize,.advertize_here,.advertorial,.advertorial-2,.advertorial-promo-box,.advertorial_red,.advertorialtitle,.adverts,.adverts-125,.adverts_RHS,.advt,.advt-banner-3,.advt-block,.advt-sec,.advt300,.advt720,.advtitle,.adwhitespace,.adwordListings,.adwords,.adwordsHeader,.adwrap,.adwrapper-lrec,.adwrapper948,.adzone-footer,.adzone-sidebar,.affiliate-link,.affiliate-sidebar,.affiliateAdvertText,.affiliates-sidebar,.affinityAdHeader,.afsAdvertising,.after_ad,.agi-adsaleslinks,.alb-content-ad,.alignads,.alt_ad,.anchorAd,.another_text_ad,.answer_ad_content,.aolSponsoredLinks,.aopsadvert,.apiAdMarkerAbove,.apiAds,.app_advertising_skyscraper,.archive-ads,.art_ads,.article-ad-box,.article-ads,.article-content-adwrap,.articleAd,.articleAd300x250,.articleAds,.articleAdsL,.articleEmbeddedAdBox,.article_ad,.article_adbox,.article_mpu_box,.article_page_ads_bottom,.articleads,.aseadn,.aux-ad-widget-1,.aux-ad-widget-2,.b-astro-sponsored-links_horizontal,.b-astro-sponsored-links_vertical,.b_ads_cont,.b_ads_top,.banmanad,.banner-468x60,.banner-ad,.banner-ads,.banner-adv,.banner-advert,.banner-adverts,.banner-buysellads,.banner160x600,.banner300by250,.banner300x100,.banner300x250,.banner468,.banner468by60,.banner728x90,.bannerADV,.bannerAd,.bannerAdWrapper300x250,.bannerAdWrapper730x86,.bannerAds,.bannerAdvert,.bannerRightAd,.banner_160x600,.banner_300x250,.banner_728x90,.banner_ad,.banner_ad_footer,.banner_ad_leaderboard,.bannerad,.bannerad-125tower,.bannerad-468x60,.barkerAd,.base-ad-mpu,.base_ad,.base_printer_widgets_AdBreak,.bg-ad-link,.bgnavad,.big-ads,.bigAd,.big_ad,.big_ads,.bigad,.bigad2,.bigbox_ad,.bigboxad,.billboard300x250,.billboard_ad,.biz-ad,.biz-ads,.biz-adtext,.blk_advert,.block-ad,.block-ad300,.block-admanager,.block-ads-bottom,.block-ads-top,.block-adsense,.block-adsense-managed,.block-adspace-full,.block-deca_advertising,.block-google-admanager,.block-google_admanager,.block-openads,.block-openadstream,.block-openx,.block-thirdage-ads,.block-wtg_adtech,.blockAd,.blockAds,.block_ad,.block_ad_sb_text,.block_ad_sponsored_links,.block_ad_sponsored_links-wrapper,.block_ad_sponsored_links_localized,.blockad,.blocked-ads,.blog-ad-leader-inner,.blog-ads-container,.blogAd,.blogAdvertisement,.blogArtAd,.blogBigAd,.blog_ad,.blogads,.blox3featuredAd,.body_ad,.body_sponsoredresults_bottom,.body_sponsoredresults_middle,.body_sponsoredresults_top,.bodyads,.bodyads2,.bookseller-header-advt,.bottom-ad,.bottom-ad-fr,.bottomAd,.bottomAds,.bottom_ad,.bottom_ad_block,.bottom_ads,.bottom_adsense,.bottomad,.bottomads,.bottomadvert,.bottombarad,.bottomrightrailAd,.bottomvidad,.box-ad,.box-ad-grey,.box-ads,.box-adsense,.boxAd,.boxAds,.boxAdsInclude,.box_ad,.box_ad_container,.box_ad_content,.box_ad_spacer,.box_ad_wrap,.box_ads,.box_adv,.box_adv_new,.box_advertising,.box_advertisment_62_border,.box_content_ad,.box_content_ads,.box_textads,.boxad,.boxads,.boxyads,.bps-ad-wrapper,.bps-advertisement,.bps-advertisement-inline-ads,.br-ad,.breakad_container,.brokerad,.bsa_ads,.btm_ad,.btn-ad,.bullet-sponsored-links,.bullet-sponsored-links-gray,.burstContentAdIndex,.busrep_poll_and_ad_container,.buttonAd,.buttonAds,.button_ads,.button_advert,.buttonadbox,.buttonads,.bx_ad,.bx_ad_right,.cA-adStrap,.cColumn-TextAdsBox,.cLeftTextAdUnit,.c_ligatus_nxn,.calloutAd,.carbonad,.carbonad-tag,.care2_adspace,.catalog_ads,.category-ad,.categorySponsorAd,.category__big_game_container_body_games_advertising,.cb-ad-banner,.cb-ad-container,.cb_ads,.cb_navigation_ad,.cbstv_ad_label,.cbzadvert,.cbzadvert_block,.cdAdTitle,.cdmainlineSearchAdParent,.cdsidebarSearchAdParent,.centerAd,.center_ad,.centerad,.centered-ad,.chitikaAdCopy,.cinemabotad,.classifiedAdThree,.clearerad,.cmAdContainer,.cmAdFind,.cmAdSponsoredLinksBox,.cm_ads,.cms-Advert,.cnbc_badge_banner_ad_area,.cnbc_banner_ad_area,.cnbc_leaderboard_ad,.cnn160AdFooter,.cnnAd,.cnnMosaic160Container,.cnnStoreAd,.cnnStoryElementBoxAd,.cnnWCAdBox,.cnnWireAdLtgBox,.cnn_728adbin,.cnn_adcntr300x100,.cnn_adcntr728x90,.cnn_adspc336cntr,.cnn_adtitle,.cntrad,.column2-ad,.columnBoxAd,.columnRightAdvert,.com-ad-server,.comment-ad,.comment-ad-wrap,.comment-advertisement,.comment_ad_box,.common_advertisement_title,.communityAd,.conTSponsored,.conductor_ad,.confirm_ad_left,.confirm_ad_right,.confirm_leader_ad,.consoleAd,.container-adwords,.containerSqAd,.container_serendipity_plugin_google_adsense,.content-ad,.content-ads,.content-advert,.contentAd,.contentAdFoot,.contentAdsWrapper,.content_ad,.content_ad_728,.content_adsense,.content_adsq,.content_tagsAdTech,.contentad,.contentad-home,.contentad300x250,.contentad_right_col,.contentadcontainer,.contentadfloatl,.contentadleft,.contentads,.contentadstartpage,.contenttextad,.contest_ad,.cp_ad,.cpmstarHeadline,.cpmstarText,.create_ad,.cs-mpu,.cscTextAd,.cse_ads,.cspAd,.ct_ad,.ctnAdSkyscraper,.ctnAdSquare300,.cube-ad,.cubeAd,.cube_ads,.currency_ad,.custom_ads,.cwAdvert,.cxAdvertisement,.darla_ad,.dart-ad,.dartAdImage,.dart_ad,.dart_tag,.dartadvert,.dartiframe,.dc-ad,.dcAdvertHeader,.deckAd,.deckads,.detail-ads,.detailMpu,.detail_ad,.detail_top_advert,.dfrads,.displayAdSlot,.divAd,.divAdright,.div_adv300,.div_advstrip,.divad1,.divad2,.divad3,.divads,.divider_ad,.dlSponsoredLinks,.dmco_advert_iabrighttitle,.downloadAds,.download_ad,.downloadad,.dsq_ad,.dualAds,.dynamic-ads,.dynamic_ad,.e-ad,.ec-ads,.ec-ads-remove-if-empty,.em-ad,.em_ads_box_dynamic_remove,.embed-ad,.embeddedAd,.entry-body-ad,.entry-injected-ad,.entry_sidebar_ads,.entryad,.ez-clientAd,.f_Ads,.feature_ad,.featuredAds,.featured_ad,.featuredadvertising,.fireplaceadleft,.fireplaceadright,.fireplaceadtop,.firstpost_advert_container,.flagads,.flash-advertisement,.flash_ad,.flash_advert,.flashad,.flexiad,.flipbook_v2_sponsor_ad,.floatad,.floated_right_ad,.floatingAds,.fm-badge-ad,.fns_td_wrap,.fold-ads,.footad,.footer-ad,.footerAd,.footerAdModule,.footerAds,.footerAdslot,.footerAdverts,.footerTextAd,.footer_ad,.footer_ad336,.footer_ads,.footer_block_ad,.footer_bottomad,.footer_line_ad,.footer_text_ad,.footerad,.forumtopad,.freedownload_ads,.frn_adbox,.frn_cont_adbox,.frontads,.frontpage-google-ad,.ft-ad,.ftdAdBar,.ftdContentAd,.full_ad_box,.fullbannerad,.g3rtn-ad-site,.gAdRows,.gAdSky,.gAdvertising,.g_ggl_ad,.ga-ads,.ga-textads-bottom,.ga-textads-top,.gaTeaserAds,.gaTeaserAdsBox,.gads,.gads_cb,.gads_container,.gallery_ad,.gam_ad_slot,.gameAd,.gamesPage_ad_content,.gbl_advertisement,.gen_side_ad,.gglAds,.global_banner_ad,.googad,.googads,.google-ad,.google-ad-container,.google-ads,.google-ads-boxout,.google-ads-slim,.google-adsense,.google-right-ad,.google-sponsored-ads,.google-sponsored-link,.google468,.google468_60,.googleAd,.googleAd-content,.googleAd-list,.googleAd300x250_wrapper,.googleAdBox,.googleAdSense,.googleAdSenseModule,.googleAd_body,.googleAds,.googleAds_article_page_above_comments,.googleAdsense,.googleContentAds,.googleProfileAd,.googleSearchAd_content,.googleSearchAd_sidebar,.google_ad,.google_ad_wide,.google_add_container,.google_ads,.google_ads_bom_title,.google_ads_content,.google_adsense_footer,.googlead,.googleaddiv,.googleaddiv2,.googleads,.googleads_300x250,.googleads_title,.googleadsense,.googleafc,.googley_ads,.gpAdBox,.gpAds,.gradientAd,.grey-ad-line,.group_ad,.gsAd,.gsfAd,.gt_ad,.gt_ad_300x250,.gt_ad_728x90,.gt_adlabel,.gutter-ad-left,.gutter-ad-right,.gx_ad,.h-ad-728x90-bottom,.h_Ads,.h_ad,.half-ad,.half_ad_box,.hcf-ad,.hcf-ad-rectangle,.hcf-cms-ad,.hd_advert,.hdr-ads,.head_ad,.header-ad,.header-advert,.header-taxonomy-image-sponsor,.headerAd,.headerAdCode,.headerAds,.headerAdvert,.headerTextAd,.header_ad,.header_ad_center,.header_ad_div,.header_ads,.header_advertisement,.header_advertisment,.headerad,.headerad-720,.hi5-ad,.highlightsAd,.hm_advertisment,.hn-ads,.home-ad-links,.homeAd,.homeAd1,.homeAd2,.homeAdBoxA,.homeAdBoxBetweenBlocks,.homeAdBoxInBignews,.homeAdSection,.homeMediumAdGroup,.home_ad_bottom,.home_advertisement,.home_mrec_ad,.homead,.homepage-ad,.homepage300ad,.homepageFlexAdOuter,.homepageMPU,.homepage_middle_right_ad,.homepageinline_adverts,.hor_ad,.horiz_adspace,.horizontalAd,.horizontal_ad,.horizontal_ads,.horizontaltextadbox,.horizsponsoredlinks,.hortad,.houseAd1,.houseAdsStyle,.housead,.hoverad,.hp-col4-ads,.hp2-adtag,.hp_ad_cont,.hp_ad_text,.hp_t_ad,.hp_w_ad,.hpa-ad1,.html-advertisement,.ic-ads,.ico-adv,.idMultiAd,.image-advertisement,.imageAd,.imageads,.imgad,.in-page-ad,.in-story-ads,.in-story-text-ad,.inStoryAd-news2,.indEntrySquareAd,.indie-sidead { display:none !important; } .indy_googleads,.inhousead,.inline-ad,.inline-mpu,.inline-mpu-left,.inlineSideAd,.inline_ad,.inline_ad_title,.inlinead,.inlineadsense,.inlineadtitle,.inlist-ad,.inlistAd,.inner-advt-banner-3,.innerAds,.innerad,.inpostad,.insert_advertisement,.insertad,.insideStoryAd,.inteliusAd_image,.interest-based-ad,.internalAdsContainer,.iprom-ad,.is24-adplace,.isAd,.islandAd,.islandAdvert,.islandad,.itemAdvertise,.jimdoAdDisclaimer,.jp-advertisment-promotional,.js-advert,.kdads-empty,.kdads-link,.kw_advert,.kw_advert_pair,.l_ad_sub,.label-ad,.labelads,.largeRecAdNewsContainerRight,.largeRectangleAd,.largeUnitAd,.large_ad,.lastRowAd,.lcontentbox_ad,.leadAd,.leaderAdSlot,.leaderAdTop,.leaderAdvert,.leaderBoardAdHolder,.leaderOverallAdArea,.leader_ad,.leaderboardAd,.leaderboardAdContainer,.leaderboardAdContainerInner,.leaderboard_ad,.leaderboardad,.leaderboardadtop,.left-ad,.leftAd,.leftAdColumn,.leftAds,.left_ad,.left_ad_box,.left_adlink,.left_ads,.left_adsense,.leftad,.leftadtag,.leftbar_ad_160_600,.leftbarads,.leftbottomads,.leftnavad,.lgRecAd,.lg_ad,.ligatus,.linead,.link_adslider,.link_advertise,.live-search-list-ad-container,.ljad,.local-ads,.log_ads,.logoAds,.logoad,.logoutAd,.longAd,.longAdBox,.lowerAds,.lr-ad,.m-ad-tvguide-box,.m4-adsbygoogle,.m_banner_ads,.macAd,.macad,.main-ad,.main-advert,.main-tabs-ad-block,.mainAd,.mainLinkAd,.main_ad,.main_ad_bg_div,.main_adbox,.main_ads,.main_intro_ad,.map_media_banner_ad,.marginadsthin,.marketing-ad,.masthead_topad,.matador_sidebar_ad_600,.mdl-ad,.media-advert,.mediaAd,.mediaAdContainer,.mediaResult_sponsoredSearch,.medium-rectangle-ad,.mediumRectangleAdvert,.medium_ad,.medrect_ad,.member-ads,.menuItemBannerAd,.menueadimg,.messageBoardAd,.mf-ad300-container,.micro_ad,.mid_ad,.mid_page_ad,.midad,.middle-ad,.middleAds,.middleads,.min_navi_ad,.mini-ad,.miniad,.mmc-ad,.mmcAd_Iframe,.mod-ad-lrec,.mod-ad-n,.mod-adopenx,.mod-vertical-ad,.mod_admodule,.module-ad,.module-ad-small,.module-ads,.module-advertisement,.module-sponsored-ads,.moduleAd,.moduleAdvertContent,.module_ad,.module_box_ad,.modulegad,.moduletable-advert,.moduletable-googleads,.moduletablesquaread,.mos-ad,.mpu,.mpu-ad,.mpu-ad-con,.mpu-advert,.mpu-footer,.mpu-fp,.mpu-title,.mpu-top-left,.mpu-top-left-banner,.mpu-top-right,.mpu01,.mpuAd,.mpuAdSlot,.mpuAdvert,.mpuArea,.mpuBox,.mpuContainer,.mpuHolder,.mpuTextAd,.mpu_ad,.mpu_advert,.mpu_container,.mpu_gold,.mpu_holder,.mpu_platinum,.mpu_side,.mpu_text_ad,.mpuad,.mpuholderportalpage,.mrec_advert,.ms-ads-link,.msfg-shopping-mpu,.mvw_onPageAd1,.mwaads,.my-ad250x300,.nSponsoredLcContent,.nSponsoredLcTopic,.nadvt300,.narrow_ad_unit,.narrow_ads,.navAdsBanner,.navBads,.nav_ad,.navadbox,.navcommercial,.navi_ad300,.naviad,.nba300Ad,.nbaT3Ad160,.nbaTVPodAd,.nbaTwo130Ads,.nbc_ad_carousel_wrp,.newPex_forumads,.newTopAdContainer,.newad,.newsAd,.news_article_ad_google,.newsviewAdBoxInNews,.nf-adbox,.nn-mpu,.noAdForLead,.normalAds,.nrAds,.nsAdRow,.nu2ad,.oas-ad,.oas-bottom-ads,.oas_ad,.oas_advertisement,.offer_sponsoredlinks,.oio-banner-zone,.oio-link-sidebar,.oio-zone-position,.on_single_ad_box,.onethirdadholder,.openads,.openadstext_after,.openx,.openx-ad,.openx_ad,.osan-ads,.other_adv2,.outermainadtd1,.ovAdPromo,.ovAdSky,.ovAdartikel,.ov_spns,.ovadsenselabel,.pageAds,.pageBottomGoogleAd,.pageGoogleAd,.pageGoogleAdFlat,.pageGoogleAdSubcontent,.pageGoogleAds,.pageGoogleAdsContainer,.pageLeaderAd,.page_content_right_ad,.pagead,.pageads,.pagenavindexcontentad,.paneladvert,.partner-ad,.partner-ads-container,.partnerAd,.partnersTextLinks,.pencil_ad,.player_ad_box,.player_hover_ad,.player_page_ad_box,.plista_inimg_box,.pm-ad,.pmad-in2,.pnp_ad,.pod-ad-300,.podRelatedAdLinksWidget,.podSponsoredLink,.portalCenterContentAdBottom,.portalCenterContentAdMiddle,.portalCenterContentAdTop,.portal_searchresultssponsoredlist,.portalcontentad,.post-ad,.postAd,.post_ad,.post_ads,.post_sponsor_unit,.postbit_adbit_register,.postbit_adcode,.postgroup-ads,.postgroup-ads-middle,.prebodyads,.premium_ad_container,.promoAd,.promoAds,.promo_ad,.promoboxAd,.ps-ligatus_placeholder,.pub_300x250,.pub_300x250m,.pub_728x90,.publication-ad,.publicidad,.puff-advertorials,.qa_ad_left,.qm-ad-content,.qm-ad-content-news,.quigo-ad,.qzvAdDiv,.r_ad_1,.r_ad_box,.r_ads,.rad_container,.rect_ad_module,.rectad,.rectangle-ad,.rectangleAd,.rectanglead,.redads_cont,.referrerDetailAd,.regular_728_ad,.regularad,.relatedAds,.related_post_google_ad,.relatesearchad,.remads,.resourceImagetAd,.result_ad,.reviewMidAdvertAlign,.rght300x250,.rhads,.rhs-ad,.rhs-ads-panel,.rhs-advert-container,.rhs-advert-link,.rhs-advert-title,.right-ad,.right-ad-holder,.right-ad2,.right-ads,.right-ads2,.right-sidebar-box-ad,.rightAd,.rightAdBox,.rightAdverts,.rightColAd,.rightColumnRectAd,.rightRailAd,.right_ad,.right_ad_160,.right_ad_box,.right_ad_common_block,.right_ad_text,.right_ad_top,.right_ads,.right_ads_column,.right_box_ad_rotating_container,.right_col_ad,.right_hand_advert_column,.right_side-partyad,.rightad,.rightad_1,.rightad_2,.rightadbox1,.rightads,.rightadunit,.rightbigcolumn_ads,.rightbigcolumn_ads_nobackground,.rightcol_boxad,.rightcoladvert,.rightcoltowerad,.rightmenu_ad,.rnav_ad,.rngtAd,.rot_ads,.roundedCornersAd,.roundingrayboxads,.rt_ad1_300x90,.rt_ad_300x250,.rt_ad_call,.s2k_ad,.savvyad_unit,.sb-ad-sq-bg,.sbAd,.sbAdUnitContainer,.sb_ad_holder,.sb_adsN,.sb_adsNv2,.sb_adsW,.sb_adsWv2,.scanAd,.scc_advert,.sci-ad-main,.sci-ad-sub,.search-ad,.search-results-ad,.search-sponsor,.search-sponsored,.searchAd,.searchAdTop,.searchAds,.searchSponsoredResultsBox,.searchSponsoredResultsList,.search_column_results_sponsored,.search_results_sponsored_top,.section-ad2,.section_mpu_wrapper,.section_mpu_wrapper_wrapper,.selfServeAds,.sepContentAd,.serp_sponsored,.servsponserLinks,.shoppingGoogleAdSense,.showAd_No,.showAd_Yes,.showcaseAd,.sidbaread,.side-ad,.side-ads,.side-sky-banner-160,.sideAd,.sideBoxAd,.side_ad,.side_ad2,.side_ad_1,.side_ad_2,.side_ad_3,.sidead,.sideads,.sideadsbox,.sideadvert,.sidebar-ad,.sidebar-ads,.sidebar-content-ad,.sidebar-text-ad,.sidebarAd,.sidebarAdUnit,.sidebarAdvert,.sidebar_ad,.sidebar_ad_300_250,.sidebar_ads,.sidebar_ads_336,.sidebar_adsense,.sidebar_box_ad,.sidebarad,.sidebarad_bottom,.sidebaradbox,.sidebarads,.sidebarboxad,.sideheadnarrowad,.sideheadsponsorsad,.single-google-ad,.singleAd,.singleAdsContainer,.single_ad,.singlead,.singleadstopcstm2,.site_ad_120_600,.site_ad_300x250,.sitesponsor,.skinAd,.skin_ad_638,.sky-ad,.skyAd,.skyAdd,.skyAdvert,.skyAdvert2,.sky_ad,.sky_scraper_ad,.skyad,.skyjobsadtext,.skyscraper-ad,.skyscraper_ad,.skyscraper_bannerAdHome,.sleekadbubble,.slideshow-ad,.slpBigSlimAdUnit,.slpSquareAdUnit,.sm_ad,.smallSkyAd1,.smallSkyAd2,.small_ad,.small_ads,.smallad-left,.smallads,.smallsponsorad,.smart_ads_bom_title,.spLinks,.specialAd175x90,.speedyads,.sphereAdContainer,.spl-ads,.spl_ad,.spl_ad2,.spl_ad_plus,.splitAd,.splitAdResultsPane,.sponlinkbox,.spons-link,.spons_links,.sponslink,.sponsor-ad,.sponsor-link,.sponsor-links,.sponsor-services,.sponsorPanel,.sponsorPost,.sponsorPostWrap,.sponsorStrip,.sponsor_ad_area,.sponsor_area,.sponsor_bar,.sponsor_columns,.sponsor_footer,.sponsor_line,.sponsor_links,.sponsor_logo,.sponsoradtitle,.sponsored-ads,.sponsored-chunk,.sponsored-editorial,.sponsored-features,.sponsored-links,.sponsored-links-alt-b,.sponsored-links-holder,.sponsored-links-right,.sponsored-post,.sponsored-post_ad,.sponsored-results,.sponsored-right-border,.sponsored-text,.sponsoredBox,.sponsoredInfo,.sponsoredInner,.sponsoredLabel,.sponsoredLink,.sponsoredLinks,.sponsoredLinks2,.sponsoredLinksHeader,.sponsoredProduct,.sponsoredResults,.sponsoredSideInner,.sponsored_ads,.sponsored_box,.sponsored_box_search,.sponsored_by,.sponsored_link,.sponsored_links,.sponsored_links_title_container,.sponsored_links_title_container_top,.sponsored_links_top,.sponsored_result,.sponsored_results,.sponsored_well,.sponsoredibbox,.sponsoredlink,.sponsoredlinks,.sponsoredlinkscontainer,.sponsoredresults,.sponsoredtextlink_container_ovt,.sponsoring_link,.sponsorlink,.sponsorlink2,.sponsormsg,.sport-mpu-box,.spotlightAd,.squareAd,.square_ad,.square_banner_ad,.squared_ad,.ss-ad-banner,.ss-ad-mpu,.standard-ad,.start__newest__big_game_container_body_games_advertising,.staticAd,.stickyAdLink,.stock-ticker-ad-tag,.stocks-ad-tag,.store-ads,.story_AD,.story_ad_div,.story_right_adv,.storyad,.subad,.subadimg,.subcontent-ad,.subtitle-ad-container,.sugarad,.super-ad,.supercommentad_left,.supercommentad_right,.supp-ads,.supportAdItem,.surveyad,.t10ad,.tab_ad,.tab_ad_area,.tablebordersponsor,.tadsanzeige,.tadsbanner,.tadselement,.tallad,.tblTopAds,.tbl_ad,.tbox_ad,.td-Adholder,.td-TrafficWeatherWidgetAdGreyBrd,.teaser-sponsor,.teaserAdContainer,.teaser_adtiles,.text-ad,.text-ad-links,.text-ads,.text-advertisement,.text-g-advertisement,.text-g-group-short-rec-ad,.text-g-net-grp-google-ads-article-page,.textAd,.textAdBox,.textAds,.text_ad,.text_ads,.textad,.textadContainer,.textad_headline,.textadbox,.textadheadline,.textadlink,.textads,.textads_left,.textads_right,.textadsds,.textadsfoot,.textadtext,.textlink-ads,.textlinkads,.tf_page_ad_search,.thirdage_ads_300x250,.thirdage_ads_728x90,.thisIsAd,.thisIsAnAd,.ticket-ad,.tileAds,.tips_advertisement,.title-ad,.title_adbig,.tncms-region-ads,.toolad,.toolbar-ad,.top-ad,.top-ad-space,.top-ads,.top-banner-ad,.top-left-nav-ad,.top-menu-ads,.topAd,.topAdWrap,.topAds,.topAdvertisement,.topAdverts,.topBannerAd,.topLeaderboardAd,.top_Ad,.top_ad,.top_ad1,.top_ad_728,.top_ad_728_90,.top_ad_disclaimer,.top_ad_div,.top_ad_post,.top_ad_wrapper,.top_ads,.top_advert,.top_advertisement,.top_advertising_lb,.top_bar_ad,.top_container_ad,.topad,.topad-bar,.topadbox,.topads,.topadspot,.topadvertisementsegment,.topboardads,.topcontentadvertisement,.topic_inad,.topstoriesad,.toptenAdBoxA,.tourFeatureAd,.tower-ad,.towerAd,.towerAdLeft,.towerAds,.tower_ad,.tower_ad_disclaimer,.towerad,.tr-ad-adtech-placement,.tribal-ad,.ts-ad_unit_bigbox,.ts-banner_ad,.ttlAdsensel,.tto-sponsored-element,.tucadtext,.tvs-mpu,.twoColumnAd,.twoadcoll,.twoadcolr,.tx_smartadserver_pi1,.txt-ads,.txtAd,.txtAds,.txt_ads,.txtadvertise,.type_adscontainer,.type_miniad,.type_promoads,.ukAds,.ukn-banner-ads,.under_ads,.undertimyads,.unit-ad,.universalboxADVBOX01,.universalboxADVBOX03,.universalboxADVBOX04a,.usenext,.v5rc_336x280ad,.vert-ads,.vert-adsBlock,.vertad,.vertical-adsense,.vidadtext,.videoAd,.videoBoxAd,.video_ad,.view-promo-mpu-right,.view_rig_ad,.virgin-mpu,.wa_adsbottom,.wantads,.weather_ad,.wide-ad,.wide-advert,.wide-skyscraper-ad,.wideAd,.wideAdTable,.wide_ad,.wide_ad_unit_top,.wide_ads,.wide_google_ads,.widget-ad,.widget-ad-codes,.widget-ad300x250,.widget-entry-ads-160,.widgetYahooAds,.widget_ad,.widget_ad_boxes_widget,.widget_ad_rotator,.widget_adrotate_widgets,.widget_advert_widget,.widget_econaabachoadswidget,.widget_island_ad,.widget_maxbannerads,.widget_sdac_bottom_ad_widget,.widget_sdac_footer_ads_widget,.widget_sdac_skyscraper_ad_widget,.wikia-ad,.wikia_ad_placeholder,.wingadblock,.withAds,.wl-ad,.wnMultiAd,.wp125_write_ads_widget,.wp125ad,.wp125ad_2,.wpn_ad_content,.wrap-ads,.wrapper-ad,.wrapper-ad-sidecol,.wsSponsoredLinksRight,.wsTopSposoredLinks,.x03-adunit,.x04-adunit,.x81_ad_detail,.xads-blk-top-hld,.xads-blk2,.xads-ojedn,.y-ads,.y-ads-wide,.y7-advertisement,.yahoo-sponsored,.yahoo-sponsored-links,.yahooAd,.yahooAds,.yahoo_ads,.yahooad,.yahooad-image,.yahooad-urlline,.yan-sponsored,.ygrp-ad,.yom-ad,.youradhere,.yrail_ad_wrap,.yrail_ads,.ysmsponsor,.ysponsor,.yw-ad,.zRightAdNote,a[href^="http://ad-apac.doubleclick.net/"],a[href^="http://ad-emea.doubleclick.net/"],a[href^="http://ad.doubleclick.net/"],a[href^="http://adserving.liveuniversenetwork.com/"],a[href^="http://galleries.pinballpublishernetwork.com/"],a[href^="http://galleries.securewebsiteaccess.com/"],a[href^="http://install.securewebsiteaccess.com/"],a[href^="http://latestdownloads.net/download.php?"],a[href^="http://secure.signup-page.com/"],a[href^="http://secure.signup-way.com/"],a[href^="http://www.FriendlyDuck.com/AF_"],a[href^="http://www.adbrite.com/mb/commerce/purchase_form.php?"],a[href^="http://www.firstload.de/affiliate/"],a[href^="http://www.friendlyduck.com/AF_"],a[href^="http://www.google.com/aclk?"],a[href^="http://www.liutilities.com/aff"],a[href^="http://www.liutilities.com/products/campaigns/adv/"],a[href^="http://www.my-dirty-hobby.com/?sub="],a[href^="http://www.ringtonematcher.com/"],#mclip_container:last-child,#ssmiwdiv[jsdisplay],#tads.c,#tadsb.c,#tadsto.c,.ch[onclick="ga(this,event)"],.ra[align="left"][width="30%"],.ra[align="right"][width="30%"] { display:none !important; }</style></html>

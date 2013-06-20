@@ -1,0 +1,111 @@
+Buffer Overflow:
+6.1 The security problem of the webserver was that it did not correctly check the header file.
+With a specially crafted header file, the server would have had a buffer overflow. To fix this,
+I made the code check the amount of characters inputted so that the initialized buffer that we
+created couldn't be overflown. This check stops the buffer overflow because it will exit/stop 
+the program before it starts writing to the buffer.
+
+-I was unable to create a demo exploit that worked-
+
+6.2.1 - The breach is indeed extremely dangerous. A skilled attacker can do many things if he
+can successfully overflow a buffer, such as editing return addresses. He would be able to return
+to any code he wanted, even his own. (He could fill the buffer with his code, then just use that code,
+as well). This will allow him to essentially run ANY code he wanted.
+
+6.2.2 - A recovery plan for the flaw: Make sure all the bound-checking is done with inputs that
+the user does. There may be other flaws in the system, but checking the bounds to disallow 
+overwriting will prevent buffer overflows from occurring, which are very dangerous. I believe
+a bound check would prevent this flaw from happening, but I it doesn't protect the server
+from all the other dangerous attacks.
+
+6.2.3 - I couldn't figure out how to create an executable demonstrating the exploit. I think I understood
+the code, but I couldn't figure out how to exploit it.
+
+Filesystem Exploits:
+6.1 - The main security flaw in this was the lack of checking whether or not the input was valid,
+and that it had the suid bit on. An attacker could access any file in the system and run anything
+he wanted. One change I made with the code was checking to see if the variable has any invalid
+characters in it, it would remove them. This would help with trying to execute code. Another thing
+I did was remove the SUID bit for the cgi, so that if an attacker gets access to it, he wouldn't be able
+to have root access to the whole machine.
+
+For the file permissions of the items, here is what I did:
+Create a new user and group "memo".
+Add everyone in the company (who needs memo access) to the memo group.
+Create a directory /home/memo/memos (this is where the memos will be stored)
+Move all the previous memos into that directory.
+Change the permissions so that: root can read/write, group can read/write, and other can read.
+IMPORTANT: make sure the ~/memos directory has the sticky bit on. (This will prevent 
+anyone to delete other people's things, except for root and user memo).
+Because everyone can read it, it isn't private. (which was a requirement)
+
+My demo exploit is pretty simple, it uses elinks to dump the contents of the URL (with the pathname-
+attack) into a file called "shadow.txt". The url that I used was this:
+http://localhost:8118/cgi-bin/memo.cgi?memo=/etc/shadow
+When going to that url, the website assigned the variable "memo" to /etc/shadow, and then 
+read the contents to the page, as if it was a regular memo. Because of the ">", it wrote it to the
+file shadow.txt.
+
+6.2.1 - This threat was very serious. The attacker had the power to access any file in the system, and
+he could have gained root access and do whatever he pleased. In order to secure this, it would 
+be important to check the path names that is requested. It's also important to make sure the 
+permissions are not allowed so everyone can do anything, because that can create problems. Following
+my steps from 6.1 should prevent any attempt of pathname attacks.
+
+6.2.2 - It is NOT sufficient to just use those path names because it is possible to access folders 
+that are of lower level using "..". Something like "/home/username/memo/../../../" would get you back 
+to the "/" directory. (Same goes for /root/memo). That can be dangerous to allow attackers to access 
+those files under "/". 
+
+6.2.3 - It was a tough exploit to figure out. The general idea was clear, but the right words/text
+was hard to figure out. Also, my exploit only does something pretty simple. I think if I needed to
+and if I had more time to research, I could have done a lot worse than read a secret file!
+
+
+SQL Injection:
+exploit3.txt
+To exploit the login page, we can use the following input for ID:
+   1 OR 1=1 --
+and anything for password. 
+- This will always let you log in into the account because 1=1 is always true, and -- eliminates 
+the rest of the line
+
+To find out other people's logins, we could get the user id's from the "Transfer Money" part after 
+you log in. When you try to send money to someone else, you'll get their id's. From this, you can
+use the following for input:
+ID : anything
+Password: ' OR '1'='1' AND id = '[id number]
+exactly like how that is. The password would be unecessary, because all you need to match is the
+id number.
+
+If you can log into an account, you can transfer all of its balance (or however much you want) to
+any routing number and account number you want.
+
+You can't create a new account or update accounts because the code uses the SQL statements as 
+queries only, being passed into a query function thatt shouldn't be able to update or add anything.
+
+6.
+The security flaw in the FCCU application was that it did not check the inputs that the user put
+into the fields. This allowed them to modify the SQL statements and essentially access anything
+from the database that they wanted. 
+
+The way I fixed the flaw was pretty simple:
+I made sure that all the inputs from the id and password (and everything that required database
+lookup) to make sure that they didn't include potentially dangerous code. Things like this include
+making sure the input for ID's and numbers were actually integers, and couldn't be anything else.
+The other thing was disallowing characters like the ' (apostrophe), which allowed me really access
+anything I wanted. 
+
+A recovery plan for the server:
+1. The breach was pretty serious because this involves very important information (and money). 
+A hacker being able to access these things allowed him to steal $ and even SSN's. Attack
+FILLLLLLLLLLLLLLLLLL THIIIIIIIIIISSSSSSSSS INNNNNNNNNN
+
+2. In order to secure the system, we would have to make sure that all the potential injections are
+impossible, and it would be good to check if anything has been affected by the breach (if one occured).
+It would be smart to try to restore the alterations, but also make sure that there's always checking
+for correct input values.
+
+3. When I first tried to do the SQL injection, it didn't seem to work.. I'm not sure why not, but I typed it 
+in again and it worked fine. Sometimes the sql quieries seemed to act in weird ways so I failed at first,
+but I think I was able to do what I needed to do.

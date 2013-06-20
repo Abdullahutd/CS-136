@@ -1,0 +1,26 @@
+6.
+1. The security flaw in the FCCU application was that it did not check the inputs that the user put
+into the fields. This allowed them to modify the SQL statements and essentially access anything
+from the database that they wanted. 
+
+The way I fixed the flaw was pretty simple:
+I made sure that all the inputs from the id and password (and everything that required database
+lookup) to make sure that they didn't include potentially dangerous code. Things like this include
+making sure the input for ID's and numbers were actually integers, and couldn't be anything else.
+The other thing was disallowing characters like the ' (apostrophe), which allowed me really access
+anything I wanted. 
+
+A recovery plan for the server:
+1. The breach was pretty serious because this involves very important information (and money). 
+A hacker being able to access these things allowed him to steal $ and even SSN's. The attacker
+can gain root access because php allows that to happen. If the hacker injected his own code in it,
+he would have been able to do practically anything.
+
+2. In order to secure the system, we would have to make sure that all the potential injections are
+impossible, and it would be good to check if anything has been affected by the breach (if one occured).
+It would be smart to try to restore the alterations, but also make sure that there's always checking
+for correct input values.
+
+3. When I first tried to do the SQL injection, it didn't seem to work.. I'm not sure why not, but I typed it 
+in again and it worked fine. Sometimes the sql quieries seemed to act in weird ways so I failed at first,
+but I think I was able to do what I needed to do.

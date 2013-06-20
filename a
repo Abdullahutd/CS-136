@@ -1,0 +1,97 @@
+iptables -t filter -A INPUT -s 10.1.1.3 -i lo -j DROP
+iptables -t filter -A INPUT -m state --state ESTABLISHED -j ACCEPT
+iptables -t filter -A OUTPUT -m state --state ESTABLISHED -j ACCEPT
+iptables -t filter -A INPUT -m state --state NEW -p tcp --dport 22 -j ACCEPT
+iptables -t filter -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+iptables -t filter -A INPUT -m state --state NEW -p tcp -s 10.1.1.2 --dport 3306 -j ACCEPT
+iptables -t filter -A INPUT -m state --state NEW -p udp -s 10.1.1.2 --sport 10000:10005 -j ACCEPT
+iptables -t filter -A INPUT -m state --state NEW -p icmp --icmp-type echo-request -j ACCEPT
+iptables -t filter -A OUTPUT -m state --state NEW -p tcp -d 10.1.1.2 --dport 22 -j ACCEPT
+iptables -t filter -A OUTPUT -m state --state NEW -p tcp -d 10.1.1.2 --dport 80 -j ACCEPT
+iptables -t filter -A OUTPUT -m state --state NEW -p tcp -d 10.1.1.2 --dport 3306 -j ACCEPT
+iptables -t filter -A OUTPUT -m state --state NEW -p udp -d 10.1.1.2 --dport 10006:10010 -j ACCEPT
+iptables -t filter -A OUTPUT -m state --state NEW -p icmp --icmp-type echo-request -j ACCEPT
+iptables -t filter -A INPUT -s 198.*.*.* -i lo -j ACCEPT
+iptables -t filter -A INPUT -s 198.*.*.* -o lo -j ACCEPT
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+Permissions Answers
+
+1. No Questions to answer here.
+
+2. The Ballot Box
+
+Question: Is there any way that employees can read the ballots of
+other users? If so, what could be done to stop this?
+   There is a way employees can read the ballots of other users. Limiting the "read" access of the
+     directory doesn't block the users from executing those files inside the folder.
+     ie. If 'temp' had permissions 333, and there was file in there called 'a', the user could simply type:
+       $less temp/a
+     and that would show the content of 'a'. To fix this, we would have to make sure that all the files
+     inside the directory are also unreadable, not just the directory itself.
+
+Question: What does the 'x' bit mean when applied to directories?
+   The 'x' bit for directories means if you can go into the directory, such as using $cd {directory_name}
+
+3. The TPS Reports Directory
+
+Question: Which users on the system can delete arbitrary files
+in the /tpsreports directory?
+   Only the members  of wheel or the owner of the directory (tps) can delete or rename files inside
+        the /tpsreports directory.
+
+Question: Is there any way that non-wheel employees can read
+files in the /tpsreports directory? If not, why?
+   There is NO way that non-wheel employees can read files in that directory because "other" users
+   have no access to the directory whatsoever. (Unless, a non-wheel employee can somehow hack the root
+   and get access as root, but I don't think we're taking that into account.)
+
+Question: What do '0' permissions mean for the owner of a directory?
+What privileges do they have over files in that directory?
+   This means that the owner has no permissions to access the directory whatsoever. They still own the
+        files within that directory (if it's theirs), but since there's no way to access the folder,
+        they cant do much with the stuff inside.
+
+4. sudo: Editing Configuration Files
+
+Question: Is this safe? Why or why not? If it is not safe, is there a
+better way to give larry this access? If it is safe, how do you know
+it is safe?
+   This isn't safe because if someone was in Larry's group, they would also have the permission to access and
+      edit that file. Also, if someone can get Larry's password or into his computer, the hacker could do things
+      with the file that could be harmful to the company. There doesn't seem to be a better way, because if
+      Larry has access to an editing program, it would still allow for changes to happen, which can be
+      potentially devastating.
+
+5. sudo: Restarting System Processes
+
+Question: If this is possible, how would you grant larry access to
+restart Apache? If it is not possible to grant this permission
+securely, explain why.
+   This should be secure unless someone else can access Larry's account. In this case, that would result
+      unauthorized users to run that script as they please. There doesn't seem to be a way to grant him
+      the permission securely because we don't know how secure his system is. One thing we CAN do is
+      maybe have a limit to how many times he can restart, so we know if it's maliciously restarting.
+
+6. POSIX and sudo: Two Wrongs Make a Much Bigger Wrong
+
+Question: Is there some way that moe or curly could subvert this
+system to gain root privileges? If not, why?
+   There IS a way moe or curly could subvert this. One of them can create a bash script	to add them to the
+   	 group wheel. Since they have the privileges to	write into some	admin's	folders, they could put	it in there.
+         Once that happens, they can trick the admin into executing the file and since the admin is part of wheel,
+         they would be able to sudo usermod -a -G wheel (moe/curly).
+
+7. Firewall
+
+The submission script will make a copy of your firewall and include it
+in the tarball.
+
+8. Estimated hours: 8
+
+
+
+
+

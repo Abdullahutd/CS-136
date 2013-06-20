@@ -1,0 +1,86 @@
+TCP/UDP/... Sessions
+File: output.pcap, Type: tcpdump, Created at: Tue Nov 15 18:29:44 2011
+
+1    10.1.1.3:41123 <-> 10.1.1.2:23                (telnet)    1914705 bytes
+"       session_0001.telnet.html                               1953845 bytes
+"       session_0001.telnet.replay                                  12 seconds
+2    10.1.1.3:33505 -> 10.1.1.2:443                (https)        3790 bytes
+3    10.1.1.3:41117 <-> 10.1.1.2:23                (telnet)      35552 bytes
+"       session_0003.telnet.html                                 38664 bytes
+"       session_0003.telnet.replay                                  28 seconds
+4    10.1.1.3:51486 -> 10.1.1.2:80                 (http)          728 bytes
+"       session_0004.http.html                                     882 bytes
+"       session_0004.part_01.data                                   24 bytes
+5    10.1.1.3:41102 <-> 10.1.1.2:23                (telnet)      30054 bytes
+"       session_0005.telnet.html                                 32108 bytes
+"       session_0005.telnet.replay                                  14 seconds
+6    10.1.1.3:41115 <-> 10.1.1.2:23                (telnet)    1952787 bytes
+"       session_0006.telnet.html                               1992653 bytes
+"       session_0006.telnet.replay                                  21 seconds
+7    10.1.1.2:48922 -> 10.1.1.3:80                 (http)        33520 bytes
+"       session_0007.http.html                                   57740 bytes
+"       session_0007.part_01.data                                19308 bytes
+8    10.1.1.3:33507 -> 10.1.1.2:443                (https)        3758 bytes
+9    10.1.1.3:33508 -> 10.1.1.2:443                (https)        3758 bytes
+10   10.1.1.3:41121 <-> 10.1.1.2:23                (telnet)      76266 bytes
+"       session_0010.telnet.html                                 80694 bytes
+"       session_0010.telnet.replay                                  28 seconds
+11   10.1.1.3:51489 -> 10.1.1.2:80                 (http)          718 bytes
+"       session_0011.http.html                                     872 bytes
+"       session_0011.part_01.data                                   19 bytes
+12   10.1.1.3:33510 -> 10.1.1.2:443                (https)        3758 bytes
+13   10.1.1.2:48866 -> 10.1.1.3:80                 (http)         1796 bytes
+"       session_0013.http.html                                    2306 bytes
+"       session_0013.part_01.data                                  493 bytes
+14   10.1.1.3:35984 -> 10.1.1.2:443                (https)        3790 bytes
+15   10.1.1.3:34990 -> 10.1.1.2:23                 (telnet)    1941846 bytes
+"       session_0015.telnet.html                               1983378 bytes
+"       session_0015.telnet.replay                                  22 seconds
+16   10.1.1.3:39119 -> 10.1.1.2:80                 (http)          742 bytes
+"       session_0016.http.html                                     896 bytes
+"       session_0016.part_01.data                                   31 bytes
+17   10.1.1.3:34992 -> 10.1.1.2:23                 (telnet)    1929600 bytes
+"       session_0017.telnet.html                               1969472 bytes
+"       session_0017.telnet.replay                                   7 seconds
+18   10.1.1.3:35988 -> 10.1.1.2:443                (https)        3822 bytes
+19   10.1.1.2:48867 -> 10.1.1.3:80                 (http)         1796 bytes
+"       session_0019.http.html                                    2306 bytes
+"       session_0019.part_01.data                                  493 bytes
+20   10.1.1.3:39122 -> 10.1.1.2:80                 (http)          744 bytes
+"       session_0020.http.html                                     898 bytes
+"       session_0020.part_01.data                                   32 bytes
+21   10.1.1.3:35990 -> 10.1.1.2:443                (https)        3758 bytes
+22   10.1.1.3:39124 -> 10.1.1.2:80                 (http)          810 bytes
+"       session_0022.http.html                                     964 bytes
+"       session_0022.part_01.data                                   65 bytes
+23   10.1.1.3:34997 -> 10.1.1.2:23                 (telnet)    1938636 bytes
+"       session_0023.telnet.html                               1977475 bytes
+"       session_0023.telnet.replay                                   1 seconds
+24   10.1.1.3:34998 -> 10.1.1.2:23                 (telnet)    1335793 bytes
+"       session_0024.telnet.html                               1363519 bytes
+"       session_0024.telnet.replay                                  12 seconds
+25   10.1.1.3:34999 -> 10.1.1.2:23                 (telnet)      13220 bytes
+"       session_0025.telnet.html                                 15976 bytes
+"       session_0025.telnet.replay                                  11 seconds
+26   10.1.1.3:39128 -> 10.1.1.2:80                 (http)          820 bytes
+"       session_0026.http.html                                     974 bytes
+"       session_0026.part_01.data                                   70 bytes
+27   10.1.1.2:48868 -> 10.1.1.3:80                 (http)         1796 bytes
+"       session_0027.http.html                                    2306 bytes
+"       session_0027.part_01.data                                  493 bytes
+28   10.1.1.3:35996 -> 10.1.1.2:443                (https)        3822 bytes
+29   10.1.1.3:35002 -> 10.1.1.2:23                 (telnet)       3302 bytes
+"       session_0029.telnet.html                                  4646 bytes
+"       session_0029.telnet.replay                                   3 seconds
+30   10.1.1.3:35998 -> 10.1.1.2:443                (https)        3721 bytes
+31   10.1.1.3:39132 -> 10.1.1.2:80                 (http)          774 bytes
+"       session_0031.http.html                                     928 bytes
+"       session_0031.part_01.data                                   47 bytes
+32   10.1.1.3:36000 -> 10.1.1.2:443                (https)        3684 bytes
+33   10.1.1.3:36001 -> 10.1.1.2:443                (https)        3684 bytes
+34   10.1.1.3:35007 -> 10.1.1.2:23                 (telnet)       4139 bytes
+"       session_0034.telnet.html                                  5407 bytes
+"       session_0034.telnet.replay                                   1 seconds
+35   10.1.1.3:39136 -> 10.1.1.2:80                 (http)          740 bytes
+"       session_0035.http.html                                     894 bytes
+"       session_0035.part_01.data                                   30 bytes

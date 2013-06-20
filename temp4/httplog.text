@@ -1,0 +1,4 @@
+1321826824.582     61 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=4307 - NONE/- text/html
+1321826824.582     61 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=4307 - NONE/- text/html
+1321826828.025     64 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=FZCO&new=49&hash=9b7be4354208c706733378dbc04429b6 - NONE/- text/html;
+1321826828.025     63 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=FZCO&new=49&hash=9b7be4354208c706733378dbc04429b6 - NONE/- text/html;

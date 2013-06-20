@@ -1,0 +1,571 @@
+<HTML>
+<HEAD><TITLE>3</TITLE></HEAD><BODY bgcolor="white">
+<H1>telnet: 10.1.1.3:41117 &lt;-&gt; 10.1.1.2:23</H1>
+<H2>File output.pcap, Session 3</H2>
+<PRE WRAP="virtual">
+<font color="red">uname -a
+</font><font color="red">uname -a
+</font><font color="blue">uname -a
+Linux alice.mitm.uclaclass.isi.deterlab.net 2.6.32-34-generic-pae #77-Ubuntu SMP Tue Sep 13 21:16:18 UTC 201
+<font color="green">&gt;</font>1 i686 GNU/Linux
+$ </font><font color="blue">uname -a
+Linux alice.mitm.uclaclass.isi.deterlab.net 2.6.32-34-generic-pae #77-Ubuntu SMP Tue Sep 13 21:16:18 UTC 201
+<font color="green">&gt;</font>1 i686 GNU/Linux
+$ </font><font color="red">cd /usr
+</font><font color="red">cd /usr
+</font><font color="blue">cd /usr
+$ </font><font color="blue">cd /usr
+$ </font><font color="red">cd .
+</font><font color="red">cd .
+</font><font color="blue">cd .
+$ </font><font color="blue">cd .
+$ </font><font color="red">cd /usr
+</font><font color="red">cd /usr
+</font><font color="blue">cd /usr
+$ </font><font color="blue">cd /usr
+$ </font><font color="red">ls ..
+</font><font color="red">ls ..
+</font><font color="blue">ls ..
+bin    dev     home.   local       mnt   proj  scratch  srv  users.vmlinuz
+boot   etc     initrd.img  lost+found  opt   root  selinux  sys  usr
+cdrom  groups  lib.   media       proc  sbin  share    tmp  var
+$ </font><font color="blue">ls ..
+bin    dev     home.   local       mnt   proj  scratch  srv  users.vmlinuz
+boot   etc     initrd.img  lost+found  opt   root  selinux  sys  usr
+cdrom  groups  lib.   media       proc  sbin  share    tmp  var
+$ </font><font color="red">cd
+</font><font color="red">cd
+</font><font color="blue">cd
+$ </font><font color="blue">cd
+$ </font><font color="red">du -xsh .
+</font><font color="red">du -xsh .
+</font><font color="blue">du -xsh .
+du: cannot read directory `./root': Permission denied
+du: cannot read directory `./var/log/apache2': Permission denied
+</font><font color="blue">du -xsh .
+du: cannot read directory `./root': Permission denied
+du: cannot read directory `./var/log/apache2': Permission denied
+</font><font color="blue">du: cannot read directory `./var/spool/cron/atjobs': Permission denied
+du: cannot read directory `./var/spool/cron/atspool': Permission denied
+du: cannot read directory `./var/spool/cron/crontabs': Permission denied
+</font><font color="blue">du: cannot read directory `./var/spool/cron/atjobs': Permission denied
+du: cannot read directory `./var/spool/cron/atspool': Permission denied
+du: cannot read directory `./var/spool/cron/crontabs': Permission denied
+</font><font color="blue">du: cannot read directory `./var/cache/ldconfig': Permission denied
+du: cannot read directory `./lost+found': Permission denied
+</font><font color="blue">du: cannot read directory `./var/cache/ldconfig': Permission denied
+du: cannot read directory `./lost+found': Permission denied
+</font><font color="blue">du: cannot read directory `./etc/ppp/peers': Permission denied
+du: cannot read directory `./etc/chatscripts': Permission denied
+</font><font color="blue">du: cannot read directory `./etc/ppp/peers': Permission denied
+du: cannot read directory `./etc/chatscripts': Permission denied
+</font><font color="blue">du: cannot read directory `./etc/ssl/private': Permission denied
+</font><font color="blue">du: cannot read directory `./etc/ssl/private': Permission denied
+</font><font color="blue">du: cannot read directory `./proj/DeterTest': Permission denied
+du: cannot read directory `./users/jhudson': Permission denied
+du: cannot read directory `./users/bks': Permission denied
+du: cannot read directory `./users/alwabel': Permission denied
+du: cannot read directory `./users/jjh': Permission denied
+du: cannot read directory `./users/faber': Permission denied
+du: cannot read directory `./users/jhickey': Permission denied
+</font><font color="blue">du: cannot read directory `./proj/DeterTest': Permission denied
+du: cannot read directory `./users/jhudson': Permission denied
+du: cannot read directory `./users/bks': Permission denied
+du: cannot read directory `./users/alwabel': Permission denied
+du: cannot read directory `./users/jjh': Permission denied
+du: cannot read directory `./users/faber': Permission denied
+du: cannot read directory `./users/jhickey': Permission denied
+</font><font color="blue">du: cannot read directory `./users/TTaggart': Permission denied
+</font><font color="blue">du: cannot read directory `./users/TTaggart': Permission denied
+</font><font color="blue">du: cannot read directory `./users/lahey': Permission denied
+du: cannot read directory `./users/bwilson': Permission denied
+du: cannot read directory `./users/kls2': Permission denied
+du: cannot read directory `./users/abhi': Permission denied
+du: cannot read directory `./users/schwab': Permission denied
+du: cannot read directory `./users/mikeryan': Permission denied
+du: cannot read directory `./users/scuric': Permission denied
+du: cannot read directory `./users/sklower': Permission denied
+</font><font color="blue">du: cannot read directory `./users/lahey': Permission denied
+du: cannot read directory `./users/bwilson': Permission denied
+du: cannot read directory `./users/kls2': Permission denied
+du: cannot read directory `./users/abhi': Permission denied
+du: cannot read directory `./users/schwab': Permission denied
+du: cannot read directory `./users/mikeryan': Permission denied
+du: cannot read directory `./users/scuric': Permission denied
+du: cannot read directory `./users/sklower': Permission denied
+</font><font color="blue">1.1G..
+$ </font><font color="blue">1.1G..
+$ </font><font color="red">who
+</font><font color="red">who
+</font><font color="blue">who
+jumbo    pts/2        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/1        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/0        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/3        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/4        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/5        2011-11-15 18:27 (bob-lan0)
+jambo    pts/6        2011-11-15 18:28 (bob-lan0)
+jambo    pts/7        2011-11-15 18:28 (bob-lan0)
+jambo    pts/8        2011-11-15 18:28 (bob-lan0)
+jambo    pts/9        2011-11-15 18:28 (bob-lan0)
+$ </font><font color="blue">who
+jumbo    pts/2        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/1        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/0        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/3        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/4        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/5        2011-11-15 18:27 (bob-lan0)
+jambo    pts/6        2011-11-15 18:28 (bob-lan0)
+jambo    pts/7        2011-11-15 18:28 (bob-lan0)
+jambo    pts/8        2011-11-15 18:28 (bob-lan0)
+jambo    pts/9        2011-11-15 18:28 (bob-lan0)
+$ </font><font color="red">ls -alh
+</font><font color="red">ls -alh
+</font><font color="blue">ls -alh
+</font><font color="blue">ls -alh
+</font><font color="blue">total 118K
+drwxr-xr-x  28 root root    4.0K 2011-11-13 16:12 .
+drwxr-xr-x  28 root root    4.0K 2011-11-13 16:12 ..
+drwxr-xr-x   2 root root    4.0K 2011-10-14 15:59 bin
+drwxr-xr-x   3 root root    4.0K 2011-10-14 15:57 boot
+drwxr-xr-x   2 root root    4.0K 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root    3.7K 2011-11-15 15:23 dev
+drwxr-xr-x  93 root root    4.0K 2011-11-15 18:23 etc
+drwxr-xr-x   2 root root    4.0K 2010-06-28 20:32 groups
+drwxr-xr-x   3 root root    4.0K 2010-06-01 18:25 home
+lrwxrwxrwx   1 root root      37 2011-10-14 15:43 initrd.img -&gt; boot/initrd.img-2.6.32-34-generic-pae
+drwxr-xr-x  17 root root     12K 2011-11-01 14:06 lib
+drwxr-xr-x   3 root root    4.0K 2010-06-02 19:54 local
+drwx------   2 root root     16K 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root    4.0K 2010-06-01 18:15 media
+drwxr-xr-x   2 root root    4.0K 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root    4.0K 2010-06-01 18:16 opt
+dr-xr-xr-x 168 root root       0 2011-11-15 15:23 proc
+drwxr-xr-x   4 root root    4.0K 2011-11-15 15:23 proj
+drwx------   6 root root    4.0K 2011-11-13 16:12 root
+drwxr-xr-x   2 root root    4.0K 2011-11-01 14:06 sbin
+drwxr-xr-x   2 root root    4.0K 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root    4.0K 2009-12-05 13:55 selinux
+drwxrwxr-x  23 root libuuid 1.0K 2011-10-06 13:50 share
+drwxr-xr-x   3 root root    4.0K 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root       0 2011-1</font><font color="blue">total 118K
+drwxr-xr-x  28 root root    4.0K 2011-11-13 16:12 .
+drwxr-xr-x  28 root root    4.0K 2011-11-13 16:12 ..
+drwxr-xr-x   2 root root    4.0K 2011-10-14 15:59 bin
+drwxr-xr-x   3 root root    4.0K 2011-10-14 15:57 boot
+drwxr-xr-x   2 root root    4.0K 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root    3.7K 2011-11-15 15:23 dev
+drwxr-xr-x  93 root root    4.0K 2011-11-15 18:23 etc
+drwxr-xr-x   2 root root    4.0K 2010-06-28 20:32 groups
+drwxr-xr-x   3 root root    4.0K 2010-06-01 18:25 home
+lrwxrwxrwx   1 root root      37 2011-10-14 15:43 initrd.img -&gt; boot/initrd.img-2.6.32-34-generic-pae
+drwxr-xr-x  17 root root     12K 2011-11-01 14:06 lib
+drwxr-xr-x   3 root root    4.0K 2010-06-02 19:54 local
+drwx------   2 root root     16K 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root    4.0K 2010-06-01 18:15 media
+drwxr-xr-x   2 root root    4.0K 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root    4.0K 2010-06-01 18:16 opt
+dr-xr-xr-x 168 root root       0 2011-11-15 15:23 proc
+drwxr-xr-x   4 root root    4.0K 2011-11-15 15:23 proj
+drwx------   6 root root    4.0K 2011-11-13 16:12 root
+drwxr-xr-x   2 root root    4.0K 2011-11-01 14:06 sbin
+drwxr-xr-x   2 root root    4.0K 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root    4.0K 2009-12-05 13:55 selinux
+drwxrwxr-x  23 root libuuid 1.0K 2011-10-06 13:50 share
+drwxr-xr-x   3 root root    4.0K 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root       0 2011-1</font><font color="blue">1-15 15:23 sys
+drwxrwxrwt   4 root root    4.0K 2011-11-15 15:28 tmp
+drwxr-xr-x  96 root root    4.0K 2011-11-15 15:24 users
+drwxr-xr-x  12 root root    4.0K 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root    4.0K 2011-11-15 15:27 var
+lrwxrwxrwx   1 root root      34 2011-10-14 15:43 vmlinuz -&gt; boot/vmlinuz-2.6.32-34-generic-pae
+$ </font><font color="blue">1-15 15:23 sys
+drwxrwxrwt   4 root root    4.0K 2011-11-15 15:28 tmp
+drwxr-xr-x  96 root root    4.0K 2011-11-15 15:24 users
+drwxr-xr-x  12 root root    4.0K 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root    4.0K 2011-11-15 15:27 var
+lrwxrwxrwx   1 root root      34 2011-10-14 15:43 vmlinuz -&gt; boot/vmlinuz-2.6.32-34-generic-pae
+$ </font><font color="red">ps aux
+</font><font color="red">ps aux
+</font><font color="blue">ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   2812  1696 ?        Ss   15:23   0:05 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    15:23   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/0]
+root         4  0.0  0.0      0     0 ?        S    15:23   0:00 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/0]
+root         6  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/1]
+root         7  0.0  0.0      0     0 ?        S    15:23   0:00 [ksoftirqd/1]
+</font><font color="blue">ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   2812  1696 ?        Ss   15:23   0:05 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    15:23   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/0]
+root         4  0.0  0.0      0     0 ?        S    15:23   0:00 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/0]
+root         6  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/1]
+root         7  0.0  0.0      0     0 ?        S    15:23   0:00 [ksoftirqd/1]
+</font><font color="blue">root         8  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/1]
+root         9  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/2]
+root        10  0.0  0.0      0     0 ?        S    15:23   0:01 [ksoftirqd/2]
+root        11  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/2]
+root        12  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/3]
+root        13  0.0  0.0      0     0 ?        S    15:23   0:01 [ksoftirqd/3]
+root        14  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/3]
+root        15  0.0  0.0      0     0 ?        S    15:23   0:04 [events/0]
+root        16  0.1  0.0      0     0 ?        S    15:23   0:19 [events/1]
+root        17  0.0  0.0      0     0 ?        S    15:23   0:04 [events/2]
+root        18  0.1  0.0      0     0 ?        S    15:23   0:13 [events/3]
+root        19  0.0  0.0      0     0 ?        S    15:23   0:00 [cpuset]
+root        20  0.0  0.0      0     0 ?        S    15:23   0:00 [khelper]
+root        21  0.0  0.0      0     0 ?        S    15:23   0:00 [async/mgr]
+root        22  0.0  0.0      0     0 ?        S    15:23   0:00 [pm]
+root        24  0.0  0.0      0     0 ?        S    15:23   0:00 [sync_supers]
+root        25  0.0  0.0      0     0 ?        S    15:23   0:00 [bdi-default]
+root        26  0.0  0.0      0     0 ?        S    15:23   0:00 [kintegrityd/0]
+root        27  0.0  0.0      0     0 ?  </font><font color="blue">root         8  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/1]
+root         9  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/2]
+root        10  0.0  0.0      0     0 ?        S    15:23   0:01 [ksoftirqd/2]
+root        11  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/2]
+root        12  0.0  0.0      0     0 ?        S    15:23   0:00 [migration/3]
+root        13  0.0  0.0      0     0 ?        S    15:23   0:01 [ksoftirqd/3]
+root        14  0.0  0.0      0     0 ?        S    15:23   0:00 [watchdog/3]
+root        15  0.0  0.0      0     0 ?        S    15:23   0:04 [events/0]
+root        16  0.1  0.0      0     0 ?        S    15:23   0:19 [events/1]
+root        17  0.0  0.0      0     0 ?        S    15:23   0:04 [events/2]
+root        18  0.1  0.0      0     0 ?        S    15:23   0:13 [events/3]
+root        19  0.0  0.0      0     0 ?        S    15:23   0:00 [cpuset]
+root        20  0.0  0.0      0     0 ?        S    15:23   0:00 [khelper]
+root        21  0.0  0.0      0     0 ?        S    15:23   0:00 [async/mgr]
+root        22  0.0  0.0      0     0 ?        S    15:23   0:00 [pm]
+root        24  0.0  0.0      0     0 ?        S    15:23   0:00 [sync_supers]
+root        25  0.0  0.0      0     0 ?        S    15:23   0:00 [bdi-default]
+root        26  0.0  0.0      0     0 ?        S    15:23   0:00 [kintegrityd/0]
+root        27  0.0  0.0      0     0 ?  </font><font color="blue">      S    15:23   0:00 [kintegrityd/1]
+root        28  0.0  0.0      0     0 ?        S    15:23   0:00 [kintegrityd/2]
+root        29  0.0  0.0      0     0 ?        S    15:23   0:00 [kintegrityd/3]
+root        30  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/0]
+root        31  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/1]
+root        32  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/2]
+root        33  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/3]
+root        34  0.0  0.0      0     0 ?        S    15:23   0:00 [kacpid]
+root        35  0.0  0.0      0     0 ?        S    15:23   0:00 [kacpi_notify]
+root        36  0.0  0.0      0     0 ?        S    15:23   0:00 [kacpi_hotplug]
+root        37  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/0]
+root        38  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/1]
+root        39  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/2]
+root        40  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/3]
+root        41  0.0  0.0      0     0 ?        S    15:23   0:00 [ata_aux]
+root        42  0.0  0.0      0     0 ?        S    15:23   0:00 [ksuspend_usbd]
+root        43  0.0  0.0      0     0 ?        S    15:23   0:00 [khubd]
+</font><font color="blue">      S    15:23   0:00 [kintegrityd/1]
+root        28  0.0  0.0      0     0 ?        S    15:23   0:00 [kintegrityd/2]
+root        29  0.0  0.0      0     0 ?        S    15:23   0:00 [kintegrityd/3]
+root        30  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/0]
+root        31  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/1]
+root        32  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/2]
+root        33  0.0  0.0      0     0 ?        S    15:23   0:00 [kblockd/3]
+root        34  0.0  0.0      0     0 ?        S    15:23   0:00 [kacpid]
+root        35  0.0  0.0      0     0 ?        S    15:23   0:00 [kacpi_notify]
+root        36  0.0  0.0      0     0 ?        S    15:23   0:00 [kacpi_hotplug]
+root        37  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/0]
+root        38  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/1]
+root        39  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/2]
+root        40  0.0  0.0      0     0 ?        S    15:23   0:00 [ata/3]
+root        41  0.0  0.0      0     0 ?        S    15:23   0:00 [ata_aux]
+root        42  0.0  0.0      0     0 ?        S    15:23   0:00 [ksuspend_usbd]
+root        43  0.0  0.0      0     0 ?        S    15:23   0:00 [khubd]
+</font><font color="blue">root        44  0.0  0.0      0     0 ?        S    15:23   0:00 [kseriod]
+root        45  0.0  0.0      0     0 ?        S    15:23   0:00 [kmmcd]
+root        50  0.0  0.0      0     0 ?        S    15:23   0:00 [khungtaskd]
+root        51  0.0  0.0      0     0 ?        S    15:23   0:00 [kswapd0]
+root        52  0.0  0.0      0     0 ?        SN   15:23   0:00 [ksmd]
+root        53  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/0]
+root        54  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/1]
+root        55  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/2]
+root        56  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/3]
+root        57  0.0  0.0      0     0 ?        S    15:23   0:00 [ecryptfs-kthr]
+root        58  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/0]
+root        59  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/1]
+root        60  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/2]
+root        61  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/3]
+root        64  0.0  0.0      0     0 ?        S    15:23   0:00 [scsi_eh_0]
+root        65  0.0  0.0      0     0 ?        S    15:23   0:00 [scsi_eh_1]
+root        68  0.0  0.0      0     0 ?        S    15:23   0:00 [kstriped]
+root        69  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd/0]
+root        70  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd</font><font color="blue">root        44  0.0  0.0      0     0 ?        S    15:23   0:00 [kseriod]
+root        45  0.0  0.0      0     0 ?        S    15:23   0:00 [kmmcd]
+root        50  0.0  0.0      0     0 ?        S    15:23   0:00 [khungtaskd]
+root        51  0.0  0.0      0     0 ?        S    15:23   0:00 [kswapd0]
+root        52  0.0  0.0      0     0 ?        SN   15:23   0:00 [ksmd]
+root        53  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/0]
+root        54  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/1]
+root        55  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/2]
+root        56  0.0  0.0      0     0 ?        S    15:23   0:00 [aio/3]
+root        57  0.0  0.0      0     0 ?        S    15:23   0:00 [ecryptfs-kthr]
+root        58  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/0]
+root        59  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/1]
+root        60  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/2]
+root        61  0.0  0.0      0     0 ?        S    15:23   0:00 [crypto/3]
+root        64  0.0  0.0      0     0 ?        S    15:23   0:00 [scsi_eh_0]
+root        65  0.0  0.0      0     0 ?        S    15:23   0:00 [scsi_eh_1]
+root        68  0.0  0.0      0     0 ?        S    15:23   0:00 [kstriped]
+root        69  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd/0]
+root        70  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd</font><font color="blue">/1]
+root        71  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd/2]
+root        72  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd/3]
+root        73  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpath_handle]
+root        74  0.0  0.0      0     0 ?        S    15:23   0:00 [ksnapd]
+root        75  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/0]
+root        76  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/1]
+root        77  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/2]
+root        78  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/3]
+root        79  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root        80  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root        81  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root        82  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root       225  0.0  0.0      0     0 ?        S    15:23   0:00 [mpt_poll_0]
+root       226  0.0  0.0      0     0 ?        S    15:23   0:00 [mpt/0]
+root       245  0.0  0.0      0     0 ?        S    15:23   0:00 [scsi_eh_2]
+root       263  0.0  0.0      0     0 ?        S    15:23   0:00 [flush-8:0]
+root       266  0.0  0.0      0     0 ?        S    15:23   0:00 [kjournald]
+root       309  0.0  0.0   2316   852 ?        S    15:23   0:00 upstart-udev-br
+root       31</font><font color="blue">/1]
+root        71  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd/2]
+root        72  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpathd/3]
+root        73  0.0  0.0      0     0 ?        S    15:23   0:00 [kmpath_handle]
+root        74  0.0  0.0      0     0 ?        S    15:23   0:00 [ksnapd]
+root        75  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/0]
+root        76  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/1]
+root        77  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/2]
+root        78  0.0  0.0      0     0 ?        S    15:23   0:00 [kondemand/3]
+root        79  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root        80  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root        81  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root        82  0.0  0.0      0     0 ?        S    15:23   0:00 [kconservative]
+root       225  0.0  0.0      0     0 ?        S    15:23   0:00 [mpt_poll_0]
+root       226  0.0  0.0      0     0 ?        S    15:23   0:00 [mpt/0]
+root       245  0.0  0.0      0     0 ?        S    15:23   0:00 [scsi_eh_2]
+root       263  0.0  0.0      0     0 ?        S    15:23   0:00 [flush-8:0]
+root       266  0.0  0.0      0     0 ?        S    15:23   0:00 [kjournald]
+root       309  0.0  0.0   2316   852 ?        S    15:23   0:00 upstart-udev-br
+root       31</font><font color="blue">1  0.0  0.0   2424   780 ?        S&lt;s  15:23   0:00 udevd --daemon
+</font><font color="blue">1  0.0  0.0   2424   780 ?        S&lt;s  15:23   0:00 udevd --daemon
+</font><font color="blue">root       407  0.0  0.0      0     0 ?        S    15:23   0:00 [edac-poller]
+root       445  0.0  0.0      0     0 ?        S    15:23   0:00 [kpsmoused]
+root       538  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/0]
+root       539  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/1]
+root       540  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/2]
+root       541  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/3]
+root       542  0.0  0.0      0     0 ?        S    15:23   0:00 [ttm_swap]
+root       553  0.0  0.0   2436   680 ?        S&lt;   15:23   0:00 udevd --daemon
+root       556  0.0  0.0   2436   660 ?        S&lt;   15:23   0:00 udevd --daemon
+syslog     645  0.0  0.0  35544  1748 ?        Sl   15:23   0:01 rsyslogd -c4
+daemon     724  0.0  0.0   1896   512 ?        Ss   15:23   0:00 portmap
+root       829  0.0  0.0   1792   564 tty4     Ss+  15:23   0:00 /sbin/getty -8
+root       833  0.0  0.0   1792   568 tty5     Ss+  15:23   0:00 /sbin/getty -8
+root       838  0.0  0.0   1792   572 tty2     Ss+  15:23   0:00 /sbin/getty -8
+root       839  0.0  0.0   1792   564 tty3     Ss+  15:23   0:00 /sbin/getty -8
+root       842  0.0  0.0   1792   568 tty6     Ss+  15:23   0:00 /sbin/getty -8
+root       848  0.0  0.0   2828   588 ?        Ss   15:23   0:01 /usr/sbin/irqba
+root       857  0.0  0.0   2376   896 ?        Ss   15:23   0:00 cron
+daemon     858  0.0  0.0   2248 </font><font color="blue">root       407  0.0  0.0      0     0 ?        S    15:23   0:00 [edac-poller]
+root       445  0.0  0.0      0     0 ?        S    15:23   0:00 [kpsmoused]
+root       538  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/0]
+root       539  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/1]
+root       540  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/2]
+root       541  0.0  0.0      0     0 ?        S    15:23   0:00 [radeon/3]
+root       542  0.0  0.0      0     0 ?        S    15:23   0:00 [ttm_swap]
+root       553  0.0  0.0   2436   680 ?        S&lt;   15:23   0:00 udevd --daemon
+root       556  0.0  0.0   2436   660 ?        S&lt;   15:23   0:00 udevd --daemon
+syslog     645  0.0  0.0  35544  1748 ?        Sl   15:23   0:01 rsyslogd -c4
+daemon     724  0.0  0.0   1896   512 ?        Ss   15:23   0:00 portmap
+root       829  0.0  0.0   1792   564 tty4     Ss+  15:23   0:00 /sbin/getty -8
+root       833  0.0  0.0   1792   568 tty5     Ss+  15:23   0:00 /sbin/getty -8
+root       838  0.0  0.0   1792   572 tty2     Ss+  15:23   0:00 /sbin/getty -8
+root       839  0.0  0.0   1792   564 tty3     Ss+  15:23   0:00 /sbin/getty -8
+root       842  0.0  0.0   1792   568 tty6     Ss+  15:23   0:00 /sbin/getty -8
+root       848  0.0  0.0   2828   588 ?        Ss   15:23   0:01 /usr/sbin/irqba
+root       857  0.0  0.0   2376   896 ?        Ss   15:23   0:00 cron
+daemon     858  0.0  0.0   2248 </font><font color="blue">  432 ?        Ss   15:23   0:00 atd
+statd      921  0.0  0.0   1968   764 ?        Ss   15:23   0:00 rpc.statd -L
+root       956  0.0  0.0   1808   516 ?        Ss   15:23   0:00 /usr/local/libe
+root       987  0.0  0.0   1792   568 tty1     Ss+  15:23   0:00 /sbin/getty -8
+root       988  0.0  0.0   1792   572 ttyS0    Ss+  15:23   0:00 /sbin/getty -L
+ntp       1169  0.0  0.0   4408  1352 ?        Ss   15:23   0:00 /usr/sbin/ntpd
+root      1216  0.0  0.0   1912   660 ?        Ss   15:23   0:00 /usr/local/etc/
+root      1219  0.0  0.1   5936  3556 ?        S    15:23   0:00 /usr/bin/perl -
+root      1231  0.0  0.0  65124   940 ?        Ssl  15:23   0:00 /usr/local/etc/
+root      1263  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/0]
+root      1264  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/1]
+root      1265  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/2]
+root      1266  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/3]
+root      1267  0.0  0.0      0     0 ?        S    15:23   0:00 [nfsiod]
+</font><font color="blue">  432 ?        Ss   15:23   0:00 atd
+statd      921  0.0  0.0   1968   764 ?        Ss   15:23   0:00 rpc.statd -L
+root       956  0.0  0.0   1808   516 ?        Ss   15:23   0:00 /usr/local/libe
+root       987  0.0  0.0   1792   568 tty1     Ss+  15:23   0:00 /sbin/getty -8
+root       988  0.0  0.0   1792   572 ttyS0    Ss+  15:23   0:00 /sbin/getty -L
+ntp       1169  0.0  0.0   4408  1352 ?        Ss   15:23   0:00 /usr/sbin/ntpd
+root      1216  0.0  0.0   1912   660 ?        Ss   15:23   0:00 /usr/local/etc/
+root      1219  0.0  0.1   5936  3556 ?        S    15:23   0:00 /usr/bin/perl -
+root      1231  0.0  0.0  65124   940 ?        Ssl  15:23   0:00 /usr/local/etc/
+root      1263  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/0]
+root      1264  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/1]
+root      1265  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/2]
+root      1266  0.0  0.0      0     0 ?        S    15:23   0:00 [rpciod/3]
+root      1267  0.0  0.0      0     0 ?        S    15:23   0:00 [nfsiod]
+</font><font color="blue">root      1268  0.0  0.0      0     0 ?        S    15:23   0:00 [lockd]
+</font><font color="blue">root      1268  0.0  0.0      0     0 ?        S    15:23   0:00 [lockd]
+</font><font color="blue">root      2283  0.0  0.0   1764   336 ?        Ss   15:24   0:00 /usr/local/etc/
+root      2289  0.0  0.1   5688  3124 ?        Ss   15:24   0:00 /usr/bin/perl -
+la236ay   2290  0.0  0.0   3608  1432 ?        S    15:24   0:00 /usr/local/etc/
+root      2302  0.0  0.0   3868   724 ?        Ss   15:24   0:00 linktest -e UCL
+root      2310  0.0  0.1   5552  2116 ?        Ss   15:24   0:00 /usr/sbin/sshd
+root      2995  0.0  0.1   8068  3788 ?        Ss   15:27   0:00 /usr/sbin/apach
+www-data  2997  0.0  0.1   7336  2136 ?        S    15:27   0:03 /usr/sbin/apach
+www-data  2999  0.2  0.2 229832  5080 ?        Sl   15:27   0:27 /usr/sbin/apach
+www-data  3000  0.2  0.2 229868  5116 ?        Sl   15:27   0:27 /usr/sbin/apach
+root      3233  0.0  0.0   1960   640 ?        Ss   15:27   0:00 /usr/sbin/inetd
+root      3277  0.0  0.1   3840  2104 ?        S    15:27   0:01 /usr/bin/perl -
+root      4313  0.0  0.0   2160   920 ?        Ss   18:27   0:00 in.telnetd: bob
+root      4314  0.2  0.0   2720  1404 pts/5    Ss   18:27   0:00 login -h bob-la
+jimbo     4391  0.0  0.0   1832   544 pts/5    S+   18:27   0:00 -sh
+root      4610  0.0  0.0   2160   924 ?        Ss   18:28   0:00 in.telnetd: bob
+root      4611  0.6  0.0   2720  1404 pts/9    Ss   18:28   0:00 login -h bob-la
+jambo     4710  0.0  0.0   1832   540 pts/9    S+   18:28   0:00 -sh
+root      4770  0.0  0.0   2160   928 ?        Ss   18:28   0:00 in.telnetd: bo</font><font color="blue">root      2283  0.0  0.0   1764   336 ?        Ss   15:24   0:00 /usr/local/etc/
+root      2289  0.0  0.1   5688  3124 ?        Ss   15:24   0:00 /usr/bin/perl -
+la236ay   2290  0.0  0.0   3608  1432 ?        S    15:24   0:00 /usr/local/etc/
+root      2302  0.0  0.0   3868   724 ?        Ss   15:24   0:00 linktest -e UCL
+root      2310  0.0  0.1   5552  2116 ?        Ss   15:24   0:00 /usr/sbin/sshd
+root      2995  0.0  0.1   8068  3788 ?        Ss   15:27   0:00 /usr/sbin/apach
+www-data  2997  0.0  0.1   7336  2136 ?        S    15:27   0:03 /usr/sbin/apach
+www-data  2999  0.2  0.2 229832  5080 ?        Sl   15:27   0:27 /usr/sbin/apach
+www-data  3000  0.2  0.2 229868  5116 ?        Sl   15:27   0:27 /usr/sbin/apach
+root      3233  0.0  0.0   1960   640 ?        Ss   15:27   0:00 /usr/sbin/inetd
+root      3277  0.0  0.1   3840  2104 ?        S    15:27   0:01 /usr/bin/perl -
+root      4313  0.0  0.0   2160   920 ?        Ss   18:27   0:00 in.telnetd: bob
+root      4314  0.2  0.0   2720  1404 pts/5    Ss   18:27   0:00 login -h bob-la
+jimbo     4391  0.0  0.0   1832   544 pts/5    S+   18:27   0:00 -sh
+root      4610  0.0  0.0   2160   924 ?        Ss   18:28   0:00 in.telnetd: bob
+root      4611  0.6  0.0   2720  1404 pts/9    Ss   18:28   0:00 login -h bob-la
+jambo     4710  0.0  0.0   1832   540 pts/9    S+   18:28   0:00 -sh
+root      4770  0.0  0.0   2160   928 ?        Ss   18:28   0:00 in.telnetd: bo</font><font color="blue">b
+root      4771  0.5  0.0   2720  1404 pts/6    Ss   18:28   0:00 login -h bob-la
+jambo     4848  0.0  0.0   1832   544 pts/6    S    18:28   0:00 -sh
+root      4862  0.0  0.0   2160   924 ?        Ss   18:28   0:00 in.telnetd: bob
+root      4863  0.7  0.0   2720  1408 pts/8    Ss   18:28   0:00 login -h bob-la
+jambo     4938  0.0  0.0   1832   540 pts/8    S+   18:28   0:00 -sh
+root      4944  0.1  0.0   2160   924 ?        Ss   18:28   0:00 in.telnetd: bob
+root      4945  0.8  0.0   2720  1404 pts/7    Ss   18:28   0:00 login -h bob-la
+jambo     5019  0.0  0.0   1832   540 pts/7    S+   18:28   0:00 -sh
+</font><font color="blue">b
+root      4771  0.5  0.0   2720  1404 pts/6    Ss   18:28   0:00 login -h bob-la
+jambo     4848  0.0  0.0   1832   544 pts/6    S    18:28   0:00 -sh
+root      4862  0.0  0.0   2160   924 ?        Ss   18:28   0:00 in.telnetd: bob
+root      4863  0.7  0.0   2720  1408 pts/8    Ss   18:28   0:00 login -h bob-la
+jambo     4938  0.0  0.0   1832   540 pts/8    S+   18:28   0:00 -sh
+root      4944  0.1  0.0   2160   924 ?        Ss   18:28   0:00 in.telnetd: bob
+root      4945  0.8  0.0   2720  1404 pts/7    Ss   18:28   0:00 login -h bob-la
+jambo     5019  0.0  0.0   1832   540 pts/7    S+   18:28   0:00 -sh
+</font><font color="blue">jambo     5048  0.0  0.0   2716  1040 pts/6    R+   18:28   0:00 ps aux
+root     19763  0.0  0.0   2160   924 ?        Ss   17:55   0:00 in.telnetd: bob
+root     19764  0.0  0.0   2720  1408 pts/4    Ss   17:55   0:00 login -h bob-la
+jumbo    19840  0.0  0.0   1832   540 pts/4    S+   17:55   0:00 -sh
+root     20202  0.0  0.0   2160   924 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20203  0.0  0.0   2720  1404 pts/3    Ss   17:55   0:00 login -h bob-la
+jimbo    20278  0.0  0.0   1832   540 pts/3    S+   17:55   0:00 -sh
+root     20296  0.0  0.0   2160   920 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20297  0.0  0.0   2720  1400 pts/1    Ss   17:55   0:00 login -h bob-la
+jumbo    20374  0.0  0.0   1832   544 pts/1    S+   17:55   0:00 -sh
+root     20475  0.0  0.0   2160   928 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20476  0.0  0.0   2720  1404 pts/2    Ss   17:55   0:00 login -h bob-la
+root     20513  0.0  0.0   2160   920 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20518  0.0  0.0   2720  1404 pts/0    Ss   17:55   0:00 login -h bob-la
+jumbo    20554  0.0  0.0   1832   544 pts/2    S+   17:55   0:00 -sh
+jimbo    20634  0.0  0.0   1832   540 pts/0    S+   17:55   0:00 -sh
+$ </font><font color="blue">jambo     5048  0.0  0.0   2716  1040 pts/6    R+   18:28   0:00 ps aux
+root     19763  0.0  0.0   2160   924 ?        Ss   17:55   0:00 in.telnetd: bob
+root     19764  0.0  0.0   2720  1408 pts/4    Ss   17:55   0:00 login -h bob-la
+jumbo    19840  0.0  0.0   1832   540 pts/4    S+   17:55   0:00 -sh
+root     20202  0.0  0.0   2160   924 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20203  0.0  0.0   2720  1404 pts/3    Ss   17:55   0:00 login -h bob-la
+jimbo    20278  0.0  0.0   1832   540 pts/3    S+   17:55   0:00 -sh
+root     20296  0.0  0.0   2160   920 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20297  0.0  0.0   2720  1400 pts/1    Ss   17:55   0:00 login -h bob-la
+jumbo    20374  0.0  0.0   1832   544 pts/1    S+   17:55   0:00 -sh
+root     20475  0.0  0.0   2160   928 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20476  0.0  0.0   2720  1404 pts/2    Ss   17:55   0:00 login -h bob-la
+root     20513  0.0  0.0   2160   920 ?        Ss   17:55   0:00 in.telnetd: bob
+root     20518  0.0  0.0   2720  1404 pts/0    Ss   17:55   0:00 login -h bob-la
+jumbo    20554  0.0  0.0   1832   544 pts/2    S+   17:55   0:00 -sh
+jimbo    20634  0.0  0.0   1832   540 pts/0    S+   17:55   0:00 -sh
+$ </font><font color="red">ls ..
+</font><font color="red">ls ..
+</font><font color="blue">ls ..
+bin    dev     home.   local       mnt   proj  scratch  srv  users.vmlinuz
+boot   etc     initrd.img  lost+found  opt   root  selinux  sys  usr
+cdrom  groups  lib.   media       proc  sbin  share    tmp  var
+$ </font><font color="blue">ls ..
+bin    dev     home.   local       mnt   proj  scratch  srv  users.vmlinuz
+boot   etc     initrd.img  lost+found  opt   root  selinux  sys  usr
+cdrom  groups  lib.   media       proc  sbin  share    tmp  var
+$ </font><font color="red">uptime
+</font><font color="red">uptime
+</font><font color="blue">uptime
+ 18:28:35 up  3:05, 10 users,  load average: 0.25, 0.30, 0.21
+$ </font><font color="blue">uptime
+ 18:28:35 up  3:05, 10 users,  load average: 0.25, 0.30, 0.21
+$ </font><font color="red">cd /usr
+</font><font color="red">cd /usr
+</font><font color="blue">cd /usr
+$ </font><font color="blue">cd /usr
+$ </font><font color="red">who
+</font><font color="red">who
+</font><font color="blue">who
+jumbo    pts/2        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/1        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/0        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/3        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/4        2011-11-15 17:55 (bob-lan0)
+jambo    pts/5        2011-11-15 18:28 (bob-lan0)
+jambo    pts/6        2011-11-15 18:28 (bob-lan0)
+jumbo    pts/7        2011-11-15 18:28 (bob-lan0)
+jambo    pts/8        2011-11-15 18:28 (bob-lan0)
+jambo    pts/9        2011-11-15 18:28 (bob-lan0)
+$ </font><font color="blue">who
+jumbo    pts/2        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/1        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/0        2011-11-15 17:55 (bob-lan0)
+jimbo    pts/3        2011-11-15 17:55 (bob-lan0)
+jumbo    pts/4        2011-11-15 17:55 (bob-lan0)
+jambo    pts/5        2011-11-15 18:28 (bob-lan0)
+jambo    pts/6        2011-11-15 18:28 (bob-lan0)
+jumbo    pts/7        2011-11-15 18:28 (bob-lan0)
+jambo    pts/8        2011-11-15 18:28 (bob-lan0)
+jambo    pts/9        2011-11-15 18:28 (bob-lan0)
+$ </font><font color="red">cd .
+</font><font color="red">cd .
+</font><font color="blue">cd .
+$ </font><font color="red">du -xsh .
+</font><font color="red">du -xsh .
+</font><font color="blue">du -xsh .
+</font><font color="blue">du -xsh .
+</font><font color="blue">712M..
+$ </font><font color="blue">712M..
+$ </font><font color="red">uname -a
+</font><font color="red">uname -a
+</font><font color="blue">uname -a
+Linux alice.mitm.uclaclass.isi.deterlab.net 2.6.32-34-generic-pae #77-Ubuntu SMP Tue Sep 13 21:16:18 UTC 201
+<font color="green">&gt;</font>1 i686 GNU/Linux
+$ </font><font color="blue">uname -a
+Linux alice.mitm.uclaclass.isi.deterlab.net 2.6.32-34-generic-pae #77-Ubuntu SMP Tue Sep 13 21:16:18 UTC 201
+<font color="green">&gt;</font>1 i686 GNU/Linux
+$ </font><font color="red">cd /usr
+</font><font color="red">cd /usr
+</font><font color="blue">cd /usr
+$ </font><font color="blue">cd /usr
+$ </font></PRE>
+</BODY>
+</HTML>

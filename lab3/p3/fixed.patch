@@ -1,0 +1,118 @@
+--- FCCU2.php	2011-10-25 20:27:12.000000000 -0700
++++ FCCU.php	2011-10-28 17:31:01.000000000 -0700
+@@ -29,12 +29,16 @@
+ 	login();
+ } else { // otherwise, attempt to authenticate
+ 	$id = $PARAM['id'];
++	$id = mysql_real_escape_string($id);
++        settype($id, 'integer'); // makes sure the id is a number, and not a tsring
++
+ 	$password = $PARAM['password'];
++	$password = mysql_real_escape_string($password);
+ 
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
+ 	
+-	$query = "SELECT * FROM accounts WHERE id = $id AND password = '$password'";
++	$query = "SELECT * FROM accounts WHERE id = '$id' AND password = '$password'";
+ 	debug($query);
+ 	$result = mysql_query($query) or die(mysql_error());
+ 	$row = mysql_fetch_array($result); // there should be only one row
+@@ -72,7 +76,9 @@
+ 		// normal output
+ 		
+ 		// account info
+-		$query = "SELECT * FROM accounts WHERE id = $id AND password = '$password'";
++
++                // already checked id for correct format
++		$query = "SELECT * FROM accounts WHERE id = '$id' AND password = '$password'";
+ 		$result = mysql_query($query) or die(mysql_error());
+ 		$row = mysql_fetch_array($result); // there should be only one row
+ 		account_info($row);
+@@ -92,6 +98,9 @@
+ 
+ 	global $dbhost, $dbuser, $dbpass, $dbname;
+ 	$splitname = explode(", ", $name);
++
++        //name should be a string
++	$splitname = mysql_real_escape_string($splitname); 
+ 	
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
+@@ -126,13 +135,16 @@
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
+ 	
+-	$query = "SELECT bal FROM accounts WHERE password = '$password' AND id = $id";
++	$query = "SELECT bal FROM accounts WHERE password = '$password' AND id = '$id'";
+ 	debug("126: ($password) " . $query);
+ 	$result = mysql_query($query);
+ 	
+ 	$row = mysql_fetch_array($result);
+ 	$giver_has = $row[0];
+-	
++	//check type of giver_has, just to make sure it's a number
++	$giver_has = mysql_real_escape_string($giver_has);
++        settype($giver_has, 'integer');
++	      
+ 	if ($amount > 0 && $giver_has >= $amount) {
+ 		$giver_has = $giver_has - $amount; // there's a problem here but it's not SQL Injection...
+ 		pretend("withdraw cash", $amount);
+@@ -156,17 +168,20 @@
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
+ 	
+-	$query = "SELECT bal FROM accounts WHERE password = '$password' AND id = $id";
++	$query = "SELECT bal FROM accounts WHERE password = '$password' AND id = '$id'";
+ 	debug($query);
+ 	$result = mysql_query($query);
+ 	
+ 	$row = mysql_fetch_array($result);
+ 	$giver_has = $row[0];
++	//check type of giver_has, just to make sure it's a number
++	$giver_has = mysql_real_escape_string($giver_has);
++        settype($giver_has, 'integer');	      
+ 	
+ 	if ($amount > 0 && $giver_has >= $amount && $bank && $account) {
+ 		$giver_has = $giver_has - $amount; // there's a problem here but it's not SQL Injection...
+ 		pretend("wire money", $amount, $bank, $acct);
+-		$query = "UPDATE accounts SET bal = $giver_has WHERE password = '$password' AND id = $id LIMIT 1";
++		$query = "UPDATE accounts SET bal = $giver_has WHERE password = '$password' AND id = '$id' LIMIT 1";
+ 		debug($query);
+ 		mysql_query($query) or die(mysql_error());
+ 		echo "<h2 align='center'>Wire of $$amount to bank ($bank) account ($account) complete.</h2>\n";
+@@ -190,8 +205,14 @@
+ 	
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
++
++	//check types for giver and recipient
++	$giver_id = mysql_real_escape_string($giver_id);
++        settype($giver_id, 'integer');
++        $recipient_id = mysql_real_escape_string($recipient_id);
++        settype($recipient_id, 'integer');
+ 	
+-	$query = "SELECT bal FROM accounts WHERE id = $giver_id OR id = $recipient_id";
++	$query = "SELECT bal FROM accounts WHERE id = '$giver_id' OR id = '$recipient_id'";
+ 	debug($query);
+ 	$result = mysql_query($query);
+ 	
+@@ -200,11 +221,16 @@
+ 	$row = mysql_fetch_array($result);
+ 	$giver_has = $row[0];
+ 	debug("$giver_has, $recipient_has");
+-	
++
++        $giver_has = mysql_real_escape_string($giver_has);
++        settype($giver_has, 'integer');
++        $recipient_has = mysql_real_escape_string($recipient_has);
++        settype($recipient_has, 'integer');
++
+ 	if ($amount > 0 && $giver_has >= $amount && $recipient_has) {
+ 		$giver_has = $giver_has - $amount; // there's a problem here but it's not SQL Injection...
+ 		$recipient_has = $recipient_has + $amount; // does anyone know what it is?
+-		$query = "UPDATE accounts SET bal = $recipient_has WHERE id = $recipient_id LIMIT 1";
++		$query = "UPDATE accounts SET bal = $recipient_has WHERE id = '$recipient_id' LIMIT 1";
+ 		debug($query);
+ 		mysql_query($query) or die(mysql_error());
+ 		$query = "UPDATE accounts SET bal = $giver_has WHERE password = '$password' AND id = $giver_id LIMIT 1";

@@ -1,0 +1,70 @@
+--- FCCU.php	2011-10-28 17:54:44.000000000 -0700
++++ FCCU.new.php	2011-10-28 17:58:18.000000000 -0700
+@@ -29,7 +29,11 @@
+ 	login();
+ } else { // otherwise, attempt to authenticate
+ 	$id = $PARAM['id'];
++        $id = mysql_real_escape_string($id);
++        settype($id, 'integer');
++       
+         $password = $PARAM['password'];
++        $password = mysql_real_escape_string($password);
+ 
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
+@@ -72,6 +76,8 @@
+ 		// normal output
+ 		
+ 		// account info
++
++                // already checked id for correct format
+ 		$query = "SELECT * FROM accounts WHERE id = $id AND password = '$password'";
+ 		$result = mysql_query($query) or die(mysql_error());
+ 		$row = mysql_fetch_array($result); // there should be only one row
+@@ -133,6 +139,10 @@
+ 	$row = mysql_fetch_array($result);
+ 	$giver_has = $row[0];
+ 	
++        //check type of giver_has, just to make sure it's a number
++        $giver_has = mysql_real_escape_string($giver_has);
++        settype($giver_has, 'integer');
++	      
+ 	if ($amount > 0 && $giver_has >= $amount) {
+ 		$giver_has = $giver_has - $amount; // there's a problem here but it's not SQL Injection...
+ 		pretend("withdraw cash", $amount);
+@@ -162,7 +172,7 @@
+ 	
+ 	$row = mysql_fetch_array($result);
+ 	$giver_has = $row[0];
+-	
++      
+ 	if ($amount > 0 && $giver_has >= $amount && $bank && $account) {
+ 		$giver_has = $giver_has - $amount; // there's a problem here but it's not SQL Injection...
+ 		pretend("wire money", $amount, $bank, $acct);
+@@ -190,6 +200,12 @@
+ 	
+ 	$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
+ 	mysql_select_db($dbname);
++
++	//check types for giver and recipient
++	$giver_id = mysql_real_escape_string($giver_id);
++        settype($giver_id, 'integer');
++        $recipient_id = mysql_real_escape_string($recipient_id);
++        settype($recipient_id, 'integer');
+ 	
+ 	$query = "SELECT bal FROM accounts WHERE id = $giver_id OR id = $recipient_id";
+ 	debug($query);
+@@ -200,7 +216,12 @@
+ 	$row = mysql_fetch_array($result);
+ 	$giver_has = $row[0];
+ 	debug("$giver_has, $recipient_has");
+-	
++
++        $giver_has = mysql_real_escape_string($giver_has);
++        settype($giver_has, 'integer');
++        $recipient_has = mysql_real_escape_string($recipient_has);
++        settype($recipient_has, 'integer');
++
+ 	if ($amount > 0 && $giver_has >= $amount && $recipient_has) {
+ 		$giver_has = $giver_has - $amount; // there's a problem here but it's not SQL Injection...
+ 		$recipient_has = $recipient_has + $amount; // does anyone know what it is?

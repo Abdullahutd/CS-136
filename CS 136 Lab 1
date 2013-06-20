@@ -1,0 +1,733 @@
+Last login: Thu Oct 13 12:31:08 on ttys000
+Jon-2:~ jonnguy$ man adduser
+No manual entry for adduser
+Jon-2:~ jonnguy$ less etc/group
+etc/group: No such file or directory
+Jon-2:~ jonnguy$ sudo addgroup temp
+sudo: addgroup: command not found
+Jon-2:~ jonnguy$ ls
+Applications Documents    Dropbox      Movies       Pictures     blank
+Desktop      Downloads    Library      Music        Public       test
+Jon-2:~ jonnguy$ ls
+Applications Documents    Dropbox      Movies       Pictures     blank
+Desktop      Downloads    Library      Music        Public       test
+Jon-2:~ jonnguy$ ssh la236ay@users.deterlab.net
+Password:
+Last login: Thu Oct 13 15:53:18 2011 from cpe-76-167-224-
+Copyright (c) 1980, 1983, 1986, 1988, 1990, 1991, 1993, 1994
+	The Regents of the University of California.  All rights reserved.
+
+FreeBSD 8.2-RELEASE-p3 (USERS8) #2: Wed Sep 28 12:01:21 PDT 2011
+
+
+[la236ay@users ~]$ ssh pc180
+Linux server.permandfwalls.uclaclass.isi.deterlab.net 2.6.32-31-generic-pae #60 SMP Thu Apr 7 17:02:54 PDT 2011 i686 GNU/Linux
+Ubuntu 10.04.2 LTS
+
+Welcome to Ubuntu!
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Thu Oct 13 16:06:24 PDT 2011
+
+  System load:  0.77               Processes:           146
+  Usage of /:   15.8% of 14.67GB   Users logged in:     0
+  Memory usage: 7%                 IP address for eth6: 10.1.1.3
+  Swap usage:   0%                 IP address for eth8: 192.168.1.180
+
+  Graph this data and manage this system at https://landscape.canonical.com/
+
+Last login: Thu Oct 13 16:05:52 2011 from users.isi.deterlab.net
+la236ay@server:~$ ls
+top_secret
+la236ay@server:~$ sudo mkdir admins
+la236ay@server:~$ ls
+admins	top_secret
+la236ay@server:~$ addgroup emp
+addgroup: Only root may add a user or group to the system.
+la236ay@server:~$ sudo addgroup emp
+Adding group `emp' (GID 1001) ...
+Done.
+la236ay@server:~$ man adduser
+la236ay@server:~$ ls
+admins	top_secret
+la236ay@server:~$ sudo adduser larry
+Adding user `larry' ...
+Adding new group `larry' (1002) ...
+Adding new user `larry' (1001) with group `larry' ...
+Creating home directory `/home/larry' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for larry
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] y
+la236ay@server:~$ 
+la236ay@server:~$ sudo adduser moe
+Adding user `moe' ...
+Adding new group `moe' (1003) ...
+Adding new user `moe' (1002) with group `moe' ...
+Creating home directory `/home/moe' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for moe
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] 
+la236ay@server:~$ 
+la236ay@server:~$ sudo adduser curly
+Adding user `curly' ...
+Adding new group `curly' (1004) ...
+Adding new user `curly' (1003) with group `curly' ...
+Creating home directory `/home/curly' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for curly
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] 
+la236ay@server:~$ 
+la236ay@server:~$ sudo adduser --home ~/admins/ken ken
+Adding user `ken' ...
+Adding new group `ken' (1005) ...
+Adding new user `ken' (1004) with group `ken' ...
+Creating home directory `/users/la236ay/admins/ken' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for ken
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n]  
+la236ay@server:~$ ls
+admins	top_secret
+la236ay@server:~$ cd admins
+la236ay@server:~/admins$ ls
+ken
+la236ay@server:~/admins$ sudo adduser --home ~/admins/dmr dmr
+Adding user `dmr' ...
+Adding new group `dmr' (1006) ...
+Adding new user `dmr' (1005) with group `dmr' ...
+Creating home directory `/users/la236ay/admins/dmr' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for dmr
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] 
+la236ay@server:~/admins$ sudo adduser --home ~/admins/bwk bwk
+Adding user `bwk' ...
+Adding new group `bwk' (1007) ...
+Adding new user `bwk' (1006) with group `bwk' ...
+Creating home directory `/users/la236ay/admins/bwk' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for bwk
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] 
+la236ay@server:~/admins$ sudo addgroup wheel
+Adding group `wheel' (GID 1008) ...
+Done.
+la236ay@server:~/admins$ ls
+bwk  dmr  ken
+la236ay@server:~/admins$ cd ..
+la236ay@server:~$ ls
+admins	top_secret
+la236ay@server:~$ usermod -a -G emp larry
+usermod: cannot lock /etc/passwd; try again later.
+la236ay@server:~$ sudo usermod -a -G emp larry
+la236ay@server:~$ sudo usermod -a -G emp moe
+la236ay@server:~$ sudo usermod -a -G emp curly
+la236ay@server:~$ sudo usermod -a -G wheel ken
+la236ay@server:~$ sudo usermod -a -G wheel dmr
+la236ay@server:~$ sudo usermod -a -G wheel bwk
+la236ay@server:~$ sudo usermod -a -G ken larry
+la236ay@server:~$ sudo usermod -a -G ken bwk
+la236ay@server:~$ sudo usermod -a -G ken dmr
+la236ay@server:~$ sudo usermod -a -G bwk moe
+la236ay@server:~$ sudo usermod -a -G bwk dmr
+la236ay@server:~$ sudo usermod -a -G bwk ken
+la236ay@server:~$ sudo usermod -a -G dmr curly
+la236ay@server:~$ sudo usermod -a -G dmr ken
+la236ay@server:~$ sudo usermod -a -G dmr bwk
+la236ay@server:~$ ls
+admins	top_secret
+la236ay@server:~$ cd /home
+la236ay@server:/home$ cd .
+la236ay@server:/home$ cd ..
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ ls -al
+total 120
+drwxr-xr-x  28 root root  4096 2011-10-13 16:05 .
+drwxr-xr-x  28 root root  4096 2011-10-13 16:05 ..
+drwxr-xr-x   2 root root  4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root  4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root  4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root  3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root  4096 2011-10-13 16:10 etc
+drwxr-xr-x   2 root root  4096 2010-06-28 20:32 groups
+drwxr-xr-x   6 root root  4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root    37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root    37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root 12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root  4096 2010-06-02 19:54 local
+drwx------   2 root root 16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root  4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root  4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root  4096 2010-06-01 18:16 opt
+dr-xr-xr-x 140 root root     0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root  4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root  4096 2011-10-13 16:04 root
+drwxr-xr-x   2 root root  4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root  4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root  4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root  4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root  4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root     0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root  4096 2011-10-13 16:09 tmp
+drwxr-xr-x  81 root root  4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root  4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root  4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root    34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root    34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ sudo chgrp wheel home
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ ls -l
+total 112
+drwxr-xr-x   2 root root   4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root   4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root   4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root   3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root   4096 2011-10-13 16:10 etc
+drwxr-xr-x   2 root root   4096 2010-06-28 20:32 groups
+drwxr-xr-x   6 root wheel  4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root     37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root     37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root  12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root   4096 2010-06-02 19:54 local
+drwx------   2 root root  16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root   4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root   4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root   4096 2010-06-01 18:16 opt
+dr-xr-xr-x 140 root root      0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root   4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root   4096 2011-10-13 16:04 root
+drwxr-xr-x   2 root root   4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root   4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root   4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root   4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root   4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root      0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root   4096 2011-10-13 16:09 tmp
+drwxr-xr-x  81 root root   4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root   4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root   4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root     34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root     34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ ls -l
+total 112
+drwxr-xr-x   2 root root   4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root   4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root   4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root   3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root   4096 2011-10-13 16:10 etc
+drwxr-xr-x   2 root root   4096 2010-06-28 20:32 groups
+drwxr-xr-x   6 root wheel  4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root     37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root     37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root  12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root   4096 2010-06-02 19:54 local
+drwx------   2 root root  16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root   4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root   4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root   4096 2010-06-01 18:16 opt
+dr-xr-xr-x 140 root root      0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root   4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root   4096 2011-10-13 16:04 root
+drwxr-xr-x   2 root root   4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root   4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root   4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root   4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root   4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root      0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root   4096 2011-10-13 16:14 tmp
+drwxr-xr-x  81 root root   4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root   4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root   4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root     34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root     34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ sudo chmod 770 home
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ cd ~/admins
+la236ay@server:~/admins$ ls
+bwk  dmr  ken
+la236ay@server:~/admins$ ls
+bwk  dmr  ken
+la236ay@server:~/admins$ ls -l
+total 6
+drwxr-xr-x 2 bwk bwk 512 2011-10-13 16:08 bwk
+drwxr-xr-x 2 dmr dmr 512 2011-10-13 16:08 dmr
+drwxr-xr-x 2 ken ken 512 2011-10-13 16:08 ken
+la236ay@server:~/admins$ cd bwk
+la236ay@server:~/admins/bwk$ ls -l
+total 0
+la236ay@server:~/admins/bwk$ cd ..
+la236ay@server:~/admins$ ls
+bwk  dmr  ken
+la236ay@server:~/admins$ chmod 775 bwk
+chmod: changing permissions of `bwk': Operation not permitted
+la236ay@server:~/admins$ sudo chmod -R 775 bwk
+la236ay@server:~/admins$ ls -l
+total 6
+drwxrwxr-x 2 bwk bwk 512 2011-10-13 16:08 bwk
+drwxr-xr-x 2 dmr dmr 512 2011-10-13 16:08 dmr
+drwxr-xr-x 2 ken ken 512 2011-10-13 16:08 ken
+la236ay@server:~/admins$ sudo chmod -R 775 ken
+la236ay@server:~/admins$ sudo chmod -R 775 dmr
+la236ay@server:~/admins$ sudo chmod 765 ken
+la236ay@server:~/admins$ sudo chmod 765 dmr
+la236ay@server:~/admins$ sudo chmod 765 bwk
+la236ay@server:~/admins$ ls
+bwk  dmr  ken
+la236ay@server:~/admins$ ls -l
+total 6
+drwxrw-r-x 2 bwk bwk 512 2011-10-13 16:08 bwk
+drwxrw-r-x 2 dmr dmr 512 2011-10-13 16:08 dmr
+drwxrw-r-x 2 ken ken 512 2011-10-13 16:08 ken
+la236ay@server:~/admins$ chmod g+s bwk
+chmod: changing permissions of `bwk': Operation not permitted
+la236ay@server:~/admins$ sudo chmod g+s bwk
+la236ay@server:~/admins$ sudo chmod g+s ken
+la236ay@server:~/admins$ sudo chmod g+s dmr
+la236ay@server:~/admins$ cd /root
+la236ay@server:/root$ ./submit.sh
+Creating submission file: '/root/la236ay-permissions'
+cp: cannot stat `/admins': No such file or directory
+cp: cannot stat `/tpsreports': No such file or directory
+cp: cannot stat `/ballots': No such file or directory
+tar: Removing leading `/' from member names
+Done.
+la236ay@server:/root$ ls
+firewall  la236ay-permissions-1318548654.tar.gz  permissions-answers.txt  restore.sh  restore.sh~  submit.sh
+la236ay@server:/root$ ./submit.sh
+Creating submission file: '/root/la236ay-permissions'
+cp: cannot stat `/admins': No such file or directory
+cp: cannot stat `/tpsreports': No such file or directory
+cp: cannot stat `/ballots': No such file or directory
+tar: Removing leading `/' from member names
+Done.
+la236ay@server:/root$ ls
+firewall			       la236ay-permissions-1318548666.tar.gz  restore.sh   submit.sh
+la236ay-permissions-1318548654.tar.gz  permissions-answers.txt		      restore.sh~
+la236ay@server:/root$ cd ..
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ cd ..
+la236ay@server:/$ ls
+bin   cdrom  etc     home	 initrd.img.old  local	     media  opt   proj	sbin	 selinux  srv  tmp    usr  vmlinuz
+boot  dev    groups  initrd.img  lib		 lost+found  mnt    proc  root	scratch  share	  sys  users  var  vmlinuz.old
+la236ay@server:/$ cd
+la236ay@server:~$ ls
+admins	top_secret
+la236ay@server:~$ mv admins /admins
+mv: cannot create directory `/admins': Permission denied
+la236ay@server:~$ sudo mv admins /admins
+la236ay@server:~$ ls
+top_secret
+la236ay@server:~$ cd 
+la236ay@server:~$ ls
+top_secret
+la236ay@server:~$ cd /home
+-bash: cd: /home: Permission denied
+la236ay@server:~$ sudo cd /home
+sudo: cd: command not found
+la236ay@server:~$ sudo /admins
+sudo: /admins: command not found
+la236ay@server:~$ ls
+top_secret
+la236ay@server:~$ cd /admins
+la236ay@server:/admins$ cd ..
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ ls -l
+total 116
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:10 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwxrwx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:31 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ whoami
+la236ay
+la236ay@server:/$ usermod -G wheel la236ay
+usermod: cannot lock /etc/passwd; try again later.
+la236ay@server:/$ sudo usermod -G wheel la236ay
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ cd /home
+-bash: cd: /home: Permission denied
+la236ay@server:/$ cd home
+-bash: cd: home: Permission denied
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ ls -l
+total 116
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:32 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwxrwx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:31 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ less /etc/group
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ cd
+la236ay@server:~$ ls
+top_secret
+la236ay@server:~$ touch a
+la236ay@server:~$ ls
+a  top_secret
+la236ay@server:~$ ls -l
+total 2
+-rw-r--r-- 1 la236ay UCLAClass   0 2011-10-13 16:33 a
+drwxr-xr-x 2 la236ay UCLAClass 512 2011-10-03 17:37 top_secret
+la236ay@server:~$ ls /home
+ls: cannot open directory /home: Permission denied
+la236ay@server:~$ cd /root
+la236ay@server:/root$ ls
+firewall			       la236ay-permissions-1318548666.tar.gz  restore.sh   submit.sh
+la236ay-permissions-1318548654.tar.gz  permissions-answers.txt		      restore.sh~
+la236ay@server:/root$ ./submit.sh
+Creating submission file: '/root/la236ay-permissions'
+cp: cannot stat `/tpsreports': No such file or directory
+cp: cannot stat `/ballots': No such file or directory
+tar: Removing leading `/' from member names
+Done.
+la236ay@server:/root$ cd
+la236ay@server:~$ cd /admins
+la236ay@server:/admins$ ls
+bwk  dmr  ken
+la236ay@server:/admins$ cd ..
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ ls -l
+total 116
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:32 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwxrwx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:33 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ chmod g-r home
+chmod: changing permissions of `home': Operation not permitted
+la236ay@server:/$ sudo chmod g-r home
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ ls -l
+total 116
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:32 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwx-wx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:33 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ sudo chmod g+r home
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ mkdir /ballots
+mkdir: cannot create directory `/ballots': Permission denied
+la236ay@server:/$ ls
+admins	boot   dev  groups  initrd.img	    lib    lost+found  mnt  proc  root	scratch  share	sys  users  var      vmlinuz.old
+bin	cdrom  etc  home    initrd.img.old  local  media       opt  proj  sbin	selinux  srv	tmp  usr    vmlinuz
+la236ay@server:/$ sudo mkdir /ballot
+la236ay@server:/$ sudo mkdir /ballots
+la236ay@server:/$ cd /ballots
+la236ay@server:/ballots$ cd ..
+la236ay@server:/$ ls
+admins	 bin	dev	home		lib	    media  proc  sbin	  share  tmp	var
+ballot	 boot	etc	initrd.img	local	    mnt    proj  scratch  srv	 users	vmlinuz
+ballots  cdrom	groups	initrd.img.old	lost+found  opt    root  selinux  sys	 usr	vmlinuz.old
+la236ay@server:/$ cd /
+la236ay@server:/$ ls
+admins	 bin	dev	home		lib	    media  proc  sbin	  share  tmp	var
+ballot	 boot	etc	initrd.img	local	    mnt    proj  scratch  srv	 users	vmlinuz
+ballots  cdrom	groups	initrd.img.old	lost+found  opt    root  selinux  sys	 usr	vmlinuz.old
+la236ay@server:/$ rmdir ballot
+rmdir: failed to remove `ballot': Permission denied
+la236ay@server:/$ sudo rmdir ballot
+la236ay@server:/$ ls -l
+total 120
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+drwxr-xr-x   2 root root       4096 2011-10-13 16:35 ballots
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:32 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwxrwx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:33 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ sudo chmod 333 ballots
+la236ay@server:/$ ls
+admins	 boot	etc	initrd.img	local	    mnt   proj	scratch  srv  users  vmlinuz
+ballots  cdrom	groups	initrd.img.old	lost+found  opt   root	selinux  sys  usr    vmlinuz.old
+bin	 dev	home	lib		media	    proc  sbin	share	 tmp  var
+la236ay@server:/$ ls -l
+total 120
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+d-wx-wx-wx   2 root root       4096 2011-10-13 16:35 ballots
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:32 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwxrwx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:33 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ ls
+admins	 boot	etc	initrd.img	local	    mnt   proj	scratch  srv  users  vmlinuz
+ballots  cdrom	groups	initrd.img.old	lost+found  opt   root	selinux  sys  usr    vmlinuz.old
+bin	 dev	home	lib		media	    proc  sbin	share	 tmp  var
+la236ay@server:/$ ls -l
+total 120
+drwxr-xr-x   5 root UCLAClass  4096 2011-10-13 16:08 admins
+d-wx-wx-wx   2 root root       4096 2011-10-13 16:35 ballots
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 bin
+drwxr-xr-x   3 root root       4096 2011-04-08 18:44 boot
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 cdrom
+drwxr-xr-x  16 root root       3780 2011-10-13 16:04 dev
+drwxr-xr-x  91 root root       4096 2011-10-13 16:32 etc
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 groups
+drwxrwx---   6 root wheel      4096 2011-10-13 16:07 home
+lrwxrwxrwx   1 root root         37 2011-04-08 18:43 initrd.img -> boot/initrd.img-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         37 2011-02-15 23:41 initrd.img.old -> boot/initrd.img-2.6.32-28-generic-pae
+drwxr-xr-x  17 root root      12288 2011-02-15 23:41 lib
+drwxr-xr-x   3 root root       4096 2010-06-02 19:54 local
+drwx------   2 root root      16384 2010-06-01 18:15 lost+found
+drwxr-xr-x   2 root root       4096 2010-06-01 18:15 media
+drwxr-xr-x   2 root root       4096 2010-04-23 03:11 mnt
+drwxr-xr-x   2 root root       4096 2010-06-01 18:16 opt
+dr-xr-xr-x 139 root root          0 2011-10-13 16:04 proc
+drwxr-xr-x   3 root root       4096 2011-10-13 16:04 proj
+drwxr-xr-x   7 root root       4096 2011-10-13 16:33 root
+drwxr-xr-x   2 root root       4096 2011-02-15 23:41 sbin
+drwxr-xr-x   2 root root       4096 2010-06-28 20:32 scratch
+drwxr-xr-x   2 root root       4096 2009-12-05 13:55 selinux
+drwxrwx---   2 root root       4096 2010-06-02 19:54 share
+drwxr-xr-x   3 root root       4096 2010-06-02 17:55 srv
+drwxr-xr-x  13 root root          0 2011-10-13 16:04 sys
+drwxrwxrwt   4 root root       4096 2011-10-13 16:19 tmp
+drwxr-xr-x  81 root root       4096 2011-10-13 16:04 users
+drwxr-xr-x  12 root root       4096 2010-06-02 17:55 usr
+drwxr-xr-x  17 root root       4096 2011-10-13 16:05 var
+lrwxrwxrwx   1 root root         34 2011-04-08 18:43 vmlinuz -> boot/vmlinuz-2.6.32-31-generic-pae
+lrwxrwxrwx   1 root root         34 2011-02-15 23:41 vmlinuz.old -> boot/vmlinuz-2.6.32-28-generic-pae
+la236ay@server:/$ sudo chmod 771 home
+la236ay@server:/$ ls
+admins	 boot	etc	initrd.img	local	    mnt   proj	scratch  srv  users  vmlinuz
+ballots  cdrom	groups	initrd.img.old	lost+found  opt   root	selinux  sys  usr    vmlinuz.old
+bin	 dev	home	lib		media	    proc  sbin	share	 tmp  var
+la236ay@server:/$ cd home
+la236ay@server:/home$ ls
+ls: cannot open directory .: Permission denied
+la236ay@server:/home$ cd  larry
+la236ay@server:/home/larry$ 

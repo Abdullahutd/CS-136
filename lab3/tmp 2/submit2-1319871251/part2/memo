@@ -1,0 +1,44 @@
+6.1 - The main security flaw in this was the lack of checking whether or not the input was valid,
+and that it had the suid bit on. An attacker could access any file in the system and run anything
+he wanted. 
+
+Note: the files in the /usr/src/fhttpd/ folder are not patched, you must patch them with the
+fixed.patch file provided.
+One change I made with the code was checking to see if the variable has any invalid
+characters in it, it would remove them. This would help with trying to execute code. Because
+I moved the memos to another folder, I made sure the variable pointed to that location instead of 
+anything else. This prevents the attacker from access other files on the machine. Another thing
+I did was remove the SUID bit for the cgi, so that if an attacker gets access to it, he wouldn't be able
+to have root access to the whole machine.
+
+For the file permissions of the items, here is what I did:
+Create a new user and group "memo".
+Set the permissions of /home/memo to 755
+Add everyone in the company (who needs memo access) to the memo group.
+Create a directory /home/memo/memos (this is where the memos will be stored)
+Change the permissions so that: root can read/write, group can read/write, and other can read/execute. (765)
+IMPORTANT: make sure the ~/memos directory has the sticky bit on. (This will prevent 
+anyone to delete other people's things, except for root and user memo).
+Because everyone can read it, it isn't private. (which was a requirement)
+
+My demo exploit is pretty simple, it uses elinks to dump the contents of the URL (with the pathname-
+attack) into a file called "shadow.txt". The url that I used was this:
+http://localhost:8118/cgi-bin/memo.cgi?memo=/etc/shadow
+When going to that url, the website assigned the variable "memo" to /etc/shadow, and then 
+read the contents to the page, as if it was a regular memo. Because of the ">", it wrote it to the
+file shadow.txt.
+
+6.2.1 - This threat was very serious. The attacker had the power to access any file in the system, and
+he could have gained root access and do whatever he pleased. In order to secure this, it would 
+be important to check the path names that is requested. It's also important to make sure the 
+permissions are not allowed so everyone can do anything, because that can create problems. Following
+my steps from 6.1 should prevent any attempt of pathname attacks.
+
+6.2.2 - It is NOT sufficient to just use those path names because it is possible to access folders 
+that are of lower level using "..". Something like "/home/username/memo/../../../" would get you back 
+to the "/" directory. (Same goes for /root/memo). That can be dangerous to allow attackers to access 
+those files under "/". 
+
+6.2.3 - It was a tough exploit to figure out. The general idea was clear, but the right words/text
+was hard to figure out. Also, my exploit only does something pretty simple. I think if I needed to
+and if I had more time to research, I could have done a lot worse than read a secret file!

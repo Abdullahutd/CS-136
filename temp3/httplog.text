@@ -1,0 +1,11 @@
+1321824301.886     62 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=3762 - NONE/- text/html
+1321824301.886     62 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=3762 - NONE/- text/html
+1321824302.662     74 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=B1FF&new=99&hash=ea2b83a2468a7ccc6605184a15045125 - NONE/- text/html;
+1321824302.662     74 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=B1FF&new=99&hash=ea2b83a2468a7ccc6605184a15045125 - NONE/- text/html;
+1321824302.769     74 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=FZCO&new=17&hash=5482d9afd8bdfb055114f449b5b67698 - NONE/- text/html;
+1321824302.769     74 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=FZCO&new=17&hash=5482d9afd8bdfb055114f449b5b67698 - NONE/- text/html;
+1321824304.959     61 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=3763 - NONE/- text/html
+1321824304.959     61 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=3763 - NONE/- text/html
+1321824306.877     64 10.1.1.2 TCP_HIT/200 0 GET http://10.1.1.3/cgi-bin/stock.cgi?symbol=ASDF&new=31&hash=7f98edff6534f73877ee98ce0794b775 - NONE/- text/html;
+1321824310.030     61 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=3764 - NONE/- text/html
+1321824310.030     61 10.1.1.3 TCP_HIT/200 0 GET http://10.1.1.2/cgi-bin/access1.cgi?line=3764 - NONE/- text/html

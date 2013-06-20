@@ -1,0 +1,78 @@
+
+1. The data that's being transmitted in cleartext seems to be http GET requests.
+It seems like the data is being transmitted via the HTTP protocol on port 80.
+There also seems to be telnet communications in cleartext via port 23. 
+During the session, it seems like there is the Apache server is being used and the data that's being transferred is the 
+html for the sites. 
+Alice updates Bob's stocks via stocks.cgi. (She updates it using something like GET /cgi-bin/stock.cgi?symbol=DNGL&new=76&hash=e96448d96721224ae48d0fa7baf53b0d.. and this seems to update the DNGL stock to "76")
+Also, Bob tries to access the html by using the access1.cgi file.
+Some sort of authentication would be user: jumbo, password: donald78 | jambo, password minnie77 | jimbo, password goofy76 
+The encrypted communication seems to be on port 443. (This is the HTTPS/ "secure" parts of the data)
+
+2. To execute this attack, I had to look through the things I sniffed, and I noticed that the stocks are updated by using an RPC like:
+GET /cgi-bin/stock.cgi?symbol=FZCO&new=17&hash=5482d9afd8bdfb055114f449b5b67698
+In this example, the stock FZCO would update to the 'new' value of 17. The hash is there to prevent a change in the number or symbol. 
+(I tried to change the symbol name to another name, and the new number to a different number, but I got the following error:
+PROTOCOL ERROR! Cryptographic stamp incorrect. Stock price update ([symbol]; [number]) rejected. Basically, the encrypting 
+hash did not match.)
+To determine this worked, I attempted to replay the RPC by typing this into my browser:
+- To get FZCO to be low:
+http://localhost:8118/cgi-bin/stock.cgi?symbol=FZCO&new=17&hash=5482d9afd8bdfb055114f449b5b67698
+- To get ZBOR to be high:
+http://localhost:8118/cgi-bin/stock.cgi?symbol=ZBOR&new=79&hash=5f70f9a4e87efd4e2a76b45389ed685e
+I determined these were the right ones because I looked through all the data I sniffed and found the ones
+that matched the symbol of the stock, and either a high/low number.
+For these questions, you don't need to write filters, just write short answers or pseudocode explaining how you would do it.
+
+Given the power of etterfilter and the kinds of traffic on this network, you can actually make significant changes to a machine or machines that you're not even logged in to. How?
+Of the cleartext protocols in use, can you perform any other dirty tricks using insertion attacks? The more nasty and clever they are, the better.
+
+
+3. 
+Here is my filter:
+#it's using TCP protocol from soruce 80 (bob's port)
+if (ip.proto == TCP && tcp.src == 80) {
+        # replace FZCO with OWND
+        replace("FZCO", "OWND");
+
+        # replace $ with $300
+        replace("$", "$300");
+}
+This filter basically replaces FZCO and OWND. It also replaces any $ with $300, so anyone would see the number $x as $300x.
+
+MITM Tasks
+
+What configuration elements did you have to change?
+Copy and paste some of this data into a text file and include it in your submission materials.
+Why doesn't it work to use tcpdump to capture this "decrypted" data?
+For this exploit to work, it is necessary for users to blindly "click OK" without investigating the certificate issues. Why is this necessary?
+What is the encrypted data they're hiding?
+
+4. The part of the configuration that I changed was this part:
+# if you use iptables:
+      redir_command_on = “iptables -t nat -A PREROUTING -i %iface -p tcp –dport %port -j REDIRECT –to-port %rport”
+      redir_command_off = “iptables -t nat -D PREROUTING -i %iface -p tcp –dport %port -j REDIRECT –to-port %rport”
+I uncommented those parts that were previously commented out.
+I also changed this part:
+#ec_uid = 65534                # nobody is the default
+#ec_gid = 65534                # nobody is the default
+to:
+ec_uid = 0
+ec_gid = 0
+
+Some of the data I found was:
+564  INT. INNER CHAMBER OF MCP 
+Over Dumont's shoulder, with a view of the MCP. Zoom IN on MCP face.
+MCP
+Welcome!
+565  EXT. CARRIER BRIDGE
+Flynn and Yori race into view. We can see two of the memory guards
+in a de-rezzed, two dimensional state, disappearing completely in
+the course of this scene. Flynn runs to Sark's position, looking out the window 
+
+If the users don't "click OK", it wont allow the user to access those webpages/ share the certificates. 
+If that happens, the data will not be sent over and the hacker wont be able to steal the information.
+
+Tcpdump doesn't capture the decrypted data because it isn't compiled with cryptography enabled.
+
+After Google'ing the data I found, I know that the information they're hiding is the Tron screenplay.

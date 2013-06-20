@@ -1,0 +1,33 @@
+--- memo.cgi	2011-10-28 23:10:59.000000000 -0700
++++ memo2.cgi	2011-10-28 23:10:53.000000000 -0700
+@@ -26,8 +26,8 @@
+ 
+ # glob through the homedirs for an array of paths to memos sorted by date
+ sub list_memo_selector {
+-	my @memos = </home/*/memo/*>; # all regular users
+-	push (@memos, </root/memo/*>); # special memos from root
++	my @memos = </home/memo/memos/*>; # location of memos
++
+ 	foreach (@memos) {
+ 		$_ =~ m#^.+/([^/]+)$#; # regex extract filename
+ 		my $temp = $1;
+@@ -55,8 +55,19 @@
+ 	list_memo_selector();
+ } else { # there is a memo selected
+ 	list_memo_selector();
++
++	my $temp = "";
+ 	my $memo = param('memo');
+ 	
++	# you know where the memos are, if the memo path isn't 
++	# in /home/memo/, then fail!
++        if ($memo !~ m#/home/memo/.*$#) {
++	    $memo = $temp;
++        }
++
++        # Remove any potentially malicious HTML tags, including the ability to backtrack
++	$memo =~ s/([;<>\*\|'&\$!#\(\)\[\]\{\}:"=..]..)//g;
++	
+         my $author = "root";
+ 	my @stat = stat $memo;
+ 	my $date = localtime $stat[9];
